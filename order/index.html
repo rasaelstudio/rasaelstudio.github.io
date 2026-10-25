@@ -29,6 +29,9 @@
   .kinds { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; clear: both; }
   .kind input, .plan input { position: absolute; opacity: 0; pointer-events: none; }
   .kind label { display: flex; flex-direction: column; align-items: center; gap: 8px; border: 1.5px solid var(--line); border-radius: 16px; padding: 12px 8px; cursor: pointer; text-align: center; font-weight: 700; transition: border-color .2s, background .2s, transform .2s var(--ease); min-height: 44px; }
+  .kind:last-child { grid-column: 1 / -1; }
+  .kind:last-child label { flex-direction: row; justify-content: center; }
+  .kind:last-child .em { width: 44px; height: 44px; font-size: 22px; }
   .kind img { width: 64px; height: 84px; object-fit: cover; border-radius: 10px; }
   .kind .em { width: 64px; height: 84px; border-radius: 10px; background: var(--cream-2); display: grid; place-items: center; font-size: 30px; }
   .kind input:checked + label, .plan input:checked + label { border-color: var(--pink); background: #FFF6F4; box-shadow: 0 0 0 3px rgba(240,124,140,.22); }
@@ -82,7 +85,8 @@
         <div class="kind"><input type="radio" name="kind" id="k-wedding" value="wedding"><label for="k-wedding"><img src="../assets/wedding-closed.jpg" alt="">دعوة عرس</label></div>
         <div class="kind"><input type="radio" name="kind" id="k-letter" value="letter"><label for="k-letter"><img src="../assets/letter-closed.jpg" alt="">رسالة حب</label></div>
         <div class="kind"><input type="radio" name="kind" id="k-proposal" value="proposal"><label for="k-proposal"><img src="../assets/proposal-closed.jpg" alt="">طلب زواج</label></div>
-        <div class="kind"><input type="radio" name="kind" id="k-other" value="other"><label for="k-other"><span class="em">🎁</span>عيد ميلاد / عيد / غيرها</label></div>
+        <div class="kind"><input type="radio" name="kind" id="k-birthday" value="birthday"><label for="k-birthday"><img src="../assets/birthday-closed.jpg" alt="">عيد ميلاد</label></div>
+        <div class="kind"><input type="radio" name="kind" id="k-other" value="other"><label for="k-other"><span class="em">🎁</span>عيد / مناسبة تانية</label></div>
       </div>
     </fieldset>
 
@@ -120,7 +124,7 @@
 <script src="../config.js"></script>
 <script>
 const R = window.RASAEL;
-const KIND_NAME = { wedding: 'دعوة عرس', letter: 'رسالة حب', proposal: 'طلب زواج', other: 'هدية لمناسبة' };
+const KIND_NAME = { wedding: 'دعوة عرس', letter: 'رسالة حب', proposal: 'طلب زواج', birthday: 'عيد ميلاد', other: 'هدية لمناسبة' };
 
 // The questions for each kind. Order of fields = order in the WhatsApp message.
 const FIELDS = {
@@ -157,8 +161,20 @@ const FIELDS = {
     { id: 'story', label: 'قصتكم بأربع جمل قصيرة (كل جملة بسطر)', type: 'textarea', ph: 'من أول مرة شفتك فيها…\nصرتِ أول شي بفكّر فيه الصبح…' },
     { id: 'answerWa', label: 'رقم واتسابك (جوابها بيوصلك عليه)', type: 'tel', req: 1, ph: '9639xxxxxxxx' },
   ],
+  birthday: [
+    { id: 'to', label: 'اسم صاحب/ة العيد', req: 1 },
+    { id: 'toGender', label: 'هي ولا هو؟', type: 'select', options: ['هي', 'هو'], req: 1 },
+    { id: 'nick', label: 'شو بتناديه/ا؟', ph: 'مثال: سلمى، حياتي، أختي…' },
+    { id: 'from', label: 'من مين الهدية؟', req: 1 },
+    { id: 'birthDate', label: 'تاريخ الميلاد (مع السنة)', type: 'date', req: 1, hint: 'منه بيطلع العمر عالشموع و«عمرك بالأرقام»' },
+    { id: 'showAge', label: 'منبيّن العمر؟', type: 'select', options: ['إي، حطّو عالشموع', 'لا، بدون عمر'] },
+    { id: 'message', label: 'رسالتك', type: 'textarea', req: 1, ph: 'اكتب من قلبك… أو اكتب «اكتبوها إنتو» واحكيلنا عنها/عنه' },
+    { id: 'wishes', label: 'تمنيات من الأهل والأصحاب (الاسم: التمنية، كل وحدة بسطر)', type: 'textarea', ph: 'ماما: الله يخليلي ياكِ…\nلين: السنة الجاية منسافر سوا!' },
+    { id: 'coupons', label: 'قسائم هدايا للحك (كل وحدة بسطر)', type: 'textarea', ph: 'عشا عليّ\nيوم كامل إلك\nسفرة صغيرة' },
+    { id: 'replyWa', label: 'رقم واتسابك لزر «ردّ عليه»', type: 'tel', ph: '9639xxxxxxxx' },
+  ],
   other: [
-    { id: 'occasion', label: 'المناسبة', type: 'select', options: ['عيد ميلاد', 'معايدة عيد', 'ذكرى زواج', 'اعتذار', 'تخرّج', 'غير شي'], req: 1 },
+    { id: 'occasion', label: 'المناسبة', type: 'select', options: ['معايدة عيد', 'ذكرى زواج', 'اعتذار', 'تخرّج', 'نجاح', 'غير شي'], req: 1 },
     { id: 'to', label: 'لمين الهدية؟ (الاسم)', req: 1 },
     { id: 'from', label: 'من مين؟', req: 1 },
     { id: 'date', label: 'تاريخ المناسبة', type: 'date' },
