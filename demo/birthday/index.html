@@ -497,29 +497,45 @@ function cakeReady() {
   if (canMic) $('micBtn').addEventListener('click', listen);
 }
 
-/* blow detection: sustained loud broadband noise on the mic puts candles out one by one */
+/* blow detection. Phones turn the mic gain down, so loudness alone is unreliable. Blowing on a mic
+   makes a big rumble of low-frequency noise, so we measure the room's low band for half a second,
+   then a blow is that band rising well above it. Each ~180 ms of blowing puts out one candle. */
 let mic = null;
 async function listen() {
   const note = $('cNote');
   try {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false } });
     const ac = new (window.AudioContext || window.webkitAudioContext)();
-    const an = ac.createAnalyser(); an.fftSize = 1024;
+    if (ac.state === 'suspended') await ac.resume();
+    const an = ac.createAnalyser(); an.fftSize = 512; an.smoothingTimeConstant = .25; an.minDecibels = -95; an.maxDecibels = -15;
     ac.createMediaStreamSource(stream).connect(an);
     mic = { stream, ac };
     $('micBtn').outerHTML = '<div class="meter"><i id="meter"></i></div>';
-    note.textContent = g('يلا… انفخي! 🌬️', 'يلا… انفخ! 🌬️');
-    const buf = new Float32Array(an.fftSize);
-    let hot = 0, last = performance.now();
+    note.textContent = g('لحظة…', 'لحظة…');
+    const freq = new Uint8Array(an.frequencyBinCount), wave = new Float32Array(an.fftSize);
+    const lowBins = Math.max(4, Math.round(1500 / (ac.sampleRate / an.fftSize)));   // 0–1.5 kHz
+    let hot = 0, last = performance.now(), base = 0, baseN = 0;
+    const t0 = last;
     (function loop(now) {
       if (!mic) return;
-      an.getFloatTimeDomainData(buf);
-      let sum = 0; for (const v of buf) sum += v * v;
-      const rms = Math.sqrt(sum / buf.length), dt = now - last; last = now;
-      const m = $('meter'); if (m) m.style.width = Math.min(100, rms * 500) + '%';
-      candlesEl.querySelectorAll('.candle:not(.out) .fw').forEach(f => { f.style.transform = rms > .04 ? `scale(${1 - Math.min(rms * 2, .45)}, ${1 - Math.min(rms, .2)}) skewX(${-rms * 120}deg)` : ''; });
-      hot = rms > .11 ? hot + dt : Math.max(0, hot - dt * 2);
-      if (hot > 260) { hot = 0; const lit = candlesEl.querySelector('.candle:not(.out)'); if (lit) blowOut(lit); }
+      const dt = now - last; last = now;
+      an.getByteFrequencyData(freq);
+      let low = 0; for (let i = 1; i <= lowBins; i++) low += freq[i]; low /= lowBins;
+      an.getFloatTimeDomainData(wave);
+      let sum = 0; for (const v of wave) sum += v * v;
+      const rms = Math.sqrt(sum / wave.length);
+      if (now - t0 < 500) { base += low; baseN++; requestAnimationFrame(loop); return; }   // calibrating
+      if (baseN) { base /= baseN; baseN = 0; note.textContent = g('يلا… انفخي! 🌬️', 'يلا… انفخ! 🌬️'); }
+      const s = Math.max(0, Math.min(1, (low - base - 10) / 45));                     // blow strength 0..1
+      if (s < .15) base += (low - base) * .01;                                        // follow slow room changes
+      const m = $('meter'); if (m) m.style.width = Math.round(Math.max(s, Math.min(1, rms * 8)) * 100) + '%';
+      candlesEl.querySelectorAll('.candle:not(.out) .fw').forEach(f => { f.style.transform = s > .05 ? `scale(${1 - s * .45}, ${1 - s * .2}) skewX(${-s * 35}deg)` : ''; });
+      hot = (s > .3 || rms > .08) ? hot + dt : Math.max(0, hot - dt);
+      if (hot > 180) { hot = 0; const lit = candlesEl.querySelector('.candle:not(.out)'); if (lit) blowOut(lit); }
+      if (now - t0 > 6000 && !candlesEl.querySelector('.candle.out') && !note.dataset.tip) {
+        note.dataset.tip = 1;
+        note.textContent = g('قرّبي الموبايل من تمّك وانفخي… أو اضغطي عالشموع 🕯️', 'قرّب الموبايل من تمّك وانفخ… أو اضغط عالشموع 🕯️');
+      }
       requestAnimationFrame(loop);
     })(last);
   } catch {
