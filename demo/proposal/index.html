@@ -444,5 +444,66 @@ yesBtn.addEventListener('click', () => {
 });
 $('againBtn').addEventListener('click', () => location.reload());
 </script>
+<!-- rasael-lock: password screen (premium). Set a password to turn it on; leave it empty for no lock. -->
+<script>
+const LOCK = {
+  password: '',                                // e.g. '1203' or 'نور' — empty = no lock
+  hint: '',                                    // shown under the box, e.g. 'تاريخ أول لقاء (يوم وشهر)'
+  forHim: false,                               // true = the texts speak to a man
+};
+</script>
+<style>
+  #rlock { position: fixed; inset: 0; z-index: 2147483000; display: grid; place-items: center; padding: 24px; background: radial-gradient(ellipse 80% 60% at 50% 40%, #3C1622, #0E060A); color: #FBF1E6; font-family: "El Messiri", "Amiri", system-ui, sans-serif; text-align: center; transition: opacity .7s ease, visibility .7s; }
+  #rlock.open { opacity: 0; visibility: hidden; }
+  #rlock .box { width: min(340px, 100%); }
+  #rlock svg { display: block; width: 58px; height: 58px; color: #F07C8C; margin: 0 auto 14px; transition: transform .5s cubic-bezier(.3,1.6,.5,1); }
+  #rlock.open svg { transform: translateY(-8px) rotate(-12deg); }
+  #rlock h2 { font-size: 26px; font-weight: 700; line-height: 1.4; }
+  #rlock p { opacity: .72; font-size: 15px; margin: 6px 0 22px; line-height: 1.7; }
+  #rlock form { display: flex; gap: 8px; }
+  #rlock input { flex: 1; min-width: 0; min-height: 52px; border-radius: 14px; border: 1.5px solid rgba(251,241,230,.3); background: rgba(251,241,230,.08); color: inherit; font: inherit; font-size: 20px; text-align: center; letter-spacing: .08em; padding: 0 12px; outline: none; transition: border-color .2s; }
+  #rlock input:focus { border-color: #F07C8C; }
+  #rlock button { min-height: 52px; min-width: 76px; border: 0; border-radius: 14px; background: #F07C8C; color: #fff; font: inherit; font-weight: 700; font-size: 17px; cursor: pointer; }
+  #rlock .hint { margin-top: 12px; font-size: 14px; opacity: .65; }
+  #rlock .wrong { margin-top: 10px; min-height: 24px; color: #FFB4BE; font-size: 14px; }
+  #rlock.shake form { animation: rlock-shake .45s; }
+  @keyframes rlock-shake { 20%, 60% { transform: translateX(-9px); } 40%, 80% { transform: translateX(9px); } }
+</style>
+<script>
+(() => {
+  if (!LOCK.password) return;
+  const norm = s => String(s).trim().toLowerCase().replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[\s\/.\-_]/g, '').replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي');
+  const KEY = 'rlock:' + location.pathname;
+  try { if (sessionStorage.getItem(KEY) === '1') return; } catch {}
+  const el = document.createElement('div');
+  el.id = 'rlock';
+  el.innerHTML = `<div class="box">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/><path d="M12 14.5v2.5"/></svg>
+    <h2>${LOCK.forHim ? 'هالصفحة إلك إنتَ بس' : 'هالصفحة إلك إنتِ بس'}</h2>
+    <p>${LOCK.forHim ? 'اكتب كلمة السر لتفتحها' : 'اكتبي كلمة السر لتفتحيها'}</p>
+    <form><input type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="كلمة السر"><button type="submit">افتح</button></form>
+    ${LOCK.hint ? `<div class="hint">تلميح: ${LOCK.hint.replace(/</g, '&lt;')}</div>` : ''}
+    <div class="wrong" aria-live="polite"></div>
+  </div>`;
+  document.body.appendChild(el);
+  const input = el.querySelector('input'), wrong = el.querySelector('.wrong');
+  setTimeout(() => input.focus(), 400);
+  let tries = 0;
+  el.querySelector('form').addEventListener('submit', e => {
+    e.preventDefault();
+    if (norm(input.value) === norm(LOCK.password)) {
+      try { sessionStorage.setItem(KEY, '1'); } catch {}
+      input.blur(); el.classList.add('open');
+      setTimeout(() => el.remove(), 800);
+    } else {
+      tries++;
+      wrong.textContent = tries < 3 ? (LOCK.forHim ? 'مو هي… جرّب كمان مرة 🙈' : 'مو هي… جرّبي كمان مرة 🙈') : (LOCK.forHim ? 'فكّر منيح… شي بتعرفو إنتو التنين بس 🤍' : 'فكّري منيح… شي بتعرفو إنتو التنين بس 🤍');
+      el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake');
+      input.select();
+    }
+  });
+})();
+</script>
+<!-- /rasael-lock -->
 </body>
 </html>
