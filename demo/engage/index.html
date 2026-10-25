@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>دعوة خطوبة 💍</title>
+<!-- Link preview (WhatsApp / Instagram). Change per client. -->
+<meta property="og:title" content="دعوة خطوبة ليث وياسمين 💍">
+<meta property="og:description" content="يسعدنا تكونوا معنا 🤍">
+<meta name="theme-color" content="#FAF5F0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@200;300;500;700&family=Noto+Naskh+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #FAF5F0; --card: #FFFDFB; --blush: #F1DCD6; --blush-2: #E7C6BE;
+    --rose: #9B4A57; --rose-2: #C9867F; --ink: #2E2226; --muted: #8C7A78;
+    --gold: #C8A26B; --gold-2: #E3C995; --gold-3: #9C7840; --sage: #8E9B80;
+    --ease: cubic-bezier(.2, .7, .2, 1);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { background: var(--paper); color: var(--ink); font: 400 18px/1.9 "Noto Naskh Arabic", serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  body.locked { overflow: hidden; height: 100svh; }
+  .sans { font-family: "Alexandria", sans-serif; }
+  button, input { font: inherit; }
+  img { display: block; max-width: 100%; }
+
+  /* hand-drawn branches: drawn on with stroke-dashoffset */
+  .branch { position: absolute; width: min(140px, 36vw); pointer-events: none; }
+  .branch path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+  .branch .st { stroke: var(--sage); stroke-width: 1.4; }
+  .branch .lf { stroke: var(--sage); stroke-width: 1.2; }
+  .branch .fl { stroke: var(--rose-2); stroke-width: 1.3; }
+  .draw path { stroke-dasharray: 1; stroke-dashoffset: 1; }
+
+  /* ---------- hero: the rings ---------- */
+  .hero { position: relative; min-height: 100svh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: calc(40px + env(safe-area-inset-top)) 22px calc(40px + env(safe-area-inset-bottom)); overflow: hidden; }
+  .hero .b1 { top: -18px; right: -22px; }
+  .hero .b2 { bottom: -18px; left: -22px; transform: rotate(180deg); }
+  .kicker { font-family: "Alexandria", sans-serif; font-weight: 300; font-size: 13px; letter-spacing: .32em; color: var(--muted); }
+  .to { font-size: 16px; color: var(--rose); min-height: 1.9em; }
+  .rings { position: relative; width: 260px; height: 190px; margin: 18px 0 8px; cursor: pointer; -webkit-tap-highlight-color: transparent; outline: none; }
+  .rings:focus-visible { outline: 2px solid var(--gold); outline-offset: 10px; border-radius: 20px; }
+  .rings svg { width: 100%; height: 100%; overflow: visible; }
+  .glint { opacity: 0; }
+  .hint { font-family: "Alexandria", sans-serif; font-weight: 300; font-size: 14px; color: var(--muted); display: inline-flex; align-items: center; gap: 8px; }
+  .hint .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--rose-2); animation: pulse 1.6s infinite; }
+  @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.9); opacity: .3; } }
+  .names { margin-top: 6px; }
+  .names .n { display: block; font-family: "Alexandria", sans-serif; font-weight: 200; font-size: clamp(54px, 17vw, 86px); line-height: 1.1; letter-spacing: -.01em; }
+  .names .and { display: block; font-family: "Noto Naskh Arabic", serif; font-size: 26px; color: var(--rose); line-height: 1.4; }
+  .h-sub { margin-top: 14px; font-size: 17px; color: var(--muted); }
+  .h-date { margin-top: 2px; font-family: "Alexandria", sans-serif; font-weight: 300; font-size: 15px; letter-spacing: .08em; color: var(--ink); }
+  .after-link { opacity: 0; }
+  .scroll-cue { position: absolute; bottom: calc(22px + env(safe-area-inset-bottom)); left: 50%; width: 1px; height: 46px; background: linear-gradient(var(--muted), transparent); opacity: 0; }
+
+  /* ---------- sections ---------- */
+  section { position: relative; padding: 80px 22px; }
+  .wrap { width: min(520px, 100%); margin-inline: auto; text-align: center; }
+  .sec-k { font-family: "Alexandria", sans-serif; font-weight: 300; font-size: 12px; letter-spacing: .32em; color: var(--rose); }
+  .sec-t { font-family: "Alexandria", sans-serif; font-weight: 300; font-size: clamp(30px, 8.5vw, 42px); line-height: 1.3; margin-top: 8px; }
+  .rule { width: 46px; height: 1px; background: var(--gold); margin: 22px auto; }
+
+  /* the invitation card: letterpress, with a blind-embossed monogram */
+  .card { position: relative; background: var(--card); border-radius: 6px; padding: 54px 26px 46px; box-shadow: 0 1px 0 rgba(255,255,255,.8) inset, 0 40px 70px -46px rgba(46,34,38,.45); }
+  .card::before { content: ""; position: absolute; inset: 10px; border: 1px solid var(--blush-2); border-radius: 3px; pointer-events: none; }
+  .mono { width: 110px; height: 110px; margin: 0 auto 26px; border-radius: 50%; display: grid; place-items: center; background: var(--card);
+    box-shadow: 4px 4px 10px rgba(46,34,38,.14), -4px -4px 10px rgba(255,255,255,1), inset 0 0 0 1px rgba(200,162,107,.4); }
+  .mono span { font-family: "Noto Naskh Arabic", serif; font-weight: 700; font-size: 36px; color: #F6EEE8; text-shadow: 1px 1px 1px rgba(46,34,38,.3), -1px -1px 1px rgba(255,255,255,1); letter-spacing: .04em; }
+  .verse { font-size: 17px; color: var(--muted); }
+  .invite-text { font-size: 19px; line-height: 2.1; }
+  .invite-text .fam { display: block; font-weight: 700; }
+  .invite-text .cpl { display: block; margin: 18px 0 4px; font-family: "Alexandria", sans-serif; font-weight: 300; font-size: clamp(30px, 9vw, 40px); color: var(--rose); line-height: 1.4; }
+
+  /* date, editorial */
+  .when { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 14px; margin-top: 26px; }
+  .when .side { font-family: "Alexandria", sans-serif; font-weight: 300; font-size: 15px; letter-spacing: .06em; padding: 10px 0; border-top: 1px solid var(--gold); border-bottom: 1px solid var(--gold); }
+  .when .day { font-family: "Noto Naskh Arabic", serif; font-weight: 400; font-size: 76px; line-height: 1.2; color: var(--rose); }
+  .month { font-family: "Alexandria", sans-serif; font-weight: 500; font-size: 18px; margin-top: 10px; }
+  .hijri { font-size: 15px; color: var(--muted); }
+  .cd { display: flex; justify-content: center; gap: 10px; margin-top: 30px; }
+  .cd div { width: 72px; padding: 12px 0 8px; background: var(--card); border-radius: 4px; box-shadow: 0 16px 30px -24px rgba(46,34,38,.5); }
+  .cd b { display: block; font-family: "Alexandria", sans-serif; font-weight: 300; font-size: 30px; line-height: 1.1; }
+  .cd span { font-family: "Alexandria", sans-serif; font-size: 11px; color: var(--muted); letter-spacing: .08em; }
+  .cd-done { margin-top: 26px; font-size: 19px; color: var(--rose); }
+
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 50px; padding: 0 26px; border-radius: 60px; border: 1px solid var(--ink); background: transparent; color: var(--ink); font-family: "Alexandria", sans-serif; font-weight: 300; font-size: 15px; cursor: pointer; text-decoration: none; transition: background .25s, color .25s, transform .2s var(--ease); -webkit-tap-highlight-color: transparent; }
+  .btn:active { transform: scale(.96); }
+  .btn:hover { background: var(--ink); color: var(--paper); }
+  .btn.solid { background: var(--ink); color: var(--paper); }
+  .btn.wa { background: #1FA855; border-color: #1FA855; color: #fff; }
+  .btn svg { width: 20px; height: 20px; flex: none; }
+  .btns { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 26px; }
+
+  /* venue */
+  .venue { font-family: "Alexandria", sans-serif; font-weight: 300; font-size: clamp(26px, 7.5vw, 34px); margin-top: 10px; line-height: 1.4; }
+  .addr { color: var(--muted); margin-top: 4px; }
+  .pin { width: 46px; height: 46px; margin: 0 auto; color: var(--rose); }
+
+  /* programme */
+  .prog { margin-top: 28px; text-align: right; display: grid; gap: 0; }
+  .prog li { list-style: none; display: grid; grid-template-columns: 74px 1fr; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--blush); }
+  .prog li:last-child { border-bottom: 0; }
+  .prog .t { font-family: "Alexandria", sans-serif; font-weight: 300; color: var(--rose); direction: ltr; text-align: left; }
+
+  /* what to wear */
+  .dress { background: var(--blush); }
+  .swatches { display: flex; justify-content: center; gap: 14px; margin-top: 26px; }
+  .swatches span { width: 54px; height: 54px; border-radius: 50%; box-shadow: 0 0 0 4px var(--paper), 0 12px 20px -12px rgba(46,34,38,.5); }
+  .dress p.note { margin-top: 20px; color: var(--ink); }
+
+  /* story */
+  .story { margin-top: 30px; position: relative; text-align: right; }
+  .story::before { content: ""; position: absolute; top: 8px; bottom: 8px; right: 7px; width: 1px; background: var(--gold); }
+  .story li { list-style: none; position: relative; padding: 0 34px 26px 0; }
+  .story li::before { content: ""; position: absolute; right: 2px; top: 10px; width: 11px; height: 11px; border-radius: 50%; background: var(--paper); border: 1px solid var(--rose); }
+  .story .d { font-family: "Alexandria", sans-serif; font-weight: 300; font-size: 13px; color: var(--rose); letter-spacing: .06em; }
+  .story .x { font-size: 18px; }
+
+  /* gallery */
+  .gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 26px; }
+  .gallery img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 4px; }
+  .gallery img:first-child { grid-column: 1 / -1; aspect-ratio: 4 / 3; }
+
+  /* rsvp */
+  .rsvp { background: var(--card); }
+  .form { margin-top: 24px; display: grid; gap: 14px; text-align: right; }
+  .form label { font-family: "Alexandria", sans-serif; font-weight: 300; font-size: 14px; color: var(--muted); }
+  .form input[type=text] { width: 100%; min-height: 50px; border: 0; border-bottom: 1px solid var(--ink); background: transparent; padding: 0 2px; font-size: 18px; color: var(--ink); border-radius: 0; }
+  .form input[type=text]:focus { outline: none; border-bottom-color: var(--rose); border-bottom-width: 2px; }
+  .seg { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .seg button { min-height: 52px; border-radius: 4px; border: 1px solid var(--blush-2); background: var(--paper); color: var(--ink); font-size: 16px; cursor: pointer; transition: background .2s, border-color .2s; }
+  .seg button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+  .step { display: flex; align-items: center; justify-content: space-between; border: 1px solid var(--blush-2); border-radius: 4px; padding: 4px; background: var(--paper); }
+  .step button { width: 46px; height: 46px; border: 0; border-radius: 4px; background: var(--card); font-size: 22px; cursor: pointer; color: var(--ink); }
+  .step b { font-family: "Alexandria", sans-serif; font-weight: 300; font-size: 22px; }
+  .err { color: var(--rose); font-size: 14px; min-height: 1.4em; }
+  .by { font-size: 15px; color: var(--muted); margin-top: 8px; }
+
+  .closing { padding-bottom: 50px; }
+  .closing .dua { font-size: 21px; line-height: 2.1; text-wrap: balance; }
+  .credit { text-align: center; font-family: "Alexandria", sans-serif; font-weight: 300; font-size: 12px; color: var(--muted); padding: 10px 0 calc(24px + env(safe-area-inset-bottom)); }
+  .rv { opacity: 0; }
+  @media (prefers-reduced-motion: reduce) { .hint .dot { animation: none; } .rv, .after-link { opacity: 1 !important; } .draw path { stroke-dashoffset: 0; } }
+</style>
+</head>
+<body class="locked">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="branch" viewBox="0 0 200 200">
+    <path class="st" pathLength="1" d="M196 6C160 30 128 52 104 86S62 150 8 196"/>
+    <path class="lf" pathLength="1" d="M150 40c-6-16 2-28 16-32-2 14-6 24-16 32z"/>
+    <path class="lf" pathLength="1" d="M128 58c-18-2-26 8-28 22 14-2 22-10 28-22z"/>
+    <path class="lf" pathLength="1" d="M108 84c4-18 18-24 32-22-6 12-16 20-32 22z"/>
+    <path class="lf" pathLength="1" d="M86 112c-18 0-26 10-26 24 14-4 22-12 26-24z"/>
+    <path class="lf" pathLength="1" d="M70 132c6-16 20-20 34-16-8 10-18 16-34 16z"/>
+    <path class="lf" pathLength="1" d="M46 158c-16 2-22 14-20 26 12-6 18-14 20-26z"/>
+    <path class="fl" pathLength="1" d="M178 20c-4-6 2-12 8-9 5 3 3 11-3 12-6 1-9-6-6-10 4-6 15-5 17 3 2 9-7 16-16 14-10-2-13-14-7-21"/>
+    <path class="fl" pathLength="1" d="M118 74c-3-4 1-9 6-7 4 2 3 8-2 9-5 0-7-5-4-8 4-4 12-2 12 4s-6 10-12 8"/>
+  </symbol>
+</svg>
+
+<!-- hero: tap the rings -->
+<header class="hero" id="hero">
+  <svg class="branch b1 draw" viewBox="0 0 200 200" aria-hidden="true"></svg>
+  <svg class="branch b2 draw" viewBox="0 0 200 200" aria-hidden="true"></svg>
+  <p class="to" id="to"></p>
+  <p class="kicker" id="kicker"></p>
+  <div class="rings" id="rings" role="button" tabindex="0" aria-label="المحابس">
+    <svg viewBox="-130 -95 260 190" aria-hidden="true">
+      <!-- B under A, then a slice of B on top of A: the rings look linked -->
+      <g id="ringB">
+        <circle r="56" fill="none" stroke="#B88A5A" stroke-width="9"/>
+        <circle r="56" fill="none" stroke="#E7C6A4" stroke-width="2" stroke-dasharray="40 312" stroke-dashoffset="-20" opacity=".9"/>
+      </g>
+      <g id="ringA">
+        <circle r="60" fill="none" stroke="#C8A26B" stroke-width="10"/>
+        <circle r="60" fill="none" stroke="#F1DDB0" stroke-width="2.4" stroke-dasharray="46 331" stroke-dashoffset="-250" opacity=".95"/>
+        <path d="M-9 -66l9-14 9 14-9 8z" fill="#FFFFFF" stroke="#C8A26B" stroke-width="1.5"/>
+        <path d="M0 -80v22M-9 -66h18" stroke="#E7D9C2" stroke-width=".8"/>
+      </g>
+      <g id="ringBtop" clip-path="url(#topclip)">
+        <circle r="56" fill="none" stroke="#B88A5A" stroke-width="9"/>
+      </g>
+      <defs><clipPath id="topclip"><rect x="-52" y="-72" width="38" height="34"/></clipPath></defs>
+      <g class="glint" id="glint" fill="#FFFFFF">
+        <path d="M0 -96l2.5 7 7 2.5-7 2.5-2.5 7-2.5-7-7-2.5 7-2.5z"/>
+        <path d="M58 -40l1.8 5 5 1.8-5 1.8-1.8 5-1.8-5-5-1.8 5-1.8z" opacity=".8"/>
+        <path d="M-62 34l1.6 4.4 4.4 1.6-4.4 1.6-1.6 4.4-1.6-4.4-4.4-1.6 4.4-1.6z" opacity=".7"/>
+      </g>
+    </svg>
+  </div>
+  <p class="hint" id="hint"><span class="dot"></span><span id="hintTxt">اضغط لتلتقي المحابس</span></p>
+  <div class="names after-link" id="names"><span class="n" id="n1"></span><span class="and">و</span><span class="n" id="n2"></span></div>
+  <p class="h-sub after-link" id="hSub"></p>
+  <p class="h-date after-link" id="hDate"></p>
+  <span class="scroll-cue" id="cue"></span>
+</header>
+
+<main>
+  <section>
+    <div class="wrap">
+      <div class="card rv">
+        <div class="mono"><span id="mono"></span></div>
+        <p class="verse" id="verse"></p>
+        <div class="rule"></div>
+        <p class="invite-text" id="inviteText"></p>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:20px">
+    <div class="wrap">
+      <p class="sec-k rv">الموعد</p>
+      <div class="when rv"><span class="side" id="wDay"></span><span class="day" id="wNum"></span><span class="side" id="wTime"></span></div>
+      <p class="month rv" id="wMonth"></p>
+      <p class="hijri rv" id="wHijri"></p>
+      <div class="cd rv" id="cd"></div>
+      <div class="btns rv"><button class="btn" id="calBtn">ذكّرني بالموعد</button></div>
+    </div>
+  </section>
+
+  <section id="venueSec" style="background:var(--card)">
+    <div class="wrap">
+      <svg class="pin rv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+      <p class="sec-k rv" style="margin-top:12px">المكان</p>
+      <p class="venue rv" id="venue"></p>
+      <p class="addr rv" id="addr"></p>
+      <div class="btns rv"><a class="btn solid" id="mapBtn" target="_blank" rel="noopener">افتح الموقع عالخريطة</a></div>
+      <ul class="prog" id="prog"></ul>
+    </div>
+  </section>
+
+  <section class="dress" id="dressSec">
+    <div class="wrap">
+      <p class="sec-k rv">اللبس</p>
+      <h2 class="sec-t rv">ألوان الحفلة</h2>
+      <div class="swatches rv" id="swatches"></div>
+      <p class="note rv" id="dressNote"></p>
+    </div>
+  </section>
+
+  <section id="storySec">
+    <div class="wrap">
+      <p class="sec-k rv">حكايتنا</p>
+      <h2 class="sec-t rv">من أول نظرة… لهون</h2>
+      <ul class="story" id="story"></ul>
+    </div>
+  </section>
+
+  <section id="gallerySec" style="padding-top:0">
+    <div class="wrap"><div class="gallery" id="gallery"></div></div>
+  </section>
+
+  <section class="rsvp" id="rsvpSec">
+    <div class="wrap">
+      <p class="sec-k rv">تأكيد الحضور</p>
+      <h2 class="sec-t rv">رح تكونوا معنا؟</h2>
+      <p class="by rv" id="by"></p>
+      <div class="form rv">
+        <div><label for="rName">الاسم</label><input type="text" id="rName" autocomplete="name" placeholder="اسمك أو اسم العيلة"></div>
+        <div class="seg" role="group" aria-label="الحضور"><button type="button" data-v="yes" aria-pressed="false">إن شاء الله جايين</button><button type="button" data-v="no" aria-pressed="false">للأسف ما منقدر</button></div>
+        <div id="countRow"><label>عدد الأشخاص</label><div class="step"><button type="button" id="minus" aria-label="أقل">−</button><b id="count"></b><button type="button" id="plus" aria-label="أكتر">+</button></div></div>
+        <p class="err" id="err" aria-live="polite"></p>
+        <button class="btn wa" id="send" type="button"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-3.3-.8-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.2z"/></svg>ابعت الرد عالواتساب</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="closing">
+    <div class="wrap">
+      <div class="rule rv"></div>
+      <p class="dua rv" id="dua"></p>
+      <p class="sec-k rv" style="margin-top:22px" id="sign"></p>
+    </div>
+  </section>
+  <p class="credit" id="credit"></p>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+/* =====================================================================
+   CLIENT DETAILS — edit only this block for each order
+   ===================================================================== */
+const ENGAGE = {
+  kind: 'خطوبة',                     // 'خطوبة' or 'كتب كتاب' or 'عقد قران'
+  groom: 'ليث',
+  bride: 'ياسمين',
+  groomFamily: 'السيد محمد الحلبي وعقيلته',
+  brideFamily: 'السيد خالد النجّار وعقيلته',
+  date: '2026-11-20T19:00:00+03:00', // the party's local time, with its UTC offset
+  verse: '﴿وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً﴾',   // '' = none
+  venue: { name: 'مطعم نارنج', address: 'دمشق، باب توما', map: 'https://maps.google.com/?q=Naranj+Restaurant+Damascus' },
+  programme: [                       // optional; empty list = hidden
+    { time: '19:00', title: 'الاستقبال' },
+    { time: '20:00', title: 'لبس المحابس' },
+    { time: '21:00', title: 'العشاء' },
+  ],
+  dress: { colors: ['#E9D8C8', '#C9867F', '#8E9B80'], note: 'ياريت الألوان الهادية… بيج، وردي، وزيتي 🤍' },   // colors: [] = hidden
+  story: [                           // optional; empty list = hidden
+    { when: 'صيف ٢٠٢٤', text: 'أول مرة التقينا بعرس صاحبنا.' },
+    { when: 'شتاء ٢٠٢٥', text: 'صرنا ما نخلّص حكي.' },
+    { when: 'هلّق', text: 'وقررنا نكمّل الطريق سوا 💍' },
+  ],
+  photos: [],                        // optional: file names next to this page
+  rsvpWhatsapp: '963983896568',      // replies go to this number ('' = RSVP hidden)
+  rsvpBy: '2026-11-15',              // optional "please reply by"
+  dua: 'بارك الله لهما، وبارك عليهما، وجمع بينهما في خير',
+  music: '',                         // e.g. 'music.mp3' next to this file; starts when the rings meet
+  credit: '@rasael.studio',
+};
+/* ===================================================================== */
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+const AR = 'ar-SY-u-nu-arab';
+const num = n => new Intl.NumberFormat(AR).format(n);
+const two = n => new Intl.NumberFormat(AR, { minimumIntegerDigits: 2 }).format(n);
+const hasGsap = typeof gsap !== 'undefined';
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const when = new Date(ENGAGE.date);
+// the date is shown in the party's own time zone, whatever the guest's phone says
+const tz = (() => { const m = ENGAGE.date.match(/([+-])(\d\d):(\d\d)$/); return m ? `Etc/GMT${m[1] === '+' ? '-' : '+'}${+m[2]}` : undefined; })();
+const fmt = (o, loc = AR) => new Intl.DateTimeFormat(loc, { timeZone: tz, ...o }).format(when);
+
+// real copies of the branch (not <use>), so each path can be styled and drawn on
+document.querySelectorAll('.branch').forEach(s => { s.innerHTML = $('branch').innerHTML; });
+
+/* personal link: ?g=عائلة الأحمد */
+const guest = (new URLSearchParams(location.search).get('g') || '').trim().slice(0, 60);
+
+/* ---------- texts ---------- */
+$('to').textContent = guest ? `إلى حضرة ${guest}` : '';
+$('kicker').textContent = `دعوة ${ENGAGE.kind}`;
+$('n1').textContent = ENGAGE.groom; $('n2').textContent = ENGAGE.bride;
+$('hSub').textContent = 'يسعدنا تشاركونا فرحتنا';
+$('hDate').textContent = fmt({ day: 'numeric', month: 'long', year: 'numeric' });
+$('mono').textContent = `${ENGAGE.groom.trim()[0]} ${ENGAGE.bride.trim()[0]}`;
+$('verse').textContent = ENGAGE.verse; if (!ENGAGE.verse) $('verse').remove();
+$('inviteText').innerHTML = `يتشرّف<span class="fam">${esc(ENGAGE.groomFamily)}</span>و<span class="fam">${esc(ENGAGE.brideFamily)}</span>
+  بدعوتكم لمشاركتهم فرحة ${esc(ENGAGE.kind)} ${ENGAGE.kind === 'خطوبة' ? 'أبنائهم' : 'ولديهم'}
+  <span class="cpl">${esc(ENGAGE.groom)} و${esc(ENGAGE.bride)}</span>ووجودكم بيكمّل فرحتنا 🤍`;
+$('wDay').textContent = fmt({ weekday: 'long' });
+$('wNum').textContent = fmt({ day: 'numeric' });
+$('wTime').textContent = fmt({ hour: 'numeric', minute: '2-digit' });
+$('wMonth').textContent = fmt({ month: 'long', year: 'numeric' });
+try { $('wHijri').textContent = fmt({ day: 'numeric', month: 'long', year: 'numeric' }, 'ar-SA-u-ca-islamic-umalqura-nu-arab'); } catch { $('wHijri').remove(); }
+$('venue').textContent = ENGAGE.venue.name;
+$('addr').textContent = ENGAGE.venue.address;
+if (ENGAGE.venue.map) $('mapBtn').href = ENGAGE.venue.map; else $('mapBtn').remove();
+if (ENGAGE.programme.length) $('prog').innerHTML = ENGAGE.programme.map(p => `<li class="rv"><span class="t">${esc(p.time.replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]))}</span><span>${esc(p.title)}</span></li>`).join(''); else $('prog').remove();
+if (ENGAGE.dress.colors.length) { $('swatches').innerHTML = ENGAGE.dress.colors.map(c => `<span style="background:${esc(c)}"></span>`).join(''); $('dressNote').textContent = ENGAGE.dress.note; } else $('dressSec').remove();
+if (ENGAGE.story.length) $('story').innerHTML = ENGAGE.story.map(s => `<li class="rv"><span class="d">${esc(s.when)}</span><p class="x">${esc(s.text)}</p></li>`).join(''); else $('storySec').remove();
+if (ENGAGE.photos.length) $('gallery').innerHTML = ENGAGE.photos.map(p => `<img class="rv" src="${esc(p)}" alt="" loading="lazy">`).join(''); else $('gallerySec').remove();
+$('dua').textContent = ENGAGE.dua;
+$('sign').textContent = `${ENGAGE.groom} و${ENGAGE.bride}`;
+$('credit').textContent = `صُنعت بحب 🤍 ${ENGAGE.credit}`;
+
+/* ---------- countdown ---------- */
+function tick() {
+  const s = Math.floor((when - Date.now()) / 1000);
+  if (s <= 0) { $('cd').outerHTML = `<p class="cd-done">${Date.now() - when < 864e5 ? 'الحفلة هلّق! 🤍' : 'الله يتمّم بالخير 🤍'}</p>`; $('calBtn')?.remove(); return false; }
+  $('cd').innerHTML = [[Math.floor(s / 86400), 'يوم'], [Math.floor(s % 86400 / 3600), 'ساعة'], [Math.floor(s % 3600 / 60), 'دقيقة'], [s % 60, 'ثانية']].map(([v, l]) => `<div><b>${two(v)}</b><span>${l}</span></div>`).join('');
+  return true;
+}
+if (tick()) { const t = setInterval(() => { if (!tick()) clearInterval(t); }, 1000); }
+
+/* ---------- calendar reminder (.ics works on iPhone and Android) ---------- */
+$('calBtn').addEventListener('click', () => {
+  const z = d => new Date(d).toISOString().replace(/[-:]/g, '').replace(/\.\d+/, '');
+  const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Rasael//Engagement//AR', 'BEGIN:VEVENT', `UID:${+when}@rasael`, `DTSTAMP:${z(Date.now())}`,
+    `DTSTART:${z(when)}`, `DTEND:${z(+when + 3 * 36e5)}`, `SUMMARY:${ENGAGE.kind} ${ENGAGE.groom} و${ENGAGE.bride} 💍`, `LOCATION:${ENGAGE.venue.name}، ${ENGAGE.venue.address}`, `URL:${location.href}`,
+    'BEGIN:VALARM', 'TRIGGER:-PT3H', 'ACTION:DISPLAY', `DESCRIPTION:${ENGAGE.kind} ${ENGAGE.groom} و${ENGAGE.bride} اليوم 🤍`, 'END:VALARM', 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' })); a.download = 'invitation.ics';
+  document.body.appendChild(a); a.click(); a.remove();
+});
+
+/* ---------- RSVP through WhatsApp ---------- */
+let going = null, count = 2;
+if (!ENGAGE.rsvpWhatsapp) $('rsvpSec').remove();
+else {
+  if (guest) $('rName').value = guest;
+  $('by').textContent = ENGAGE.rsvpBy ? `ياريت تردّوا قبل ${new Intl.DateTimeFormat(AR, { day: 'numeric', month: 'long' }).format(new Date(ENGAGE.rsvpBy + 'T12:00:00'))}` : '';
+  const drawCount = () => { $('count').textContent = num(count); };
+  drawCount();
+  $('minus').addEventListener('click', () => { count = Math.max(1, count - 1); drawCount(); });
+  $('plus').addEventListener('click', () => { count = Math.min(20, count + 1); drawCount(); });
+  document.querySelectorAll('.seg button').forEach(b => b.addEventListener('click', () => {
+    going = b.dataset.v;
+    document.querySelectorAll('.seg button').forEach(x => x.setAttribute('aria-pressed', x === b));
+    $('countRow').style.display = going === 'no' ? 'none' : '';
+    $('err').textContent = '';
+  }));
+  $('send').addEventListener('click', () => {
+    const name = $('rName').value.trim();
+    if (!name) { $('err').textContent = 'اكتب اسمك لو سمحت'; $('rName').focus(); return; }
+    if (!going) { $('err').textContent = 'اختار إذا جايين ولا لأ'; return; }
+    const msg = [`تأكيد حضور ${ENGAGE.kind} ${ENGAGE.groom} و${ENGAGE.bride} 💍`, `الاسم: ${name}`,
+      going === 'yes' ? `إن شاء الله جايين ✅ (العدد: ${num(count)})` : 'للأسف ما منقدر نحضر 🙏، ومبروك من القلب 🤍'].join('\n');
+    open(`https://wa.me/${ENGAGE.rsvpWhatsapp}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
+  });
+}
+
+/* ---------- sound: a soft "clink" when the rings meet ---------- */
+function clink() {
+  try {
+    const a = new (window.AudioContext || window.webkitAudioContext)();
+    [[2093, 0], [3136, .045], [2637, .09]].forEach(([f, d]) => {
+      const o = a.createOscillator(), g = a.createGain(), t = a.currentTime + d;
+      o.type = 'sine'; o.frequency.value = f;
+      g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(.12, t + .005); g.gain.exponentialRampToValueAtTime(.0001, t + 1.4);
+      o.connect(g).connect(a.destination); o.start(t); o.stop(t + 1.5);
+    });
+  } catch {}
+}
+let audio = null;
+if (ENGAGE.music) { audio = new Audio(ENGAGE.music); audio.loop = true; }
+
+/* ---------- the rings ---------- */
+const APART = 92, TOGETHER = 30;
+if (hasGsap) { gsap.set('#ringA', { x: APART }); gsap.set(['#ringB', '#ringBtop'], { x: -APART }); }
+let linked = false;
+function linkRings() {
+  if (linked) return; linked = true;
+  clink(); if (audio) audio.play().catch(() => {});
+  $('rings').removeAttribute('role'); $('rings').setAttribute('tabindex', '-1'); $('rings').style.cursor = 'default';
+  const done = () => { document.body.classList.remove('locked'); if (hasGsap && window.ScrollTrigger) ScrollTrigger.refresh(); };
+  if (!hasGsap || reduceMotion) {
+    if (hasGsap) { gsap.set('#ringA', { x: TOGETHER }); gsap.set(['#ringB', '#ringBtop'], { x: -TOGETHER }); }
+    $('hint').style.opacity = 0; document.querySelectorAll('.after-link').forEach(e => e.style.opacity = 1); return done();
+  }
+  gsap.timeline({ onComplete: done })
+    .to('#hint', { opacity: 0, y: 8, duration: .3 })
+    .to('#ringA', { x: TOGETHER, duration: .9, ease: 'back.out(1.4)' }, 0)
+    .to(['#ringB', '#ringBtop'], { x: -TOGETHER, duration: .9, ease: 'back.out(1.4)' }, 0)
+    .fromTo('#rings', { scale: 1 }, { scale: 1.06, duration: .18, yoyo: true, repeat: 1, ease: 'power2.out' }, .62)
+    .fromTo('#glint', { opacity: 0, scale: .4, transformOrigin: '50% 50%' }, { opacity: 1, scale: 1, duration: .35, ease: 'back.out(3)' }, .7)
+    .to('#glint', { opacity: 0, duration: .8 }, 1.3)
+    .to('#rings', { scale: .78, y: -6, duration: 1, ease: 'power3.inOut' }, 1.1)
+    .to('#hint', { height: 0, margin: 0, duration: .4 }, 1.1)
+    .fromTo('#names .n, #names .and', { y: 30, opacity: 0 }, { y: 0, opacity: 1, stagger: .14, duration: 1, ease: 'power3.out' }, 1.3)
+    .set('#names', { opacity: 1 }, 1.3)
+    .fromTo(['#hSub', '#hDate'], { y: 16, opacity: 0 }, { y: 0, opacity: 1, stagger: .12, duration: .8, ease: 'power3.out' }, 1.9)
+    .to('#cue', { opacity: .7, duration: .6 }, 2.4);
+}
+$('rings').addEventListener('click', linkRings);
+$('rings').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); linkRings(); } });
+
+/* ---------- motion ---------- */
+if (hasGsap && !reduceMotion) {
+  gsap.registerPlugin(ScrollTrigger);
+  gsap.to('.hero .branch path', { strokeDashoffset: 0, duration: 1.8, stagger: .05, ease: 'power2.inOut', delay: .2 });
+  gsap.from(['#to', '#kicker', '#rings', '#hint'], { y: 18, opacity: 0, stagger: .12, duration: .9, ease: 'power3.out', delay: .2 });
+  gsap.utils.toArray('.rv').forEach(el => gsap.fromTo(el, { y: 26, opacity: 0 }, { y: 0, opacity: 1, duration: .9, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 88%' } }));
+} else {
+  document.querySelectorAll('.rv').forEach(e => e.style.opacity = 1);
+  document.querySelectorAll('.draw path').forEach(p => p.style.strokeDashoffset = 0);
+}
+</script>
+</body>
+</html>

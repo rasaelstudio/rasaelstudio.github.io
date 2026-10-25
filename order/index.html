@@ -84,6 +84,7 @@
       <legend><span class="n">١</span>شو بدك نعملك؟</legend>
       <div class="kinds">
         <div class="kind"><input type="radio" name="kind" id="k-wedding" value="wedding"><label for="k-wedding"><img src="../assets/wedding-closed.jpg" alt="">دعوة عرس</label></div>
+        <div class="kind"><input type="radio" name="kind" id="k-engage" value="engage"><label for="k-engage"><img src="../assets/engage-closed.jpg" alt="">خطوبة / كتب كتاب</label></div>
         <div class="kind"><input type="radio" name="kind" id="k-letter" value="letter"><label for="k-letter"><img src="../assets/letter-closed.jpg" alt="">رسالة حب</label></div>
         <div class="kind"><input type="radio" name="kind" id="k-proposal" value="proposal"><label for="k-proposal"><img src="../assets/proposal-closed.jpg" alt="">طلب زواج</label></div>
         <div class="kind"><input type="radio" name="kind" id="k-birthday" value="birthday"><label for="k-birthday"><img src="../assets/birthday-closed.jpg" alt="">عيد ميلاد</label></div>
@@ -126,7 +127,7 @@
 <script src="../config.js"></script>
 <script>
 const R = window.RASAEL;
-const KIND_NAME = { wedding: 'دعوة عرس', letter: 'رسالة حب', proposal: 'طلب زواج', birthday: 'عيد ميلاد', reveal: 'كشف جنس المولود', other: 'هدية لمناسبة' };
+const KIND_NAME = { wedding: 'دعوة عرس', engage: 'دعوة خطوبة / كتب كتاب', letter: 'رسالة حب', proposal: 'طلب زواج', birthday: 'عيد ميلاد', reveal: 'كشف جنس المولود', other: 'هدية لمناسبة' };
 
 // The questions for each kind. Order of fields = order in the WhatsApp message.
 const FIELDS = {
@@ -143,6 +144,21 @@ const FIELDS = {
     { id: 'verse', label: 'شو بدك بأول الدعوة؟', type: 'select', options: ['آية ﴿وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا﴾', 'بسم الله الرحمن الرحيم بس', 'عبارة بدون آية', 'اقترحولي إنتو'] },
     { id: 'rsvp', label: 'رقم واتساب لتأكيد الحضور', type: 'tel', ph: '9639xxxxxxxx', hint: 'الضيوف بيأكدو حضورهم برسالة لهالرقم' },
     { id: 'colors', label: 'ألوان أو طابع بتحبه', ph: 'مثال: أبيض وذهبي، أو متل المثال' },
+  ],
+  engage: [
+    { id: 'occasion', label: 'المناسبة', type: 'select', options: ['خطوبة', 'كتب كتاب', 'عقد قران'], req: 1 },
+    { id: 'groom', label: 'اسم العريس', req: 1 },
+    { id: 'bride', label: 'اسم العروس', req: 1 },
+    { id: 'groomFam', label: 'أهل العريس متل ما بدكن يبيّنوا', ph: 'مثال: السيد محمد الحلبي وعقيلته' },
+    { id: 'brideFam', label: 'أهل العروس متل ما بدكن يبيّنوا', ph: 'مثال: السيد خالد النجّار وعقيلته' },
+    { id: 'date', label: 'التاريخ', type: 'date', req: 1 },
+    { id: 'time', label: 'الوقت', type: 'time', req: 1 },
+    { id: 'venue', label: 'المكان والمدينة', req: 1, ph: 'مثال: مطعم نارنج، دمشق' },
+    { id: 'map', label: 'رابط الموقع من Google Maps', type: 'url', hint: 'افتح الخريطة ← اضغط على المكان ← مشاركة ← نسخ الرابط' },
+    { id: 'programme', label: 'برنامج الحفلة', type: 'textarea', ph: '٧:٠٠ الاستقبال\n٨:٠٠ لبس المحابس' },
+    { id: 'dress', label: 'ألوان اللبس المقترحة', ph: 'مثال: بيج ووردي وزيتي، أو بلا' },
+    { id: 'story', label: 'محطات من قصتكن (اختياري)', type: 'textarea', ph: 'صيف ٢٠٢٤: أول مرة التقينا…' },
+    { id: 'rsvp', label: 'رقم واتساب لتأكيد الحضور', type: 'tel', ph: '9639xxxxxxxx', hint: 'الضيوف بيأكدو مع عدد الأشخاص برسالة لهالرقم' },
   ],
   letter: [
     { id: 'to', label: 'لمين الرسالة؟ (الاسم)', req: 1 },
@@ -216,7 +232,7 @@ function fieldHtml(f) {
 }
 
 let kind = null;
-const tiers = () => R.prices[kind === 'wedding' ? 'wedding' : 'gift'];
+const tiers = () => R.prices[kind === 'wedding' || kind === 'engage' ? 'wedding' : 'gift'];
 function setKind(k, planId) {
   kind = k;
   $('plans').innerHTML = tiers().map((p, i) => `
