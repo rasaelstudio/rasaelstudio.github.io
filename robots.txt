@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /$
+Allow: /order/
+Allow: /demo/
+Allow: /assets/
+Disallow: /

@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>عندي سؤال إلك</title>
+<!-- Link preview (WhatsApp / Instagram). Change per client. -->
+<meta property="og:title" content="عندي سؤال إلك… 💍">
+<meta property="og:description" content="افتحي الرابط وجاوبي من قلبك">
+<meta name="theme-color" content="#120F24">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=El+Messiri:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --night: #120F24;
+    --night-2: #1D1838;
+    --velvet: #8A2342;
+    --velvet-dark: #4E0E24;
+    --rose-gold: #E8B4A0;
+    --gold: #E9C987;
+    --champagne: #F7EADB;
+    --pink: #F07C8C;
+    --soft: rgba(247, 234, 219, .7);
+    --ease: cubic-bezier(.2, .7, .2, 1);
+    --spring: cubic-bezier(.34, 1.56, .64, 1);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    background: radial-gradient(ellipse 90% 70% at 50% 35%, var(--night-2) 0%, var(--night) 70%);
+    color: var(--champagne); font-family: "Amiri", serif; font-size: 18px; line-height: 1.8;
+    -webkit-font-smoothing: antialiased; overflow: hidden;
+    transition: background 1.2s;
+  }
+  body.said-yes { background: radial-gradient(ellipse 90% 70% at 50% 35%, #4A1B3A 0%, #1E1030 75%); }
+  button { font: inherit; color: inherit; border: 0; background: none; cursor: pointer; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+  :focus-visible { outline: 2px solid var(--rose-gold); outline-offset: 4px; }
+  svg { display: block; }
+  .fx { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  #confetti { z-index: 50; }
+
+  .screen {
+    position: fixed; inset: 0; z-index: 10;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: calc(24px + env(safe-area-inset-top)) 24px calc(24px + env(safe-area-inset-bottom));
+    text-align: center;
+    opacity: 0; visibility: hidden; transform: scale(.98);
+    transition: opacity .7s var(--ease), transform .7s var(--ease), visibility 0s .7s;
+  }
+  .screen.on { opacity: 1; visibility: visible; transform: none; transition: opacity .7s var(--ease), transform .7s var(--ease); }
+
+  .kicker { font-family: "El Messiri", sans-serif; font-weight: 500; font-size: 15px; letter-spacing: .14em; color: var(--rose-gold); }
+  .w { display: inline-block; opacity: 0; transform: translateY(14px); filter: blur(3px); }
+  .on .w { animation: rise .8s var(--ease) forwards; animation-delay: calc(var(--i) * 90ms + 200ms); }
+  @keyframes rise { to { opacity: 1; transform: none; filter: blur(0); } }
+
+  /* ===== Intro: ring box ===== */
+  .intro-title { font-family: "Aref Ruqaa", serif; font-weight: 700; font-size: clamp(40px, 11vw, 56px); line-height: 1.35; margin: 14px 0 40px; text-wrap: balance; }
+  .ask-q, .slide h2, .yes-title { text-wrap: balance; }
+  .box { position: relative; width: 230px; height: 210px; perspective: 900px; }
+  .box::before { content: ""; position: absolute; left: 50%; bottom: 60px; width: 260px; height: 260px; transform: translateX(-50%); background: radial-gradient(closest-side, rgba(255,226,180,.55), transparent); opacity: 0; transition: opacity 1.2s ease .5s; pointer-events: none; }
+  .box.open::before { opacity: 1; }
+  .base { position: absolute; left: 0; right: 0; bottom: 0; height: 118px; border-radius: 18px 18px 26px 26px; background: linear-gradient(170deg, #A23054 0%, var(--velvet) 40%, var(--velvet-dark) 100%); box-shadow: 0 34px 50px -22px rgba(0,0,0,.8), inset 0 2px 0 rgba(255,255,255,.18), inset 0 -10px 20px rgba(0,0,0,.25); }
+  .base::before { content: ""; position: absolute; top: 9px; left: 14px; right: 14px; height: 48px; border-radius: 50%; background: radial-gradient(ellipse at 50% 40%, #2E0512, #5C1229 80%); box-shadow: inset 0 4px 10px rgba(0,0,0,.6); }
+  .base::after { content: ""; position: absolute; left: 50%; bottom: 22px; width: 34px; height: 8px; transform: translateX(-50%); border-radius: 4px; background: linear-gradient(var(--gold), #B48A47); }
+  .ring-in { position: absolute; left: 50%; bottom: 72px; width: 104px; transform: translate(-50%, 34px) scale(.8); opacity: 0; transition: transform 1s var(--spring) .45s, opacity .6s ease .45s; filter: drop-shadow(0 6px 10px rgba(0,0,0,.45)); }
+  .box.open .ring-in { transform: translate(-50%, 0) scale(1); opacity: 1; }
+  .lid { position: absolute; left: -3px; right: -3px; bottom: 108px; height: 86px; transform-origin: bottom center; border-radius: 26px 26px 10px 10px; background: linear-gradient(170deg, #B23A5F 0%, #962847 45%, #6E1834 100%); box-shadow: inset 0 2px 0 rgba(255,255,255,.2), inset 0 -6px 12px rgba(0,0,0,.2); transition: transform 1.1s cubic-bezier(.5, 0, .2, 1); }
+  .lid::after { content: ""; position: absolute; left: 12px; right: 12px; bottom: 0; height: 2px; background: rgba(233,201,135,.6); }
+  .box.open .lid { transform: rotateX(112deg); }
+  .box:not(.open) { animation: bob 2.8s ease-in-out infinite; }
+  @keyframes bob { 50% { transform: translateY(-6px); } }
+  .spark { position: absolute; width: 18px; height: 18px; color: #fff; opacity: 0; }
+  .box.open .spark { animation: twinkle 1.8s ease-in-out infinite; animation-delay: calc(1.1s + var(--d)); }
+  @keyframes twinkle { 0%, 100% { opacity: 0; transform: scale(.4) rotate(0); } 50% { opacity: 1; transform: scale(1) rotate(45deg); } }
+  .hint { margin-top: 38px; font-family: "El Messiri", sans-serif; font-size: 14px; color: var(--soft); transition: opacity .4s; }
+  .box.open + .hint { opacity: 0; }
+
+  /* ===== Story slides ===== */
+  #sStory { justify-content: flex-start; padding-top: calc(18px + env(safe-area-inset-top)); cursor: pointer; }
+  .bars { display: flex; gap: 6px; width: 100%; max-width: 520px; }
+  .bars span { flex: 1; height: 3px; border-radius: 3px; background: rgba(247,234,219,.25); overflow: hidden; }
+  .bars span i { display: block; height: 100%; width: 100%; background: var(--champagne); transform: scaleX(0); transform-origin: right; }
+  .bars span.done i { transform: scaleX(1); }
+  .bars span.now i { animation: fill var(--dur) linear forwards; }
+  @keyframes fill { to { transform: scaleX(1); } }
+  .from { display: flex; align-items: center; gap: 10px; width: 100%; max-width: 520px; margin-top: 14px; font-family: "El Messiri", sans-serif; font-size: 15px; }
+  .from .av { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(135deg, var(--rose-gold), var(--pink)); color: var(--night); font-weight: 700; }
+  .from small { color: var(--soft); font-size: 13px; }
+  .slide { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; max-width: 520px; width: 100%; }
+  .slide img { width: 70%; max-width: 280px; aspect-ratio: 4/5; object-fit: cover; border-radius: 18px; box-shadow: 0 20px 40px -20px rgba(0,0,0,.7); }
+  .slide h2 { font-family: "Aref Ruqaa", serif; font-weight: 700; font-size: clamp(38px, 10.5vw, 54px); line-height: 1.45; }
+  .slide p { font-size: 21px; color: var(--soft); }
+  .tap-hint { font-family: "El Messiri", sans-serif; font-size: 13px; color: var(--soft); opacity: .8; }
+
+  /* ===== The question ===== */
+  .ask-ring { width: 92px; margin-bottom: 16px; animation: glint 3s ease-in-out infinite; }
+  @keyframes glint { 50% { filter: drop-shadow(0 0 14px rgba(255,236,200,.75)); transform: translateY(-4px); } }
+  .ask-name { font-family: "Aref Ruqaa", serif; font-weight: 700; font-size: clamp(46px, 13vw, 66px); line-height: 1.3; color: var(--rose-gold); }
+  .ask-q { font-family: "Aref Ruqaa", serif; font-weight: 700; font-size: clamp(32px, 9vw, 46px); line-height: 1.5; max-width: 14em; margin: 6px auto 0; }
+  .choices { display: flex; gap: 16px; align-items: center; justify-content: center; margin-top: 44px; min-height: 120px; }
+  .yes, .no { min-height: 56px; padding: 0 30px; border-radius: 999px; font-family: "El Messiri", sans-serif; font-weight: 700; font-size: 20px; white-space: nowrap; }
+  .yes { background: linear-gradient(135deg, #F3C9B4, var(--rose-gold) 50%, #D9967E); color: #3B1426; box-shadow: 0 14px 30px -10px rgba(232,180,160,.6); transition: transform .45s var(--spring); }
+  .yes:hover { filter: brightness(1.05); }
+  .no { border: 1.5px solid rgba(247,234,219,.5); color: var(--champagne); transition: left .38s var(--spring), top .38s var(--spring), opacity .4s, transform .4s; z-index: 20; }
+  .no.free { position: fixed; }
+  .no.gone { opacity: 0; transform: scale(0); pointer-events: none; }
+  .caption { min-height: 1.8em; margin-top: 18px; font-family: "El Messiri", sans-serif; font-size: 15px; color: var(--soft); }
+
+  /* ===== Yes! ===== */
+  .yes-ring { width: 150px; animation: spinIn 1.3s var(--spring) both; filter: drop-shadow(0 0 22px rgba(255,226,180,.55)); }
+  @keyframes spinIn { from { transform: scale(.2) rotate(-200deg); opacity: 0; } to { transform: none; opacity: 1; } }
+  .yes-title { font-family: "Aref Ruqaa", serif; font-weight: 700; font-size: clamp(40px, 11vw, 58px); line-height: 1.4; margin-top: 22px; }
+  .yes-text { font-size: 21px; color: var(--soft); max-width: 22em; margin: 8px auto 0; }
+  .stamp { display: inline-flex; flex-direction: column; gap: 2px; margin-top: 26px; padding: 12px 22px; border: 1px dashed rgba(232,180,160,.6); border-radius: 14px; font-family: "El Messiri", sans-serif; }
+  .stamp small { font-size: 12px; letter-spacing: .1em; color: var(--rose-gold); }
+  .stamp b { font-weight: 600; font-size: 16px; }
+  .sign { margin-top: 16px; font-family: "Aref Ruqaa", serif; font-size: 26px; color: var(--rose-gold); }
+  .actions { display: grid; gap: 10px; width: min(100%, 340px); margin-top: 26px; }
+  .btn { display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; border-radius: 999px; font-family: "El Messiri", sans-serif; font-weight: 600; font-size: 17px; text-decoration: none; }
+  .btn svg { width: 20px; height: 20px; }
+  .btn.solid { background: linear-gradient(135deg, #F3C9B4, var(--rose-gold) 50%, #D9967E); color: #3B1426; }
+  .btn.ghost { border: 1.5px solid rgba(247,234,219,.4); color: var(--champagne); }
+  .credit { margin-top: 22px; font-family: "El Messiri", sans-serif; font-size: 12px; color: var(--soft); }
+  .credit a { color: var(--rose-gold); text-decoration: none; }
+
+  .music { position: fixed; z-index: 60; left: 16px; top: calc(16px + env(safe-area-inset-top)); width: 44px; height: 44px; border-radius: 50%; display: none; place-items: center; background: rgba(18,15,36,.7); color: var(--rose-gold); border: 1px solid rgba(232,180,160,.45); }
+  .music.on { display: grid; }
+  .music svg { width: 18px; height: 18px; }
+  .music .off { display: none; }
+  .music.muted .on-i { display: none; }
+  .music.muted .off { display: block; }
+  body.story-mode .music { top: calc(70px + env(safe-area-inset-top)); }
+
+  @media (max-height: 640px) {
+    .intro-title { margin: 8px 0 22px; }
+    .box { transform: scale(.85); }
+    .choices { margin-top: 26px; }
+    .yes-ring { width: 110px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0ms !important; transition-duration: .01ms !important; transition-delay: 0ms !important; }
+    .w { opacity: 1; transform: none; filter: none; }
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFF1CF"/><stop offset=".35" stop-color="#E9C987"/><stop offset=".7" stop-color="#B98D45"/><stop offset="1" stop-color="#F2D9A2"/></linearGradient>
+    <linearGradient id="gem" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".5" stop-color="#E4F1FF"/><stop offset="1" stop-color="#B9D3F0"/></linearGradient>
+    <symbol id="ring" viewBox="0 0 120 130">
+      <ellipse cx="60" cy="88" rx="38" ry="35" fill="none" stroke="url(#gold)" stroke-width="9"/>
+      <ellipse cx="60" cy="88" rx="33" ry="30" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.3"/>
+      <path d="M47 52h26l-6 9H53Z" fill="url(#gold)"/>
+      <path d="M40 30h40l9 11-29 24-29-24Z" fill="url(#gem)" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/>
+      <path d="M40 30l10 11 10-11 10 11 10-11M31 41h58M50 41l10 24 10-24" fill="none" stroke="#9DB8D8" stroke-width="1" stroke-linejoin="round"/>
+      <path d="M44 33l4 5" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="spark" viewBox="-10 -10 20 20"><path d="M0-10C1-2 2-1 10 0 2 1 1 2 0 10-1 2-2 1-10 0-2-1-1-2 0-10Z" fill="currentColor"/></symbol>
+  </defs>
+</svg>
+
+<canvas class="fx" id="sky"></canvas>
+<canvas class="fx" id="confetti"></canvas>
+
+<!-- ===== 1. Ring box ===== -->
+<section class="screen on" id="sIntro">
+  <p class="kicker" data-text="introKicker"></p>
+  <h1 class="intro-title" data-text="introTitle"></h1>
+  <button class="box" id="box" type="button" aria-label="افتحي العلبة">
+    <span class="base"></span>
+    <svg class="ring-in" viewBox="0 0 120 130" aria-hidden="true"><use href="#ring"/></svg>
+    <span class="lid"></span>
+    <svg class="spark" style="right:18px;top:34px;--d:0s"><use href="#spark"/></svg>
+    <svg class="spark" style="left:26px;top:58px;--d:.6s;width:12px;height:12px"><use href="#spark"/></svg>
+    <svg class="spark" style="left:62px;top:4px;--d:1.1s;width:14px;height:14px"><use href="#spark"/></svg>
+  </button>
+  <p class="hint">اضغطي على العلبة</p>
+</section>
+
+<!-- ===== 2. Story slides ===== -->
+<section class="screen" id="sStory" aria-live="polite">
+  <div class="bars" id="bars"></div>
+  <div class="from"><span class="av" id="avatar"></span><span><span data-text="from"></span> <small>• هلّق</small></span></div>
+  <div class="slide" id="slide"></div>
+  <p class="tap-hint">اضغطي لتكملي</p>
+</section>
+
+<!-- ===== 3. The question ===== -->
+<section class="screen" id="sAsk">
+  <svg class="ask-ring" viewBox="0 0 120 130" aria-hidden="true"><use href="#ring"/></svg>
+  <p class="ask-name" id="askName"></p>
+  <h2 class="ask-q" id="askQ"></h2>
+  <div class="choices">
+    <button class="yes" id="yesBtn" type="button"></button>
+    <button class="no" id="noBtn" type="button"></button>
+  </div>
+  <p class="caption" id="caption" aria-live="polite"></p>
+</section>
+
+<!-- ===== 4. She said yes ===== -->
+<section class="screen" id="sYes">
+  <svg class="yes-ring" viewBox="0 0 120 130" aria-hidden="true"><use href="#ring"/></svg>
+  <h2 class="yes-title" data-text="yesTitle"></h2>
+  <p class="yes-text" data-text="yesText"></p>
+  <p class="stamp"><small>قلتي «إي»</small><b id="stampTime"></b></p>
+  <p class="sign" id="sign"></p>
+  <div class="actions">
+    <a class="btn solid" id="replyBtn" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 20l1.3-4A8 8 0 1 1 8 18.7L4 20z"/></svg>
+      ابعتيلو الجواب
+    </a>
+    <button class="btn ghost" id="againBtn" type="button">رجّعي من الأول</button>
+  </div>
+  <p class="credit"><span id="creditLabel"></span> <a id="creditLink" target="_blank" rel="noopener"></a></p>
+</section>
+
+<button class="music" id="music" type="button" aria-label="تشغيل أو إيقاف الموسيقى">
+  <svg class="on-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg>
+  <svg class="off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/><path d="M3 3l18 18"/></svg>
+</button>
+
+<script>
+/* ============================================================
+   EDIT THIS PER CLIENT — everything on the page comes from here
+   ============================================================ */
+const PROPOSAL = {
+  to: 'ريم',
+  from: 'عمر',
+  introKicker: 'عندي سؤال إلك…',
+  introTitle: 'بس قبل السؤال… في شي إلك',
+  slides: [
+    // photo: optional file name next to this page, e.g. 'us.jpg'
+    { title: 'من أول مرة شفتك فيها…', text: 'حسّيت إنو في شي رح يتغيّر', photo: '' },
+    { title: 'صرتِ أول شي بفكّر فيه الصبح', text: 'وآخر شي قبل ما نام', photo: '' },
+    { title: 'وكل حلم حلمتو للمستقبل', text: 'كنتِ إنتِ فيه', photo: '' },
+    { title: 'فقررت إسألك سؤال واحد…', text: 'بس جاوبي من قلبك 🤍', photo: '' }
+  ],
+  slideSeconds: 4.5,
+  question: 'بتقبلي تكوني شريكة عمري؟',
+  yesLabels: ['إي', 'أكيد إي', 'إي وألف إي', 'من زمان ناطرة هالسؤال', 'إي إي إي 💍'],
+  noLabels: ['لا', 'متأكدة؟', 'فكّري منيح 🥺', 'طيب مرة كمان فكّري', 'ما رح تقدري 😄', 'الزر تعبان', 'ماشي… 🙈'],
+  captions: ['', 'الزر عم يهرب منك 😄', 'حتى الزر ما بدو ياكي تقولي لا', 'ضل في جواب واحد بس…'],
+  yesTitle: 'أحلى «إي» سمعتها بحياتي',
+  yesText: 'من هلّق، كل أيامي إلك. وعد مني، رح كون قدّ هالـ«إي» 🤍',
+  whatsapp: '963900000000',          // sender's number: she sends him her answer here
+  music: '',                         // e.g. 'music.mp3' next to this file; plays when the box opens
+  credit: { label: 'صُمّمت بواسطة', handle: '@rasael.studio', url: 'https://instagram.com/rasael.studio' }
+};
+/* ============================================================ */
+
+const LOCALE = 'ar-SY-u-nu-arab';
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $ = id => document.getElementById(id);
+const words = s => s.split(/\s+/).map((w, i) => `<span class="w" style="--i:${i}">${w}</span>`).join(' ');
+const num = n => new Intl.NumberFormat(LOCALE).format(n);
+
+/* ---------- Fill content ---------- */
+document.querySelectorAll('[data-text]').forEach(el => { el.textContent = PROPOSAL[el.dataset.text] ?? ''; });
+$('avatar').textContent = PROPOSAL.from.trim()[0];
+$('askName').innerHTML = words(PROPOSAL.to + '،');
+$('askQ').innerHTML = words(PROPOSAL.question);
+$('sign').textContent = '— ' + PROPOSAL.from;
+$('creditLabel').textContent = PROPOSAL.credit.label;
+$('creditLink').textContent = PROPOSAL.credit.handle;
+$('creditLink').href = PROPOSAL.credit.url;
+document.title = `${PROPOSAL.to}، عندي سؤال إلك`;
+
+function go(fromId, toId) {
+  $(fromId).classList.remove('on');
+  $(toId).classList.add('on');
+  document.body.classList.toggle('story-mode', toId === 'sStory');
+}
+
+/* ---------- Night sky ---------- */
+const sky = $('sky'), sctx = sky.getContext('2d');
+let stars = [], shoot = null, W = 0, H = 0;
+function sizeSky() {
+  const d = Math.min(devicePixelRatio || 1, 2);
+  W = innerWidth; H = innerHeight;
+  [sky, $('confetti')].forEach(c => { c.width = W * d; c.height = H * d; c.getContext('2d').setTransform(d, 0, 0, d, 0, 0); });
+  stars = Array.from({ length: Math.round(W * H / 5000) }, () => ({ x: Math.random() * W, y: Math.random() * H, r: Math.random() * 1.3 + .2, t: Math.random() * 6.3, s: .01 + Math.random() * .03 }));
+}
+sizeSky(); addEventListener('resize', sizeSky);
+function drawSky() {
+  sctx.clearRect(0, 0, W, H);
+  for (const s of stars) {
+    s.t += s.s;
+    sctx.globalAlpha = .25 + Math.sin(s.t) * .25 + .25;
+    sctx.fillStyle = '#FFF4E0';
+    sctx.beginPath(); sctx.arc(s.x, s.y, s.r, 0, 6.3); sctx.fill();
+  }
+  if (!shoot && Math.random() < .004) shoot = { x: Math.random() * W * .6 + W * .3, y: Math.random() * H * .3, l: 0 };
+  if (shoot) {
+    shoot.l += 1;
+    const x = shoot.x - shoot.l * 7, y = shoot.y + shoot.l * 3.2;
+    const g = sctx.createLinearGradient(x, y, x + 70, y - 32);
+    g.addColorStop(0, 'rgba(255,244,224,.9)'); g.addColorStop(1, 'rgba(255,244,224,0)');
+    sctx.globalAlpha = Math.max(0, 1 - shoot.l / 45);
+    sctx.strokeStyle = g; sctx.lineWidth = 1.6;
+    sctx.beginPath(); sctx.moveTo(x, y); sctx.lineTo(x + 70, y - 32); sctx.stroke();
+    if (shoot.l > 45) shoot = null;
+  }
+  sctx.globalAlpha = 1;
+  if (!reduceMotion) requestAnimationFrame(drawSky);
+}
+drawSky();
+
+/* ---------- Confetti (hearts + gold) ---------- */
+const cf = $('confetti'), cctx = cf.getContext('2d');
+let bits = [], cfRun = false;
+function heart(x, y, s) { cctx.beginPath(); cctx.moveTo(x, y + s * .3); cctx.bezierCurveTo(x, y, x - s * .5, y - s * .1, x - s * .5, y + s * .3); cctx.bezierCurveTo(x - s * .5, y + s * .6, x, y + s * .8, x, y + s); cctx.bezierCurveTo(x, y + s * .8, x + s * .5, y + s * .6, x + s * .5, y + s * .3); cctx.bezierCurveTo(x + s * .5, y - s * .1, x, y, x, y + s * .3); cctx.fill(); }
+function burst(x, y, n) {
+  const colors = ['#F07C8C', '#E8B4A0', '#E9C987', '#FFF1CF', '#C8394F'];
+  for (let i = 0; i < n; i++) {
+    const a = Math.random() * Math.PI * 2, v = 3 + Math.random() * 8;
+    bits.push({ x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v - 5, r: Math.random() * 6.3, vr: (Math.random() - .5) * .3, s: 6 + Math.random() * 9, c: colors[i % colors.length], h: Math.random() < .45, life: 160 + Math.random() * 60 });
+  }
+  if (!cfRun && !reduceMotion) { cfRun = true; requestAnimationFrame(drawConfetti); }
+}
+function drawConfetti() {
+  cctx.clearRect(0, 0, W, H);
+  bits = bits.filter(b => b.life > 0 && b.y < H + 40);
+  for (const b of bits) {
+    b.vy += .16; b.vx *= .985; b.x += b.vx; b.y += b.vy; b.r += b.vr; b.life--;
+    cctx.globalAlpha = Math.min(1, b.life / 40); cctx.fillStyle = b.c;
+    cctx.save(); cctx.translate(b.x, b.y); cctx.rotate(b.r);
+    if (b.h) heart(0, -b.s / 2, b.s); else cctx.fillRect(-b.s / 2, -b.s / 5, b.s, b.s / 2.5);
+    cctx.restore();
+  }
+  cctx.globalAlpha = 1;
+  if (bits.length) requestAnimationFrame(drawConfetti); else cfRun = false;
+}
+
+/* ---------- Music ---------- */
+const musicBtn = $('music');
+let audio = null;
+if (PROPOSAL.music) {
+  audio = new Audio(PROPOSAL.music); audio.loop = true;
+  musicBtn.addEventListener('click', () => {
+    if (audio.paused) { audio.play(); musicBtn.classList.remove('muted'); } else { audio.pause(); musicBtn.classList.add('muted'); }
+  });
+}
+
+/* ---------- 1. Open the box ---------- */
+$('box').addEventListener('click', () => {
+  const box = $('box');
+  if (box.classList.contains('open')) return;
+  box.classList.add('open');
+  if (audio) { musicBtn.classList.add('on'); audio.play().catch(() => musicBtn.classList.add('muted')); }
+  setTimeout(() => { go('sIntro', 'sStory'); showSlide(0); }, reduceMotion ? 300 : 2600);
+});
+
+/* ---------- 2. Story slides ---------- */
+const slides = PROPOSAL.slides;
+$('bars').innerHTML = slides.map(() => '<span><i></i></span>').join('');
+$('bars').style.setProperty('--dur', PROPOSAL.slideSeconds + 's');
+let cur = -1, timer = null;
+function showSlide(i) {
+  clearTimeout(timer);
+  if (i >= slides.length) { go('sStory', 'sAsk'); setupAsk(); return; }
+  cur = i;
+  [...$('bars').children].forEach((b, k) => {
+    b.className = k < i ? 'done' : '';
+    if (k === i) { void b.offsetWidth; b.className = 'now'; }
+  });
+  const s = slides[i];
+  const slide = $('slide');
+  slide.classList.remove('on');
+  slide.innerHTML = `${s.photo ? `<img src="${s.photo}" alt="">` : ''}<h2>${words(s.title)}</h2><p>${words(s.text)}</p>`;
+  void slide.offsetWidth;
+  slide.classList.add('on');
+  timer = setTimeout(() => showSlide(i + 1), PROPOSAL.slideSeconds * 1000);
+}
+$('sStory').addEventListener('click', () => { if (cur >= 0) showSlide(cur + 1); });
+
+/* ---------- 3. The question: "no" runs away ---------- */
+const yesBtn = $('yesBtn'), noBtn = $('noBtn');
+let tries = 0, lastDodge = 0;
+function setupAsk() {
+  yesBtn.textContent = PROPOSAL.yesLabels[0];
+  noBtn.textContent = PROPOSAL.noLabels[0];
+  yesBtn.focus({ preventScroll: true });
+}
+function dodge(e) {
+  e.preventDefault();
+  // one touch fires several pointer events; count it once
+  if (noBtn.classList.contains('gone') || performance.now() - lastDodge < 350) return;
+  lastDodge = performance.now();
+  tries++;
+  const last = PROPOSAL.noLabels.length - 1;
+  noBtn.textContent = PROPOSAL.noLabels[Math.min(tries, last)];
+  yesBtn.textContent = PROPOSAL.yesLabels[Math.min(tries, PROPOSAL.yesLabels.length - 1)];
+  yesBtn.style.transform = `scale(${1 + Math.min(tries, 6) * .1})`;
+  $('caption').textContent = PROPOSAL.captions[Math.min(Math.ceil(tries / 2), PROPOSAL.captions.length - 1)];
+  if (tries >= last) { noBtn.classList.add('gone'); return; }
+  moveNo();
+  if (navigator.vibrate) navigator.vibrate(30);
+}
+function moveNo() {
+  const r = noBtn.getBoundingClientRect();
+  if (!noBtn.classList.contains('free')) {
+    // pin it where it is, then let it fly
+    noBtn.style.left = r.left + 'px'; noBtn.style.top = r.top + 'px';
+    noBtn.classList.add('free');
+    void noBtn.offsetWidth;
+  }
+  // keep clear of the ring, the question and the yes button
+  const avoid = ['.ask-ring', '#askName', '#askQ', '#yesBtn'].map(s => document.querySelector(s).getBoundingClientRect());
+  const hits = (x, t) => avoid.some(a => x < a.right + 14 && x + r.width > a.left - 14 && t < a.bottom + 14 && t + r.height > a.top - 14);
+  const pad = 16, maxX = innerWidth - r.width - pad, maxY = innerHeight - r.height - 50;
+  let x, t, k = 0;
+  do {
+    x = pad + Math.random() * (maxX - pad);
+    t = 50 + Math.random() * (maxY - 50);
+    k++;
+  } while (k < 60 && (hits(x, t) || Math.hypot(x - r.left, t - r.top) < 110));
+  noBtn.style.left = x + 'px'; noBtn.style.top = t + 'px';
+}
+noBtn.addEventListener('pointerdown', dodge);
+noBtn.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') dodge(e); });
+noBtn.addEventListener('click', e => { if (e.detail === 0) dodge(e); }); // keyboard
+noBtn.addEventListener('contextmenu', e => e.preventDefault());
+
+/* ---------- 4. Yes! ---------- */
+yesBtn.addEventListener('click', () => {
+  noBtn.classList.add('gone');
+  const now = new Date();
+  $('stampTime').textContent = new Intl.DateTimeFormat(LOCALE, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(now) + ' • ' +
+    new Intl.DateTimeFormat(LOCALE, { hour: 'numeric', minute: '2-digit' }).format(now);
+  let msg = `إي 💍\nقلتلك إي يا ${PROPOSAL.from}`;
+  if (tries > 0) msg += `\n(بس حاولت إضغط «لا» ${num(tries)} ${tries === 1 ? 'مرة' : 'مرات'} 😅)`;
+  $('replyBtn').href = `https://wa.me/${PROPOSAL.whatsapp}?text=${encodeURIComponent(msg)}`;
+  document.body.classList.add('said-yes');
+  go('sAsk', 'sYes');
+  const r = yesBtn.getBoundingClientRect();
+  burst(r.left + r.width / 2, r.top + r.height / 2, 140);
+  setTimeout(() => burst(W * .2, H * .35, 70), 500);
+  setTimeout(() => burst(W * .8, H * .35, 70), 800);
+  if (navigator.vibrate) navigator.vibrate([60, 40, 120]);
+});
+$('againBtn').addEventListener('click', () => location.reload());
+</script>
+</body>
+</html>

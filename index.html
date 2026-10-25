@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>رسائل | دعوات أعراس وهدايا حب برابط</title>
+<meta name="description" content="دعوات أعراس إلكترونية وصفحات حب وطلب زواج باسمكم، بتفتح عالموبايل وجاهزة بنفس اليوم.">
+<meta property="og:title" content="رسائل | Rasael">
+<meta property="og:description" content="دعوات أعراس وهدايا حب… برابط بيفتح عالموبايل، جاهزة بنفس اليوم 💌">
+<meta property="og:image" content="assets/og.jpg">
+<meta name="theme-color" content="#561A27">
+<link rel="icon" href="assets/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --wine: #561A27; --wine-2: #3E121B; --wine-3: #7A2738; --cream: #FBF1E6; --cream-2: #F4E4D3;
+    --pink: #F07C8C; --pink-ink: #C8394F; --ink: #2A0D16; --muted: #7B5C63; --line: #E8D4C2;
+    --r: 22px; --ease: cubic-bezier(.2, .7, .2, 1);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--cream); color: var(--ink); font: 400 16px/1.75 "IBM Plex Sans Arabic", system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+  .wrap { width: min(1080px, 100% - 32px); margin-inline: auto; }
+  h1, h2, h3 { font-family: "El Messiri", serif; font-weight: 700; line-height: 1.3; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; padding: 0 26px; border-radius: 60px; font-weight: 700; font-size: 17px; transition: transform .2s var(--ease), background .2s, box-shadow .2s; }
+  .btn:active { transform: scale(.97); }
+  .btn.primary { background: var(--pink); color: #fff; box-shadow: 0 10px 24px -10px rgba(240,124,140,.9); }
+  .btn.primary:hover { background: #EC6A7C; }
+  .btn.ghost { border: 1.5px solid rgba(251,241,230,.45); color: var(--cream); }
+  .btn.ghost:hover { background: rgba(251,241,230,.1); }
+  .btn svg { width: 20px; height: 20px; flex: none; }
+
+  /* hero */
+  .hero { position: relative; background: radial-gradient(ellipse 90% 70% at 50% 30%, var(--wine-3) 0%, var(--wine) 50%, var(--wine-2) 100%); color: var(--cream); padding: 22px 0 0; overflow: hidden; }
+  .nav { display: flex; align-items: center; justify-content: space-between; }
+  .brand { display: flex; align-items: center; gap: 10px; font-family: "El Messiri", serif; font-weight: 700; font-size: 24px; }
+  .brand img { width: 40px; height: 40px; border-radius: 10px; }
+  .nav a.ig { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; opacity: .85; direction: ltr; }
+  .nav a.ig svg { width: 18px; height: 18px; }
+  .hero-body { text-align: center; padding: 54px 0 0; }
+  .kicker { display: inline-block; font-size: 14px; color: var(--pink); background: rgba(240,124,140,.12); border: 1px solid rgba(240,124,140,.35); padding: 4px 16px; border-radius: 40px; margin-bottom: 18px; }
+  .hero h1 { font-size: clamp(36px, 9vw, 64px); max-width: 15ch; margin-inline: auto; }
+  .hero h1 em { font-style: normal; color: var(--pink); }
+  .hero p.lead { margin: 16px auto 28px; max-width: 34ch; font-size: 18px; color: rgba(251,241,230,.82); }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+  .phones { position: relative; display: flex; justify-content: center; align-items: flex-end; gap: 0; margin-top: 52px; height: clamp(300px, 72vw, 520px); }
+  .phone { position: relative; width: clamp(150px, 34vw, 240px); aspect-ratio: 390 / 844; border-radius: 30px; padding: 7px; background: #0B0B0E; box-shadow: 0 0 0 2px #2B2B33, 0 40px 80px -30px rgba(0,0,0,.8); overflow: hidden; flex: none; }
+  .phone img { width: 100%; height: 100%; object-fit: cover; border-radius: 24px; }
+  .phones .phone:nth-child(1) { transform: translate(-18%, 14%) rotate(-8deg); z-index: 1; }
+  .phones .phone:nth-child(2) { z-index: 2; transform: translateY(4%); }
+  .phones .phone:nth-child(3) { transform: translate(18%, 14%) rotate(8deg); z-index: 1; }
+
+  section { padding: 76px 0; }
+  .sec-head { text-align: center; margin-bottom: 36px; }
+  .sec-head h2 { font-size: clamp(28px, 6vw, 40px); color: var(--wine); }
+  .sec-head p { color: var(--muted); margin-top: 6px; }
+
+  /* templates */
+  .cards { display: grid; gap: 22px; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); }
+  .card { background: #fff; border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 20px 40px -32px rgba(86,26,39,.5); }
+  .card .shot { position: relative; height: 300px; overflow: hidden; display: flex; justify-content: center; align-items: flex-start; padding-top: 26px; }
+  .card .shot.w { background: #10241C; } .card .shot.l { background: #4A1622; } .card .shot.p { background: #17142B; }
+  .card .shot .phone { width: 200px; transform: none; }
+  .card .body { padding: 22px 22px 24px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+  .card h3 { font-size: 24px; color: var(--wine); }
+  .card p { color: var(--muted); font-size: 15px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chips span { font-size: 13px; background: var(--cream); border: 1px solid var(--line); padding: 2px 12px; border-radius: 30px; }
+  .card .foot { margin-top: auto; padding-top: 12px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .card .from { font-size: 14px; color: var(--muted); }
+  .card .from b { display: block; font-size: 20px; color: var(--ink); }
+  .card .btn { min-height: 46px; padding: 0 20px; font-size: 15px; background: var(--wine); color: var(--cream); }
+  .card .btn:hover { background: var(--wine-3); }
+  .soon { text-align: center; margin-top: 22px; color: var(--muted); font-size: 15px; }
+
+  /* prices */
+  .prices-bg { background: var(--cream-2); }
+  .tabs { display: flex; justify-content: center; gap: 6px; background: #fff; border: 1px solid var(--line); padding: 5px; border-radius: 60px; width: max-content; margin: 0 auto 26px; }
+  .tabs button { font: inherit; font-weight: 700; border: 0; background: none; color: var(--muted); padding: 8px 22px; border-radius: 60px; cursor: pointer; min-height: 44px; transition: background .2s, color .2s; }
+  .tabs button[aria-selected="true"] { background: var(--wine); color: var(--cream); }
+  .plans { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+  .plan { position: relative; background: #fff; border: 1.5px solid var(--line); border-radius: var(--r); padding: 26px 22px; text-align: center; }
+  .plan.best { border-color: var(--pink); box-shadow: 0 24px 40px -26px rgba(240,124,140,.9); }
+  .plan .badge { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: var(--pink); color: #fff; font-size: 13px; font-weight: 700; padding: 2px 14px; border-radius: 30px; white-space: nowrap; }
+  .plan h3 { font-size: 22px; color: var(--wine); }
+  .plan .price { font-family: "El Messiri", serif; font-size: 38px; font-weight: 700; margin: 6px 0; }
+  .plan p { color: var(--muted); font-size: 15px; min-height: 3.4em; }
+  .plan .btn { margin-top: 14px; width: 100%; min-height: 48px; background: var(--wine); color: var(--cream); font-size: 16px; }
+  .plan.best .btn { background: var(--pink); color: #fff; }
+  .note { text-align: center; color: var(--muted); font-size: 14px; margin-top: 18px; }
+
+  /* steps */
+  .steps { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); counter-reset: s; }
+  .step { background: #fff; border: 1px solid var(--line); border-radius: var(--r); padding: 22px; }
+  .step .n { width: 40px; height: 40px; border-radius: 50%; background: var(--wine); color: var(--cream); display: grid; place-items: center; font-family: "El Messiri", serif; font-weight: 700; font-size: 18px; margin-bottom: 12px; }
+  .step h3 { font-size: 19px; color: var(--wine); }
+  .step p { color: var(--muted); font-size: 15px; }
+
+  /* pay + trust */
+  .trust { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+  .tbox { background: var(--wine); color: var(--cream); border-radius: var(--r); padding: 26px; }
+  .tbox h3 { font-size: 21px; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+  .tbox h3 svg { width: 24px; height: 24px; color: var(--pink); flex: none; }
+  .tbox p { color: rgba(251,241,230,.8); font-size: 15px; }
+  .pay { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  .pay span { background: rgba(251,241,230,.12); border: 1px solid rgba(251,241,230,.25); border-radius: 30px; padding: 3px 14px; font-size: 14px; font-weight: 700; }
+
+  /* faq */
+  .faq { max-width: 720px; margin-inline: auto; display: grid; gap: 10px; }
+  details { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 0 20px; }
+  summary { cursor: pointer; list-style: none; font-weight: 700; padding: 16px 0; display: flex; justify-content: space-between; align-items: center; gap: 12px; min-height: 44px; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; font-size: 24px; color: var(--pink-ink); transition: transform .25s var(--ease); flex: none; }
+  details[open] summary::after { transform: rotate(45deg); }
+  details p { color: var(--muted); padding-bottom: 16px; }
+
+  /* final cta */
+  .final { background: radial-gradient(ellipse 90% 80% at 50% 0%, var(--wine-3), var(--wine) 55%, var(--wine-2)); color: var(--cream); text-align: center; }
+  .final h2 { font-size: clamp(30px, 7vw, 46px); }
+  .final p { color: rgba(251,241,230,.8); margin: 10px 0 26px; }
+  footer { background: var(--wine-2); color: rgba(251,241,230,.6); text-align: center; font-size: 14px; padding: 26px 0 calc(26px + env(safe-area-inset-bottom)); }
+  footer a { color: var(--cream); direction: ltr; display: inline-block; }
+
+  /* floating order button on phones */
+  .float { position: fixed; z-index: 20; bottom: calc(16px + env(safe-area-inset-bottom)); left: 16px; right: 16px; display: none; }
+  .float .btn { width: 100%; }
+  @media (max-width: 720px) { .float.show { display: block; } }
+
+  .rv { opacity: 0; transform: translateY(24px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+  .rv.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .rv { opacity: 1; transform: none; transition: none; } html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <nav class="nav">
+      <a class="brand" href="#"><img src="assets/icon.png" alt="">رسائل</a>
+      <a class="ig" id="igLink" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+        <span id="igHandle"></span>
+      </a>
+    </nav>
+    <div class="hero-body">
+      <span class="kicker">جاهزة بنفس اليوم</span>
+      <h1>دعوة عرسك أو رسالة حبك… <em>برابط واحد</em></h1>
+      <p class="lead">صفحات بتنفتح عالموبايل، فيها أساميكم وقصتكم وحركات بتخلّي اللي بيفتحها ما ينساها.</p>
+      <div class="cta">
+        <a class="btn primary" href="order/">اطلب هلّق</a>
+        <a class="btn ghost" href="#templates">جرّب الأمثلة</a>
+      </div>
+      <div class="phones" aria-hidden="true">
+        <div class="phone"><img src="assets/letter.jpg" alt=""></div>
+        <div class="phone"><img src="assets/wedding.jpg" alt=""></div>
+        <div class="phone"><img src="assets/proposal.jpg" alt=""></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section id="templates">
+    <div class="wrap">
+      <div class="sec-head rv"><h2>اختار التصميم</h2><p>افتح المثال من موبايلك وجرّبه متل ما رح يوصل للي بتحبّه</p></div>
+      <div class="cards">
+        <article class="card rv">
+          <div class="shot w"><div class="phone"><img src="assets/wedding-closed.jpg" alt="دعوة عرس: بوابة شامية مع ختم"></div></div>
+          <div class="body">
+            <h3>دعوة عرس</h3>
+            <p>بوابة شامية بتنفتح بالختم، أساميكم بخط عربي، والتاريخ هجري وميلادي.</p>
+            <div class="chips"><span>عدّاد للعرس</span><span>الموقع عالخريطة</span><span>تأكيد الحضور</span><span>رابط لكل ضيف</span></div>
+            <div class="foot"><span class="from">يبدأ من<b data-from="wedding"></b></span><a class="btn" href="demo/wedding/">جرّب المثال</a></div>
+          </div>
+        </article>
+        <article class="card rv">
+          <div class="shot l"><div class="phone"><img src="assets/letter-closed.jpg" alt="رسالة حب: ظرف بختم قلب"></div></div>
+          <div class="body">
+            <h3>رسالة حب</h3>
+            <p>ظرف بينفتح، والرسالة بتنكتب قدّامها كلمة كلمة بكلامك إنت.</p>
+            <div class="chips"><span>عدّاد أيامكم</span><span>ليش بحبك</span><span>قصتنا</span><span>افتحيها لمّا…</span></div>
+            <div class="foot"><span class="from">يبدأ من<b data-from="gift"></b></span><a class="btn" href="demo/letter/">جرّب المثال</a></div>
+          </div>
+        </article>
+        <article class="card rv">
+          <div class="shot p"><div class="phone"><img src="assets/proposal-closed.jpg" alt="طلب زواج: علبة خاتم"></div></div>
+          <div class="body">
+            <h3>طلب زواج</h3>
+            <p>علبة خاتم، قصتكم بشرائح، والسؤال… وزر «لا» بيهرب 😄</p>
+            <div class="chips"><span>علبة خاتم</span><span>قصتكم</span><span>احتفال بالجواب</span><span>الجواب عالواتساب</span></div>
+            <div class="foot"><span class="from">يبدأ من<b data-from="gift"></b></span><a class="btn" href="demo/proposal/">جرّب المثال</a></div>
+          </div>
+        </article>
+      </div>
+      <p class="soon rv">وكمان: أعياد ميلاد، معايدات العيد، وأي فكرة ببالك… احكينا 🤍</p>
+    </div>
+  </section>
+
+  <section class="prices-bg" id="prices">
+    <div class="wrap">
+      <div class="sec-head rv"><h2>الأسعار</h2><p>بالليرة السورية الجديدة، وبتدفع بعد ما تشوف التصميم بأول نسخة</p></div>
+      <div class="tabs rv" role="tablist">
+        <button role="tab" aria-selected="true" data-tab="gift">هدايا وحب</button>
+        <button role="tab" aria-selected="false" data-tab="wedding">دعوات أعراس</button>
+      </div>
+      <div class="plans" id="plans"></div>
+      <p class="note">من برّا سوريا؟ حدا من أهلك بسوريا بيقدر يدفع عنك بسهولة.</p>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="wrap">
+      <div class="sec-head rv"><h2>كيف بتطلب؟</h2><p>أربع خطوات وبس</p></div>
+      <div class="steps">
+        <div class="step rv"><div class="n">١</div><h3>اختار التصميم والباقة</h3><p>جرّب الأمثلة من موبايلك واختار اللي بيشبهكم.</p></div>
+        <div class="step rv"><div class="n">٢</div><h3>عبّي الطلب</h3><p>الأسامي، التاريخ، قصتكم… وبيوصلنا عالواتساب مباشرة.</p></div>
+        <div class="step rv"><div class="n">٣</div><h3>منبعتلك أول نسخة</h3><p>بتشوفها وبتطلب أي تعديل، وبعدها بتدفع.</p></div>
+        <div class="step rv"><div class="n">٤</div><h3>بتستلم الرابط</h3><p>بنفس اليوم. بتبعتو للي بتحبه أو لكل الضيوف 💌</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="prices-bg">
+    <div class="wrap trust">
+      <div class="tbox rv">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20M6 15h4"/></svg>الدفع</h3>
+        <p>بعد ما توافق على التصميم، بتدفع بالطريقة اللي بتناسبك.</p>
+        <div class="pay"><span>شام كاش</span><span>سيريتل كاش</span></div>
+      </div>
+      <div class="tbox rv">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>خصوصيتك</h3>
+        <p>كل رابط سرّي وما بيطلع بالبحث. ما منشارك قصتكم أو أساميكم مع حدا، ولا منستعملها بإعلاناتنا بدون إذنك.</p>
+      </div>
+      <div class="tbox rv">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>بنفس اليوم</h3>
+        <p>أغلب الطلبات بتجهز خلال ساعات. وإذا عرسك قريب، احكينا ومنعطيك أولوية.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="sec-head rv"><h2>أسئلة بتتكرر</h2></div>
+      <div class="faq">
+        <details class="rv"><summary>بتشتغل على كل الموبايلات؟</summary><p>إي، آيفون وأندرويد، وبتنفتح من واتساب أو إنستغرام مباشرة بدون أي تطبيق.</p></details>
+        <details class="rv"><summary>فيني عدّل بعد ما استلم؟</summary><p>أكيد. منبعتلك نسخة أولى قبل الدفع وبتطلب التعديلات اللي بدك ياها، ولو تغيّر شي بعدين (متل موعد أو قاعة) منعدّلو.</p></details>
+        <details class="rv"><summary>فيني حط صور وموسيقى؟</summary><p>إي بباقة «الأكثر طلباً» وما فوق. بتبعتلنا الصور عالواتساب ومنرتّبها إلك.</p></details>
+        <details class="rv"><summary>ما بعرف شو اكتب بالرسالة…</summary><p>ولا يهمك. بباقة «مميز» منكتبلك الرسالة بأسلوبك، بس احكيلنا شوي عن قصتكم.</p></details>
+        <details class="rv"><summary>أنا برّا سوريا، كيف بدفع؟</summary><p>حدا من أهلك أو رفقاتك بسوريا بيقدر يحوّل عنك بشام كاش أو سيريتل كاش، وبتوصلك الصفحة وين ما كنت.</p></details>
+        <details class="rv"><summary>لأيمتى بيضل الرابط شغّال؟</summary><p>الرابط بيضل شغّال، وبتقدر ترجعلو وقت ما بدك كذكرى.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="final">
+    <div class="wrap">
+      <h2 class="rv">جاهز تفاجئ اللي بتحبه؟</h2>
+      <p class="rv">احكيلنا قصتكم، والباقي علينا.</p>
+      <div class="cta rv"><a class="btn primary" href="order/">اطلب هلّق</a><a class="btn ghost" id="waLink" target="_blank" rel="noopener">اسألنا عالواتساب</a></div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap">رسائل · Rasael — <a id="igFoot" target="_blank" rel="noopener"></a></div></footer>
+<div class="float" id="float"><a class="btn primary" href="order/">اطلب هلّق 💌</a></div>
+
+<script src="config.js"></script>
+<script>
+const R = window.RASAEL;
+const ig = `https://instagram.com/${R.instagram}`;
+document.getElementById('igLink').href = ig; document.getElementById('igHandle').textContent = '@' + R.instagram;
+const igFoot = document.getElementById('igFoot'); igFoot.href = ig; igFoot.textContent = '@' + R.instagram;
+document.getElementById('waLink').href = `https://wa.me/${R.whatsapp}?text=${encodeURIComponent('مرحبا رسائل 🤍 عندي سؤال عن…')}`;
+document.querySelectorAll('[data-from]').forEach(b => { b.textContent = R.fmt(R.prices[b.dataset.from][0].price); });
+
+// prices
+const plans = document.getElementById('plans');
+function showPlans(kind) {
+  plans.innerHTML = R.prices[kind].map(p => `
+    <div class="plan${p.best ? ' best' : ''}">
+      ${p.best ? '<span class="badge">الأفضل</span>' : ''}
+      <h3>${p.name}</h3>
+      <div class="price">${R.fmt(p.price)}</div>
+      <p>${p.desc}</p>
+      <a class="btn" href="order/?kind=${kind === 'wedding' ? 'wedding' : 'letter'}&plan=${p.id}">اختار هالباقة</a>
+    </div>`).join('');
+}
+document.querySelectorAll('.tabs button').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.tabs button').forEach(x => x.setAttribute('aria-selected', x === b));
+  showPlans(b.dataset.tab);
+}));
+showPlans('gift');
+
+// reveal on scroll + floating order button once the hero is gone
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
+document.querySelectorAll('.rv').forEach(el => io.observe(el));
+const float = document.getElementById('float'), seen = new Map();
+const fio = new IntersectionObserver(es => {
+  es.forEach(e => seen.set(e.target, e.isIntersecting));
+  float.classList.toggle('show', ![...seen.values()].some(Boolean));
+});
+fio.observe(document.querySelector('.hero .cta')); fio.observe(document.querySelector('.final'));
+</script>
+</body>
+</html>
