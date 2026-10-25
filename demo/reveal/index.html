@@ -92,6 +92,36 @@
   .btn.wa { background: #1FA855; color: #FFFFFF; box-shadow: 0 12px 26px -12px rgba(31,168,85,.8); }
   .btn.ghost { background: rgba(59,46,42,.06); color: var(--ink); }
 
+  .snd { position: fixed; z-index: 95; top: calc(14px + env(safe-area-inset-top)); left: 14px; width: 44px; height: 44px; border-radius: 50%; border: 0; background: rgba(255,255,255,.85); color: var(--ink); display: grid; place-items: center; cursor: pointer; box-shadow: 0 6px 16px -8px rgba(59,46,42,.4); }
+  .snd svg { width: 20px; height: 20px; }
+  .link { background: none; border: 0; color: var(--ink-2); font-size: 14px; cursor: pointer; padding: 8px; margin-top: 4px; text-decoration: underline; text-underline-offset: 4px; }
+  .row-btns { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+  .btn.sm { min-height: 44px; padding: 0 18px; font-size: 14px; }
+
+  /* ---------- clues: week, signs, parents' guesses ---------- */
+  #clues { padding: 64px 20px 70px; }
+  .week { display: flex; align-items: center; gap: 14px; background: #FFFFFF; border-radius: 22px; padding: 16px 18px; text-align: right; box-shadow: 0 20px 40px -32px rgba(59,46,42,.5); }
+  .week .fruit { font-size: 44px; line-height: 1; flex: none; }
+  .week b { font-family: "Baloo Bhaijaan 2", sans-serif; font-size: 20px; display: block; line-height: 1.4; }
+  .week span { color: var(--ink-2); font-size: 14px; }
+  .clue-head { margin-top: 40px; }
+  .tally { display: flex; height: 14px; border-radius: 10px; overflow: hidden; margin: 14px 0 6px; background: var(--sand); }
+  .tally i { display: block; height: 100%; transition: width .8s var(--ease); }
+  .tally .tb { background: var(--blue-2); } .tally .tg { background: var(--pink-2); }
+  .tally-lbl { display: flex; justify-content: space-between; font-size: 14px; font-weight: 600; }
+  .tally-lbl .b { color: var(--blue-2); } .tally-lbl .g { color: var(--pink-2); }
+  .signs { display: grid; gap: 10px; margin-top: 18px; text-align: right; }
+  .clue { position: relative; display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; align-items: center; background: #FFFFFF; border-radius: 18px; padding: 14px 16px; box-shadow: 0 14px 28px -24px rgba(59,46,42,.6); }
+  .clue .q { font-size: 14px; color: var(--ink-2); }
+  .clue .a { font-weight: 600; }
+  .clue .says { grid-row: 1 / 3; grid-column: 2; font-family: "Baloo Bhaijaan 2", sans-serif; font-weight: 700; font-size: 16px; padding: 4px 12px; border-radius: 30px; white-space: nowrap; }
+  .says.boy { background: var(--blue-bg); color: var(--blue-2); } .says.girl { background: var(--pink-bg); color: var(--pink-2); }
+  .clue .mark { position: absolute; top: -8px; left: -6px; width: 28px; height: 28px; border-radius: 50%; display: none; place-items: center; font-size: 14px; font-weight: 700; color: #FFFFFF; }
+  body.revealed .clue .mark { display: grid; }
+  .clue.right .mark { background: #1FA855; } .clue.wrong .mark { background: #B9A48A; }
+  body.revealed .clue.wrong { opacity: .6; }
+  .score { margin-top: 14px; font-family: "Baloo Bhaijaan 2", sans-serif; font-weight: 700; font-size: 20px; }
+
   /* ---------- after the reveal ---------- */
   #after { display: none; }
   body.revealed #after { display: block; }
@@ -153,6 +183,22 @@
   <div class="panel" id="panel" aria-live="polite"></div>
 </div>
 
+<button class="snd" id="snd" aria-label="الصوت"></button>
+
+<section id="clues">
+  <div class="wrap">
+    <div class="week" id="week"><span class="fruit" id="fruit"></span><div><b id="weekTitle"></b><span id="weekSub"></span></div></div>
+    <div class="clue-head" id="signHead">
+      <span class="kicker">قبل ما تخمّن</span>
+      <h2 class="h2" style="margin-top:12px" id="signTitle">شو بتقول العلامات؟ 👀</h2>
+      <div class="tally" id="tally"><i class="tb"></i><i class="tg"></i></div>
+      <div class="tally-lbl" id="tallyLbl"></div>
+      <div class="signs" id="signs"></div>
+      <p class="score" id="score"></p>
+    </div>
+  </div>
+</section>
+
 <div id="after">
   <section>
     <div class="wrap">
@@ -170,6 +216,7 @@
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-3.3-.8-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.2z"/></svg>
           <span id="congratsLbl"></span>
         </a>
+        <button class="btn ghost" id="endShare">شارك الفرحة مع العيلة 🔗</button>
         <button class="btn ghost" id="againBtn">🎈 فقّع البالون مرة تانية</button>
       </div>
     </div>
@@ -187,6 +234,17 @@ const REVEAL = {
   answer: 'girl',                    // 'girl' or 'boy'. Keep it secret!
   babyName: 'ليا',                   // optional: shown after the reveal ('' = hidden)
   due: 'البيبي جاي بشهر آذار إن شاء الله 🤍',
+  dueDate: '2027-03-20',             // optional YYYY-MM-DD: "this week the baby is the size of…" + days left
+  signs: [                           // the old folk signs and what each one "says"; empty list = section hidden
+    { q: 'الوحام', a: 'عالحلو والشوكولا', says: 'girl' },
+    { q: 'شكل البطن', a: 'لقدّام ومدبّب', says: 'boy' },
+    { q: 'نبض القلب', a: 'أسرع من ١٤٠', says: 'girl' },
+    { q: 'وجه الأم', a: 'منوّر ومرتاح', says: 'boy' },
+  ],
+  guesses: [                         // what each parent thinks; empty list = hidden
+    { who: 'أحمد', says: 'boy' },
+    { who: 'ليلى', says: 'girl' },
+  ],
   revealAt: 'demo',                  // '2026-11-07T20:00:00+03:00' = everyone sees it at that moment (any country)
                                      // '' = no countdown, pop straight away · 'demo' = 8-second countdown
   message: `من أول ما عرفنا، وقلبنا عم يدقّ أسرع.
@@ -237,23 +295,64 @@ $('congratsBtn').href = wa(`مبروووك يا ${REVEAL.parents}! ${GIRL ? 'ب�
 if (!REVEAL.whatsapp) $('congratsBtn').remove();
 $('credit').textContent = `صُنعت بحب 🤍 ${REVEAL.credit}`;
 
+/* ---------- this week: the baby's size, days left ---------- */
+const FRUIT = [[4, 'حبة عدس', '🫘'], [8, 'حبة توت', '🫐'], [10, 'حبة فراولة', '🍓'], [12, 'ليمونة', '🍋'], [14, 'دراقة', '🍑'], [16, 'حبة أفوكادو', '🥑'],
+  [18, 'فليفلة', '🫑'], [19, 'مانجاية', '🥭'], [20, 'موزة', '🍌'], [22, 'كوز ذرة', '🌽'], [24, 'باذنجانة', '🍆'], [26, 'خسّة', '🥬'], [28, 'جوزة هند', '🥥'], [31, 'أناناسة', '🍍'], [34, 'شمّامة', '🍈'], [37, 'بطيخة صغيرة', '🍉']];
+(() => {
+  const due = REVEAL.dueDate && new Date(REVEAL.dueDate + 'T00:00:00'), now = new Date(); now.setHours(0, 0, 0, 0);
+  const days = due ? Math.round((due - now) / 864e5) : -1;
+  if (!(days > 0 && days < 280)) return $('week').remove();
+  const week = Math.max(4, Math.min(40, 40 - Math.floor(days / 7))), [, name, emoji] = FRUIT.filter(f => f[0] <= week).at(-1);
+  $('fruit').textContent = emoji;
+  $('weekTitle').textContent = `البيبي هلق قدّ ${name}`;
+  $('weekSub').textContent = `الأسبوع ${num(week)} · باقي ${num(days)} يوم لنشوفو 🤍`;
+})();
+
+/* ---------- the signs and the parents' guesses ---------- */
+const SAYS = { boy: 'يعني صبي 💙', girl: 'يعني بنت 💗' };
+const card = (q, a, says) => `<div class="clue" data-says="${says}"><span class="mark"></span><span class="q">${esc(q)}</span><span class="a">${esc(a)}</span><span class="says ${says}">${SAYS[says]}</span></div>`;
+if (!REVEAL.signs.length && !REVEAL.guesses.length) $('signHead').remove();
+else {
+  const b = REVEAL.signs.filter(s => s.says === 'boy').length, gl = REVEAL.signs.length - b;
+  if (REVEAL.signs.length) {
+    $('tally').children[0].style.width = (b / REVEAL.signs.length * 100) + '%';
+    $('tally').children[1].style.width = (gl / REVEAL.signs.length * 100) + '%';
+    $('tallyLbl').innerHTML = `<span class="b">صبي ${num(b)}</span><span class="g">بنت ${num(gl)}</span>`;
+  } else { $('tally').remove(); $('tallyLbl').remove(); }
+  $('signs').innerHTML = REVEAL.signs.map(s => card(s.q, s.a, s.says)).join('') + REVEAL.guesses.map(x => card('رأي', x.who, x.says)).join('');
+}
+function scoreSigns() {
+  if (!$('signs')) return;
+  const cards = [...document.querySelectorAll('.clue')];
+  cards.forEach(c => { const ok = c.dataset.says === REVEAL.answer; c.classList.toggle('right', ok); c.classList.toggle('wrong', !ok); c.querySelector('.mark').textContent = ok ? '✓' : '✗'; });
+  const right = REVEAL.signs.filter(s => s.says === REVEAL.answer).length;
+  const winners = REVEAL.guesses.filter(x => x.says === REVEAL.answer).map(x => x.who);
+  $('signTitle').textContent = 'العلامات صدقت؟ 🤔';
+  $('signHead').querySelector('.kicker').textContent = 'النتيجة';
+  $('score').textContent = [REVEAL.signs.length ? `صدق منها ${num(right)} من ${num(REVEAL.signs.length)}` : '', winners.length ? `والفايز بالتحدي: ${winners.join(' و')} 🏆` : ''].filter(Boolean).join(' · ');
+}
+
 /* ---------- sound (made in the browser, so nothing to download) ---------- */
-let AC = null;
+let AC = null, muted = false;
+const SND_ON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>';
+const SND_OFF = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="m22 9-6 6M16 9l6 6"/></svg>';
+$('snd').innerHTML = SND_ON;
+$('snd').addEventListener('click', () => { muted = !muted; $('snd').innerHTML = muted ? SND_OFF : SND_ON; $('snd').setAttribute('aria-pressed', muted); if (audio) audio.muted = muted; });
 function ac() {
   if (!AC) { try { AC = new (window.AudioContext || window.webkitAudioContext)(); } catch { return null; } }
   if (AC.state === 'suspended') AC.resume();
   return AC;
 }
 function tone(f0, f1, dur, type = 'sine', vol = .15, when = 0) {
-  const a = AC; if (!a) return;
+  const a = AC; if (!a || muted) return;
   const t = a.currentTime + when, o = a.createOscillator(), g = a.createGain();
   o.type = type; o.frequency.setValueAtTime(f0, t); o.frequency.exponentialRampToValueAtTime(f1, t + dur);
   g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t + .008); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
   o.connect(g).connect(a.destination); o.start(t); o.stop(t + dur + .02);
 }
 function noise(dur, vol, freq, when = 0, type = 'lowpass') {
-  const a = AC; if (!a) return;
-  const t = a.currentTime + when, n = Math.round(a.sampleRate * dur), buf = a.createBuffer(1, n, a.sampleRate), d = buf.getChannelData(0);
+  const a = AC; if (!a || muted) return;
+  const t = a.currentTime + when, n =Math.round(a.sampleRate * dur), buf = a.createBuffer(1, n, a.sampleRate), d = buf.getChannelData(0);
   for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / n, 3);
   const s = a.createBufferSource(), f = a.createBiquadFilter(), g = a.createGain();
   s.buffer = buf; f.type = type; f.frequency.value = freq; g.gain.value = vol;
@@ -310,8 +409,26 @@ function showGuess() {
   setPanel(`<h2>${ready && target ? 'الجواب جاهز… بس أول شي' : 'شو توقعك؟'}</h2>
     <p class="hint">${ready && target ? 'شو توقعك؟ صبي ولا بنت؟' : 'خمّن قبل ما ينكشف الجواب'}</p>
     <div class="picks"><button class="pick boy" data-g="boy">صبي<small>💙 فريق الأزرق</small></button><button class="pick girl" data-g="girl">بنت<small>💗 فريق الوردي</small></button></div>
-    <input class="name" id="gName" placeholder="اسمك (اختياري)" maxlength="30" autocomplete="given-name">`);
+    <input class="name" id="gName" placeholder="اسمك (اختياري)" maxlength="30" autocomplete="given-name">
+    ${$('signHead') ? '<button class="link" id="toClues">محتار؟ شوف شو بتقول العلامات ↓</button>' : ''}`);
   panel.querySelectorAll('.pick').forEach(b => b.addEventListener('click', () => pick(b.dataset.g)));
+  if ($('toClues')) $('toClues').addEventListener('click', () => $('signHead').scrollIntoView({ behavior: 'smooth' }));
+}
+
+/* reminder in the phone's calendar (.ics works on iPhone and Android) and sharing the link */
+function addToCalendar() {
+  const z = d => new Date(d).toISOString().replace(/[-:]/g, '').replace(/\.\d+/, '');
+  const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Rasael//Reveal//AR', 'BEGIN:VEVENT', `UID:${target}@rasael`, `DTSTAMP:${z(Date.now())}`,
+    `DTSTART:${z(target)}`, `DTEND:${z(target + 30 * 6e4)}`, `SUMMARY:صبي ولا بنت؟ ${REVEAL.parents} 🎈`, `DESCRIPTION:${location.href}`, `URL:${location.href}`,
+    'BEGIN:VALARM', 'TRIGGER:-PT10M', 'ACTION:DISPLAY', 'DESCRIPTION:الجواب بينكشف بعد ١٠ دقايق 🎈', 'END:VALARM', 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' })); a.download = 'reveal.ics';
+  document.body.appendChild(a); a.click(); a.remove();
+}
+function shareLink() {
+  const text = `${REVEAL.parents} عم يكشفوا إذا البيبي صبي ولا بنت 🎈 خمّن معنا:`;
+  if (navigator.share) navigator.share({ title: 'صبي ولا بنت؟', text, url: location.href }).catch(() => {});
+  else open(`https://wa.me/?text=${encodeURIComponent(text + '\n' + location.href)}`, '_blank', 'noopener');
 }
 function pick(g) {
   ac(); sfx.pick();
@@ -332,8 +449,11 @@ function showWait() {
   setPanel(`${guessLine()}<h2 style="margin-top:4px">الجواب بينكشف بعد…</h2>
     <div class="cd" id="cd"></div>
     <p class="when">${REVEAL.revealAt === 'demo' ? 'خلّيك هون 👀' : `${when} (بتوقيتك) · خلّي الصفحة مفتوحة`}</p>
-    <div class="actions">${guessWa()}</div>`);
+    <div class="actions">${guessWa()}
+      <div class="row-btns">${REVEAL.revealAt === 'demo' ? '' : '<button class="btn ghost sm" id="calBtn">ذكّرني بالموعد 📅</button>'}<button class="btn ghost sm" id="shareBtn">شارك الرابط 🔗</button></div></div>`);
   bindChange();
+  if ($('calBtn')) $('calBtn').addEventListener('click', addToCalendar);
+  $('shareBtn').addEventListener('click', shareLink);
   let lastS = -1;
   const draw = () => {
     const ms = target - Date.now();
@@ -417,7 +537,7 @@ function riseBalloons() {
   });
 }
 function showResult() {
-  riseBalloons();
+  riseBalloons(); scoreSigns();
   document.body.classList.add('revealed');
   $('kicker').textContent = `مبروك لـ${REVEAL.parents} 🤍`;
   $('title').innerHTML = GIRL ? 'إنها <span class="nm">بنت!</span> 💗' : 'إنه <span class="nm">صبي!</span> 💙';
@@ -427,8 +547,8 @@ function showResult() {
   const verdict = !guess ? '' : right ? `<p class="verdict">توقعك كان صح! 🎉</p><p class="hint">إنت أكيد بتعرفن منيح 😄</p>` : `<p class="verdict">ما زبط توقعك هالمرة 😄</p><p class="hint">بس الفرحة وحدة 🤍</p>`;
   setPanel(`${verdict}<div class="actions">
     ${REVEAL.whatsapp ? `<a class="btn wa" target="_blank" rel="noopener" href="${$('congratsBtn').href}">ابعت مبروك لـ${REVEAL.parents} 💌</a>` : ''}
-    <button class="btn ghost" id="toMsg">في رسالة إلك منن ↓</button></div>`);
-  $('toMsg').addEventListener('click', () => $('after').scrollIntoView({ behavior: 'smooth' }));
+    <button class="btn ghost" id="toMsg">${$('signHead') ? 'العلامات صدقت؟ ورسالة منن ↓' : 'في رسالة إلك منن ↓'}</button></div>`);
+  $('toMsg').addEventListener('click', () => ($('signHead') || $('after')).scrollIntoView({ behavior: 'smooth' }));
 }
 
 function replay() {
@@ -436,11 +556,13 @@ function replay() {
   setTimeout(() => {
     document.body.classList.remove('revealed', 'is-girl', 'is-boy');
     $('art').innerHTML = '';
+    if ($('signHead')) { $('signTitle').textContent = 'شو بتقول العلامات؟ 👀'; $('signHead').querySelector('.kicker').textContent = 'قبل ما تخمّن'; $('score').textContent = ''; }
     if (hasGsap) { gsap.set($('flood'), { scale: 0 }); gsap.set(balloon, { opacity: 1, scale: 1, rotate: 0 }); gsap.from(balloon, { scale: 0, duration: .7, ease: 'back.out(2)' }); }
     setIntro(); showPop();
   }, 500);
 }
 $('againBtn').addEventListener('click', replay);
+$('endShare').addEventListener('click', shareLink);
 
 /* ---------- start ---------- */
 const saved = store.get();
