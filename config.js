@@ -1,7 +1,7 @@
 // Rasael business settings, shared by the home page and the order form.
 // Change a price or the WhatsApp number here and it updates everywhere.
 window.RASAEL = {
-  whatsapp: '963900000000',        // orders arrive here: international format, no + or spaces
+  whatsapp: '963983896568',        // orders arrive here: international format, no + or spaces
   instagram: 'rasael.studio',
   prices: {
     gift: [                        // love letter / proposal / birthday / Eid pages
