@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>صبي ولا بنت؟ 🎈</title>
+<!-- Link preview (WhatsApp / Instagram). Change per client. -->
+<meta property="og:title" content="صبي ولا بنت؟ 🎈">
+<meta property="og:description" content="خمّن… والجواب منكشفو كلنا سوا 🤍">
+<meta name="theme-color" content="#FBF4EA">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@600;700;800&family=Readex+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FBF4EA; --sand: #F1E3CF; --ink: #3B2E2A; --ink-2: #7A6A62;
+    --gold: #EBD3A4; --gold-2: #C9A35E;
+    --pink: #F7B8C8; --pink-2: #D9577E; --pink-3: #8E2547; --pink-bg: #FCE3EA;
+    --blue: #B5D5F3; --blue-2: #3F7CC0; --blue-3: #1F4E86; --blue-bg: #E1EEFA;
+    --ease: cubic-bezier(.2, .7, .2, 1);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { background: var(--cream); color: var(--ink); font: 400 17px/1.8 "Readex Pro", system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  h1, h2, h3, .display { font-family: "Baloo Bhaijaan 2", "Readex Pro", sans-serif; font-weight: 800; line-height: 1.15; }
+  button, input { font: inherit; }
+  #fx { position: fixed; inset: 0; z-index: 90; pointer-events: none; width: 100%; height: 100%; }
+
+  /* ---------- the stage ---------- */
+  #stage { position: relative; min-height: 100svh; display: flex; flex-direction: column; align-items: center; text-align: center; padding: calc(30px + env(safe-area-inset-top)) 20px calc(22px + env(safe-area-inset-bottom)); overflow: hidden; }
+  .sky { position: absolute; inset: 0; pointer-events: none; }
+  .cloud { position: absolute; fill: #FFFFFF; animation: drift linear infinite; }
+  @keyframes drift { from { transform: translateX(-30px); } 50% { transform: translateX(30px); } to { transform: translateX(-30px); } }
+  #flood { position: absolute; left: 50%; top: 50%; width: 40px; height: 40px; margin: -20px 0 0 -20px; border-radius: 50%; transform: scale(0); pointer-events: none; }
+  body.is-girl #flood { background: var(--pink); }
+  body.is-boy #flood { background: var(--blue); }
+
+  .top { position: relative; z-index: 2; }
+  .kicker { display: inline-block; font-size: 15px; font-weight: 600; color: var(--ink-2); background: #FFFFFF; padding: 4px 16px; border-radius: 40px; box-shadow: 0 6px 16px -10px rgba(59,46,42,.45); }
+  #title { font-size: clamp(46px, 13.5vw, 70px); margin-top: 12px; text-wrap: balance; }
+  #title .b { color: var(--blue-2); } #title .g { color: var(--pink-2); }
+  body.is-girl #title { color: var(--pink-3); } body.is-boy #title { color: var(--blue-3); }
+  #title .nm { display: inline-block; }
+  #due { color: var(--ink-2); font-size: 16px; margin-top: 4px; }
+  body.revealed #due { color: var(--ink); font-weight: 600; font-size: 19px; }
+
+  .b-area { position: relative; z-index: 2; flex: 1; width: 100%; min-height: 260px; display: flex; align-items: center; justify-content: center; }
+  .b-float { animation: float 4s ease-in-out infinite; }
+  @keyframes float { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-14px) rotate(2deg); } }
+  .art { position: absolute; inset: 0; pointer-events: none; }
+  .art svg { position: absolute; bottom: 0; }
+  #balloon { display: block; width: min(190px, 48vw); transform-origin: 50% 40%; -webkit-tap-highlight-color: transparent; outline: none; }
+  #balloon.armed { cursor: pointer; }
+  #balloon:focus-visible { outline: 3px solid var(--gold-2); outline-offset: 8px; border-radius: 50%; }
+  .ring { position: absolute; left: 50%; top: 50%; width: 220px; height: 220px; margin: -150px 0 0 -110px; border-radius: 50%; border: 3px solid var(--gold); opacity: 0; pointer-events: none; }
+  .armed-on .ring { animation: ring 1.6s ease-out infinite; }
+  @keyframes ring { from { transform: scale(.7); opacity: .8; } to { transform: scale(1.5); opacity: 0; } }
+  .shred { position: absolute; width: 18px; height: 12px; border-radius: 6px 10px 4px 8px; background: var(--gold); pointer-events: none; z-index: 3; }
+
+  /* ---------- the panel ---------- */
+  .panel { position: relative; z-index: 3; width: min(420px, 100%); background: #FFFFFF; border-radius: 28px; padding: 22px 20px 20px; box-shadow: 0 30px 60px -36px rgba(59,46,42,.55); }
+  .panel h2 { font-size: 27px; }
+  .panel .hint { color: var(--ink-2); font-size: 15px; }
+  .picks { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+  .pick { min-height: 98px; border-radius: 22px; border: 0; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-family: "Baloo Bhaijaan 2", sans-serif; font-size: 30px; font-weight: 800; line-height: 1.2; transition: transform .2s var(--ease); -webkit-tap-highlight-color: transparent; }
+  .pick small { font-family: "Readex Pro", sans-serif; font-size: 13px; font-weight: 500; opacity: .8; }
+  .pick.boy { background: var(--blue-bg); color: var(--blue-2); }
+  .pick.girl { background: var(--pink-bg); color: var(--pink-2); }
+  .pick:active { transform: scale(.95); }
+  .name { width: 100%; margin-top: 12px; min-height: 48px; border-radius: 14px; border: 1.5px solid var(--sand); background: var(--cream); padding: 0 14px; font-size: 16px; text-align: center; color: var(--ink); }
+  .name:focus { outline: 2px solid var(--gold-2); outline-offset: 1px; }
+  .picked { font-size: 17px; }
+  .picked b { font-family: "Baloo Bhaijaan 2", sans-serif; font-size: 22px; }
+  .picked.boy b { color: var(--blue-2); } .picked.girl b { color: var(--pink-2); }
+  .change { background: none; border: 0; color: var(--ink-2); font-size: 13px; text-decoration: underline; cursor: pointer; padding: 6px; }
+  .cd { display: flex; justify-content: center; gap: 8px; margin: 12px 0 4px; }
+  .cd div { min-width: 66px; background: var(--cream); border-radius: 16px; padding: 8px 4px 6px; }
+  .cd b { display: block; font-family: "Baloo Bhaijaan 2", sans-serif; font-size: 32px; line-height: 1.1; }
+  .cd span { font-size: 12px; color: var(--ink-2); }
+  .cd.final div { min-width: 140px; }
+  .cd.final b { font-size: 84px; }
+  .when { font-size: 14px; color: var(--ink-2); }
+  .dots { display: flex; justify-content: center; gap: 8px; margin-top: 10px; }
+  .dots i { width: 12px; height: 12px; border-radius: 50%; background: var(--sand); transition: background .2s, transform .2s; }
+  .dots i.on { background: var(--gold-2); transform: scale(1.25); }
+  .verdict { font-family: "Baloo Bhaijaan 2", sans-serif; font-weight: 700; font-size: 22px; }
+  .actions { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 14px; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; padding: 0 26px; border-radius: 60px; border: 0; font-weight: 600; font-size: 16px; cursor: pointer; text-decoration: none; transition: transform .2s var(--ease); -webkit-tap-highlight-color: transparent; }
+  .btn:active { transform: scale(.96); }
+  .btn svg { width: 22px; height: 22px; flex: none; }
+  .btn.main { background: var(--ink); color: #FFFFFF; }
+  .btn.wa { background: #1FA855; color: #FFFFFF; box-shadow: 0 12px 26px -12px rgba(31,168,85,.8); }
+  .btn.ghost { background: rgba(59,46,42,.06); color: var(--ink); }
+
+  /* ---------- after the reveal ---------- */
+  #after { display: none; }
+  body.revealed #after { display: block; }
+  section { padding: 76px 20px; }
+  .wrap { width: min(520px, 100%); margin-inline: auto; text-align: center; }
+  .msg { background: #FFFFFF; border-radius: 26px; padding: 32px 24px 28px; box-shadow: 0 30px 60px -40px rgba(59,46,42,.5); margin-top: 18px; text-align: right; }
+  .msg .body { font-size: 19px; line-height: 2; white-space: pre-line; }
+  .msg .sign { margin-top: 16px; font-family: "Baloo Bhaijaan 2", sans-serif; font-weight: 700; font-size: 22px; text-align: left; }
+  body.is-girl .msg .sign, body.is-girl .h2 em { color: var(--pink-2); }
+  body.is-boy .msg .sign, body.is-boy .h2 em { color: var(--blue-2); }
+  .h2 { font-size: clamp(28px, 8vw, 38px); }
+  .h2 em { font-style: normal; }
+  .scan { width: min(300px, 80%); margin: 26px auto 0; background: #FFFFFF; padding: 10px 10px 14px; transform: rotate(-2deg); box-shadow: 0 20px 34px -22px rgba(59,46,42,.6); }
+  .scan img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+  .scan p { font-family: "Baloo Bhaijaan 2", sans-serif; font-weight: 700; margin-top: 6px; }
+  .end { background: var(--sand); }
+  .credit { text-align: center; font-size: 13px; color: var(--ink-2); padding: 20px 0 calc(20px + env(safe-area-inset-bottom)); background: var(--sand); }
+  @media (prefers-reduced-motion: reduce) { .b-float, .cloud, .armed-on .ring { animation: none !important; } }
+</style>
+</head>
+<body>
+<canvas id="fx"></canvas>
+
+<div id="stage">
+  <div class="sky" aria-hidden="true">
+    <svg class="cloud" style="width:130px;top:21%;left:-34px;animation-duration:19s" viewBox="0 0 130 56"><path d="M20 54a18 18 0 0 1 2-36 26 26 0 0 1 48-8 22 22 0 0 1 38 14 16 16 0 0 1 2 30z"/></svg>
+    <svg class="cloud" style="width:96px;top:33%;right:-14px;animation-duration:23s;animation-delay:-6s;opacity:.85" viewBox="0 0 130 56"><path d="M20 54a18 18 0 0 1 2-36 26 26 0 0 1 48-8 22 22 0 0 1 38 14 16 16 0 0 1 2 30z"/></svg>
+    <svg class="cloud" style="width:110px;top:52%;left:4%;animation-duration:27s;animation-delay:-11s;opacity:.7" viewBox="0 0 130 56"><path d="M20 54a18 18 0 0 1 2-36 26 26 0 0 1 48-8 22 22 0 0 1 38 14 16 16 0 0 1 2 30z"/></svg>
+    <svg class="cloud" style="width:80px;top:60%;right:6%;animation-duration:21s;animation-delay:-3s;opacity:.75" viewBox="0 0 130 56"><path d="M20 54a18 18 0 0 1 2-36 26 26 0 0 1 48-8 22 22 0 0 1 38 14 16 16 0 0 1 2 30z"/></svg>
+  </div>
+  <div id="flood"></div>
+
+  <div class="top">
+    <span class="kicker" id="kicker"></span>
+    <h1 id="title"></h1>
+    <p id="due"></p>
+  </div>
+
+  <div class="b-area" id="bArea">
+    <span class="ring"></span>
+    <div class="art" id="art" aria-hidden="true"></div>
+    <div class="b-float">
+      <!-- a clear balloon with pink AND blue confetti inside, so it gives nothing away -->
+      <svg id="balloon" viewBox="0 0 200 300" role="button" tabindex="-1" aria-label="البالون">
+        <path d="M100 232c-8 18 10 30 0 46s4 18 0 22" fill="none" stroke="#B9A48A" stroke-width="2"/>
+        <path d="M100 8C46 8 14 52 14 104c0 56 48 104 86 122 38-18 86-66 86-122C186 52 154 8 100 8z" fill="#EBD3A4" opacity=".82"/>
+        <g id="inside">
+          <circle cx="62" cy="150" r="7" fill="#F7B8C8"/><circle cx="132" cy="168" r="6" fill="#B5D5F3"/><rect x="88" y="176" width="14" height="8" rx="3" fill="#D9577E" transform="rotate(30 95 180)"/>
+          <rect x="110" y="140" width="14" height="8" rx="3" fill="#3F7CC0" transform="rotate(-25 117 144)"/><circle cx="146" cy="120" r="5" fill="#F7B8C8"/><circle cx="52" cy="112" r="5" fill="#B5D5F3"/>
+          <circle cx="96" cy="200" r="5" fill="#B5D5F3"/><circle cx="76" cy="186" r="4" fill="#D9577E"/><circle cx="120" cy="196" r="4" fill="#3F7CC0"/><rect x="66" y="128" width="12" height="7" rx="3" fill="#3F7CC0" transform="rotate(40 72 131)"/>
+        </g>
+        <path d="M90 224l10 14 10-14z" fill="#C9A35E"/>
+        <ellipse cx="62" cy="62" rx="15" ry="30" fill="#FFFFFF" opacity=".55" transform="rotate(-24 62 62)"/>
+        <text x="100" y="118" text-anchor="middle" font-family="Baloo Bhaijaan 2, sans-serif" font-weight="800" font-size="92" fill="#FFFFFF">؟</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="panel" id="panel" aria-live="polite"></div>
+</div>
+
+<div id="after">
+  <section>
+    <div class="wrap">
+      <span class="kicker" id="msgKicker"></span>
+      <h2 class="h2" id="msgTitle" style="margin-top:12px"></h2>
+      <div class="msg"><div class="body" id="msgBody"></div><div class="sign" id="msgSign"></div></div>
+      <figure class="scan" id="scan"><img id="scanImg" alt=""><p id="scanCap"></p></figure>
+    </div>
+  </section>
+  <section class="end">
+    <div class="wrap">
+      <h2 class="h2" id="endTitle"></h2>
+      <div class="actions">
+        <a class="btn wa" id="congratsBtn" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-3.3-.8-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.2z"/></svg>
+          <span id="congratsLbl"></span>
+        </a>
+        <button class="btn ghost" id="againBtn">🎈 فقّع البالون مرة تانية</button>
+      </div>
+    </div>
+  </section>
+  <p class="credit" id="credit"></p>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script>
+/* =====================================================================
+   CLIENT DETAILS — edit only this block for each order
+   ===================================================================== */
+const REVEAL = {
+  parents: 'أحمد وليلى',             // shown everywhere and in the WhatsApp messages
+  answer: 'girl',                    // 'girl' or 'boy'. Keep it secret!
+  babyName: 'ليا',                   // optional: shown after the reveal ('' = hidden)
+  due: 'البيبي جاي بشهر آذار إن شاء الله 🤍',
+  revealAt: 'demo',                  // '2026-11-07T20:00:00+03:00' = everyone sees it at that moment (any country)
+                                     // '' = no countdown, pop straight away · 'demo' = 8-second countdown
+  message: `من أول ما عرفنا، وقلبنا عم يدقّ أسرع.
+
+كنتو معنا بكل خطوة، وحبّينا تكونوا أول ناس بتعرفوا.
+
+ادعولنا يجي بالسلامة، ويكون فرحة إلنا وإلكن 🤍`,
+  scan: '',                          // optional ultrasound photo next to this file, e.g. 'scan.jpg'
+  scanCaption: 'أول صورة إلو 🤍',
+  whatsapp: '963983896568',          // parents' number: guesses and congratulations go to them
+  music: '',                         // e.g. 'music.mp3' next to this file; plays after the pop
+  credit: '@rasael.studio',
+};
+/* ===================================================================== */
+
+const $ = id => document.getElementById(id);
+const num = n => new Intl.NumberFormat('ar-SY-u-nu-arab').format(n);
+const two = n => new Intl.NumberFormat('ar-SY-u-nu-arab', { minimumIntegerDigits: 2 }).format(n);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+const hasGsap = typeof gsap !== 'undefined';
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const GIRL = REVEAL.answer === 'girl';
+const wa = text => REVEAL.whatsapp ? `https://wa.me/${REVEAL.whatsapp}?text=${encodeURIComponent(text)}` : '';
+const LABEL = { boy: 'صبي 💙', girl: 'بنت 💗' };
+const TAPS = 5;
+const store = (() => { const k = 'rasael-reveal-' + REVEAL.parents; return { get() { try { return JSON.parse(localStorage.getItem(k)); } catch { return null; } }, set(v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} } }; })();
+
+let target = REVEAL.revealAt && REVEAL.revealAt !== 'demo' ? new Date(REVEAL.revealAt).getTime() : null;
+let guess = null, guessName = '', taps = 0, armed = false, popped = false, cdTimer = 0;
+const panel = $('panel'), balloon = $('balloon');
+
+/* ---------- texts ---------- */
+const TITLE = '<span class="b">صبي</span> ولا <span class="g">بنت</span>؟';
+function setIntro() {
+  $('kicker').textContent = `${REVEAL.parents} بيستنّوا مولود 🍼`;
+  $('title').innerHTML = TITLE;
+  $('due').textContent = REVEAL.due;
+}
+setIntro();
+$('msgKicker').textContent = `من ${REVEAL.parents}`;
+$('msgTitle').innerHTML = GIRL ? 'أهلا وسهلا <em>بالأميرة</em> 💗' : 'أهلا وسهلا <em>بالبطل</em> 💙';
+$('msgBody').textContent = REVEAL.message;
+$('msgSign').textContent = `— ${REVEAL.parents}`;
+if (REVEAL.scan) { $('scanImg').src = REVEAL.scan; $('scanCap').textContent = REVEAL.scanCaption; } else $('scan').remove();
+$('endTitle').textContent = GIRL ? 'الله يجيبها بالسلامة 🤍' : 'الله يجيبه بالسلامة 🤍';
+$('congratsLbl').textContent = `ابعت مبروك لـ${REVEAL.parents}`;
+$('congratsBtn').href = wa(`مبروووك يا ${REVEAL.parents}! ${GIRL ? 'بنت 💗 الله يجيبها بالسلامة' : 'صبي 💙 الله يجيبه بالسلامة'} 🤍`);
+if (!REVEAL.whatsapp) $('congratsBtn').remove();
+$('credit').textContent = `صُنعت بحب 🤍 ${REVEAL.credit}`;
+
+/* ---------- sound (made in the browser, so nothing to download) ---------- */
+let AC = null;
+function ac() {
+  if (!AC) { try { AC = new (window.AudioContext || window.webkitAudioContext)(); } catch { return null; } }
+  if (AC.state === 'suspended') AC.resume();
+  return AC;
+}
+function tone(f0, f1, dur, type = 'sine', vol = .15, when = 0) {
+  const a = AC; if (!a) return;
+  const t = a.currentTime + when, o = a.createOscillator(), g = a.createGain();
+  o.type = type; o.frequency.setValueAtTime(f0, t); o.frequency.exponentialRampToValueAtTime(f1, t + dur);
+  g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t + .008); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+  o.connect(g).connect(a.destination); o.start(t); o.stop(t + dur + .02);
+}
+function noise(dur, vol, freq, when = 0, type = 'lowpass') {
+  const a = AC; if (!a) return;
+  const t = a.currentTime + when, n = Math.round(a.sampleRate * dur), buf = a.createBuffer(1, n, a.sampleRate), d = buf.getChannelData(0);
+  for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / n, 3);
+  const s = a.createBufferSource(), f = a.createBiquadFilter(), g = a.createGain();
+  s.buffer = buf; f.type = type; f.frequency.value = freq; g.gain.value = vol;
+  s.connect(f).connect(g).connect(a.destination); s.start(t);
+}
+const sfx = {
+  pick: () => { tone(660, 990, .18, 'triangle', .12); tone(990, 1320, .2, 'sine', .08, .07); },
+  tick: () => tone(1400, 1400, .05, 'square', .035),
+  drum: () => { for (let i = 0; i < 26; i++) noise(.06, .16 + i * .012, 900, i * (.09 - i * .0018)); },
+  squeak: i => { tone(380 + i * 110, 700 + i * 160, .16, 'triangle', .1); noise(.08, .05, 3000, 0, 'highpass'); },
+  pop: () => { noise(.35, .9, 2600); tone(150, 38, .3, 'sine', .55); },
+  chime: () => [72, 76, 79, 84, 88].forEach((m, i) => tone(440 * 2 ** ((m - 69) / 12), 440 * 2 ** ((m - 69) / 12), 1.4, 'sine', .09, .25 + i * .09)),
+};
+let audio = null;
+if (REVEAL.music) { audio = new Audio(REVEAL.music); audio.loop = true; }
+
+/* ---------- confetti ---------- */
+const fx = $('fx'), ctx = fx.getContext('2d');
+let parts = [], fxRun = false;
+function sizeFx() { const r = devicePixelRatio || 1; fx.width = innerWidth * r; fx.height = innerHeight * r; ctx.setTransform(r, 0, 0, r, 0, 0); }
+sizeFx(); addEventListener('resize', sizeFx);
+const CONF = GIRL ? ['#F7B8C8', '#D9577E', '#FFFFFF', '#FCE3EA', '#EBD3A4', '#8E2547'] : ['#B5D5F3', '#3F7CC0', '#FFFFFF', '#E1EEFA', '#EBD3A4', '#1F4E86'];
+function burst(x, y, n = 120, spread = 1) {
+  if (reduceMotion) return;
+  for (let i = 0; i < n; i++) {
+    const a = -Math.PI / 2 + (Math.random() - .5) * Math.PI * 2 * spread, v = 5 + Math.random() * 11;
+    parts.push({ x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, w: 6 + Math.random() * 7, h: 8 + Math.random() * 10, r: Math.random() * 6, vr: (Math.random() - .5) * .3, c: CONF[i % CONF.length], life: 0, round: Math.random() < .35 });
+  }
+  if (!fxRun) { fxRun = true; requestAnimationFrame(tick); }
+}
+function rain(n = 150) { for (let i = 0; i < n; i++) setTimeout(() => burst(Math.random() * innerWidth, -20, 1, .1), i * 16); }
+function tick() {
+  ctx.clearRect(0, 0, innerWidth, innerHeight);
+  parts = parts.filter(p => p.y < innerHeight + 40 && p.life < 420);
+  for (const p of parts) {
+    p.life++; p.vy += .22; p.vx *= .985; p.vy *= .985; p.x += p.vx + Math.sin(p.life / 12) * .6; p.y += p.vy; p.r += p.vr;
+    ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.r); ctx.fillStyle = p.c;
+    if (p.round) { ctx.beginPath(); ctx.arc(0, 0, p.w / 2, 0, 7); ctx.fill(); } else { ctx.scale(1, Math.cos(p.life / 6)); ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h); }
+    ctx.restore();
+  }
+  if (parts.length) requestAnimationFrame(tick); else { fxRun = false; ctx.clearRect(0, 0, innerWidth, innerHeight); }
+}
+
+/* ---------- the panel ---------- */
+function setPanel(html) {
+  panel.innerHTML = html;
+  if (hasGsap && !reduceMotion) gsap.from(panel.children, { y: 12, opacity: 0, stagger: .06, duration: .45, ease: 'power3.out' });
+}
+const waiting = () => target && target > Date.now();
+
+// 1. guess
+function showGuess() {
+  const ready = !waiting();
+  setPanel(`<h2>${ready && target ? 'الجواب جاهز… بس أول شي' : 'شو توقعك؟'}</h2>
+    <p class="hint">${ready && target ? 'شو توقعك؟ صبي ولا بنت؟' : 'خمّن قبل ما ينكشف الجواب'}</p>
+    <div class="picks"><button class="pick boy" data-g="boy">صبي<small>💙 فريق الأزرق</small></button><button class="pick girl" data-g="girl">بنت<small>💗 فريق الوردي</small></button></div>
+    <input class="name" id="gName" placeholder="اسمك (اختياري)" maxlength="30" autocomplete="given-name">`);
+  panel.querySelectorAll('.pick').forEach(b => b.addEventListener('click', () => pick(b.dataset.g)));
+}
+function pick(g) {
+  ac(); sfx.pick();
+  guess = g; guessName = ($('gName')?.value || '').trim();
+  store.set({ guess, name: guessName });
+  if (hasGsap) gsap.fromTo(balloon, { rotate: g === 'boy' ? 8 : -8 }, { rotate: 0, duration: .9, ease: 'elastic.out(1.4,.3)' });
+  if (REVEAL.revealAt === 'demo' && !target) target = Date.now() + 8000;
+  next();
+}
+const guessLine = () => `<p class="picked ${guess}">توقعك: <b>${LABEL[guess]}</b> <button class="change" id="change">غيّر</button></p>`;
+const guessWa = () => REVEAL.whatsapp ? `<a class="btn wa" target="_blank" rel="noopener" href="${wa(`مرحبا ${REVEAL.parents} 🤍\nتوقعي للبيبي: ${LABEL[guess]}${guessName ? `\n— ${guessName}` : ''}`)}">ابعتلن توقعك عالواتساب</a>` : '';
+function bindChange() { const c = $('change'); if (c) c.addEventListener('click', () => { clearInterval(cdTimer); showGuess(); }); }
+
+// 2. wait for the moment (same instant in every country), or go straight to the balloon
+function next() { if (waiting()) showWait(); else showPop(); }
+function showWait() {
+  const when = new Intl.DateTimeFormat('ar-SY-u-nu-arab', { weekday: 'long', day: 'numeric', month: 'long', hour: 'numeric', minute: '2-digit' }).format(target);
+  setPanel(`${guessLine()}<h2 style="margin-top:4px">الجواب بينكشف بعد…</h2>
+    <div class="cd" id="cd"></div>
+    <p class="when">${REVEAL.revealAt === 'demo' ? 'خلّيك هون 👀' : `${when} (بتوقيتك) · خلّي الصفحة مفتوحة`}</p>
+    <div class="actions">${guessWa()}</div>`);
+  bindChange();
+  let lastS = -1;
+  const draw = () => {
+    const ms = target - Date.now();
+    if (ms <= 0) { clearInterval(cdTimer); showPop(); return; }
+    const s = Math.ceil(ms / 1000), cd = $('cd'); if (!cd) return;
+    if (s === lastS) return; lastS = s;
+    if (s <= 10) {
+      cd.className = 'cd final'; cd.innerHTML = `<div><b>${num(s)}</b><span>ثانية</span></div>`;
+      if (hasGsap) gsap.fromTo(cd.firstChild, { scale: 1.25 }, { scale: 1, duration: .5, ease: 'power3.out' });
+      sfx.tick(); if (s === 3) sfx.drum();
+      if (hasGsap) gsap.fromTo(balloon, { scale: 1 + (10 - s) * .015 }, { scale: 1 + (10 - s) * .01, duration: .4 });
+      return;
+    }
+    const d = Math.floor(s / 86400), h = Math.floor(s % 86400 / 3600), m = Math.floor(s % 3600 / 60), ss = s % 60;
+    cd.className = 'cd';
+    cd.innerHTML = [[d, 'يوم'], [h, 'ساعة'], [m, 'دقيقة'], [ss, 'ثانية']].filter(([v], i) => i || v).map(([v, l]) => `<div><b>${two(v)}</b><span>${l}</span></div>`).join('');
+  };
+  draw(); cdTimer = setInterval(draw, 200);
+}
+
+// 3. the balloon: tap it until it pops
+function showPop() {
+  taps = 0; armed = true; popped = false;
+  setPanel(`<h2>جاهزين؟ 🥁</h2><p class="hint" id="popHint">اضغط عالبالون لتفقّعه</p><div class="dots">${'<i></i>'.repeat(TAPS)}</div>`);
+  balloon.classList.add('armed'); balloon.setAttribute('tabindex', '0'); $('bArea').classList.add('armed-on');
+  if (hasGsap) gsap.to(balloon, { scale: 1.15, duration: .8, ease: 'back.out(2)' });
+}
+const HINTS = ['كمان… 🎈', 'كمان شوي!', 'عم يكبر 😬', 'آخر ضغطة!!'];
+function tapBalloon() {
+  if (!armed || popped) return;
+  ac(); sfx.squeak(taps);
+  taps++;
+  panel.querySelectorAll('.dots i').forEach((d, i) => d.classList.toggle('on', i < taps));
+  if ($('popHint')) $('popHint').textContent = HINTS[taps - 1] || '';
+  if (taps >= TAPS) return pop();
+  if (hasGsap) {
+    gsap.to(balloon, { scale: 1.15 + taps * .11, duration: .3, ease: 'back.out(3)' });
+    gsap.fromTo(balloon, { rotate: (taps % 2 ? -1 : 1) * (4 + taps * 2) }, { rotate: 0, duration: .5, ease: 'elastic.out(1.5,.3)' });
+  }
+}
+balloon.addEventListener('click', tapBalloon);
+balloon.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tapBalloon(); } });
+
+function pop() {
+  popped = true; armed = false;
+  balloon.classList.remove('armed'); balloon.setAttribute('tabindex', '-1'); $('bArea').classList.remove('armed-on');
+  sfx.pop(); sfx.chime();
+  if (audio) audio.play().catch(() => {});
+  const r = balloon.getBoundingClientRect(), st = $('stage').getBoundingClientRect();
+  const cx = r.left + r.width / 2, cy = r.top + r.height * .38;
+  document.body.classList.add(GIRL ? 'is-girl' : 'is-boy');
+  const flood = $('flood');
+  flood.style.left = (cx - st.left) + 'px'; flood.style.top = (cy - st.top) + 'px';
+  const reach = Math.hypot(Math.max(cx, st.width - cx), Math.max(cy - st.top, st.bottom - cy)) * 2 / 40 + 2;
+  if (hasGsap) {
+    gsap.to(balloon, { scale: '+=.5', opacity: 0, duration: .12, ease: 'power2.out' });
+    gsap.fromTo(flood, { scale: 0 }, { scale: reach, duration: reduceMotion ? 0 : .9, ease: 'power3.inOut' });
+    shreds(cx - st.left, cy - st.top);
+  } else { balloon.style.opacity = 0; flood.style.transform = `scale(${reach})`; }
+  burst(cx, cy, 200, 1); setTimeout(() => rain(160), 350);
+  setTimeout(showResult, 380);
+}
+function shreds(x, y) {
+  for (let i = 0; i < 9; i++) {
+    const s = document.createElement('span'); s.className = 'shred'; s.style.left = x + 'px'; s.style.top = y + 'px';
+    $('stage').appendChild(s);
+    const a = Math.random() * Math.PI * 2, d = 90 + Math.random() * 120;
+    gsap.to(s, { x: Math.cos(a) * d, y: Math.sin(a) * d + 160, rotate: (Math.random() - .5) * 720, opacity: 0, duration: 1.1 + Math.random() * .5, ease: 'power2.out', onComplete: () => s.remove() });
+  }
+}
+
+// 4. the answer: a bunch of balloons in her/his colour floats up where the clear one was
+function riseBalloons() {
+  const art = $('art'), C = GIRL ? ['#D9577E', '#FFFFFF', '#F7B8C8', '#EBD3A4', '#8E2547'] : ['#3F7CC0', '#FFFFFF', '#B5D5F3', '#EBD3A4', '#1F4E86'];
+  const spots = [[50, 0, 118, 0], [28, 26, 92, 1], [72, 22, 96, 2], [14, 58, 70, 3], [86, 54, 74, 4]];
+  art.innerHTML = spots.map(([x, y, w, c]) => `<svg viewBox="0 0 64 120" style="left:calc(${x}% - ${w / 2}px);width:${w}px;bottom:${y}px"><path d="M32 82c2 10-6 16 0 24s-4 10 0 14" fill="none" stroke="rgba(59,46,42,.3)" stroke-width="1.5"/><path d="M32 2C14 2 4 18 4 34c0 22 18 40 28 46 10-6 28-24 28-46C60 18 50 2 32 2z" fill="${C[c]}"/><path d="M28 80l4 6 4-6z" fill="${C[c]}"/><ellipse cx="20" cy="22" rx="6" ry="10" fill="#fff" opacity=".4" transform="rotate(-20 20 22)"/></svg>`).join('');
+  if (!hasGsap || reduceMotion) return;
+  art.querySelectorAll('svg').forEach((s, i) => {
+    gsap.from(s, { y: 420, duration: 1.6 + i * .15, ease: 'power3.out', delay: .25 + i * .08 });
+    gsap.to(s, { rotate: i % 2 ? 4 : -4, y: '-=10', duration: 2.4 + i * .3, yoyo: true, repeat: -1, ease: 'sine.inOut', delay: 2 });
+  });
+}
+function showResult() {
+  riseBalloons();
+  document.body.classList.add('revealed');
+  $('kicker').textContent = `مبروك لـ${REVEAL.parents} 🤍`;
+  $('title').innerHTML = GIRL ? 'إنها <span class="nm">بنت!</span> 💗' : 'إنه <span class="nm">صبي!</span> 💙';
+  $('due').textContent = REVEAL.babyName ? (GIRL ? `واسمها ${REVEAL.babyName} 🤍` : `واسمه ${REVEAL.babyName} 🤍`) : REVEAL.due;
+  if (hasGsap && !reduceMotion) gsap.from(['#kicker', '#title', '#due'], { scale: .4, opacity: 0, stagger: .12, duration: .8, ease: 'back.out(2.2)' });
+  const right = guess === REVEAL.answer;
+  const verdict = !guess ? '' : right ? `<p class="verdict">توقعك كان صح! 🎉</p><p class="hint">إنت أكيد بتعرفن منيح 😄</p>` : `<p class="verdict">ما زبط توقعك هالمرة 😄</p><p class="hint">بس الفرحة وحدة 🤍</p>`;
+  setPanel(`${verdict}<div class="actions">
+    ${REVEAL.whatsapp ? `<a class="btn wa" target="_blank" rel="noopener" href="${$('congratsBtn').href}">ابعت مبروك لـ${REVEAL.parents} 💌</a>` : ''}
+    <button class="btn ghost" id="toMsg">في رسالة إلك منن ↓</button></div>`);
+  $('toMsg').addEventListener('click', () => $('after').scrollIntoView({ behavior: 'smooth' }));
+}
+
+function replay() {
+  scrollTo({ top: 0, behavior: 'smooth' });
+  setTimeout(() => {
+    document.body.classList.remove('revealed', 'is-girl', 'is-boy');
+    $('art').innerHTML = '';
+    if (hasGsap) { gsap.set($('flood'), { scale: 0 }); gsap.set(balloon, { opacity: 1, scale: 1, rotate: 0 }); gsap.from(balloon, { scale: 0, duration: .7, ease: 'back.out(2)' }); }
+    setIntro(); showPop();
+  }, 500);
+}
+$('againBtn').addEventListener('click', replay);
+
+/* ---------- start ---------- */
+const saved = store.get();
+if (saved && saved.guess && REVEAL.revealAt !== 'demo') { guess = saved.guess; guessName = saved.name || ''; next(); }
+else showGuess();
+if (hasGsap && !reduceMotion) gsap.from(['#kicker', '#title', '#due', '#bArea', '#panel'], { y: 24, opacity: 0, stagger: .1, duration: .8, ease: 'power3.out', delay: .1 });
+</script>
+</body>
+</html>
