@@ -412,13 +412,13 @@ async function pour() {
   if (phase !== 'pour') return; phase = 'pouring';
   gsap.killTweensOf('#pot');
   SFX.pour();
-  await gsap.to('#pot', { rotation: -55, svgOrigin: '262 112', duration: .6, ease: 'power2.inOut' });
+  await gsap.to('#pot', { rotation: -55, svgOrigin: '262 112', duration: FAST ? .4 : .6, ease: 'power2.inOut' });
   gsap.set('#stream', { opacity: 1 });
   gsap.fromTo('#stream', { strokeDasharray: 140, strokeDashoffset: 140 }, { strokeDashoffset: 0, duration: .25 });
   const o = { v: 24 };
-  await gsap.to(o, { v: 0, duration: 1.5, ease: 'power1.out', onUpdate: () => setLevel(o.v) });
+  await gsap.to(o, { v: 0, duration: FAST ? 1 : 1.5, ease: 'power1.out', onUpdate: () => setLevel(o.v) });
   gsap.to('#stream', { opacity: 0, duration: .2 });
-  await gsap.to('#pot', { rotation: 0, x: 70, y: -60, opacity: 0, svgOrigin: '262 112', duration: .7, ease: 'power2.inOut' });
+  await gsap.to('#pot', { rotation: 0, x: 70, y: -60, opacity: 0, svgOrigin: '262 112', duration: FAST ? .4 : .7, ease: 'power2.inOut' });
   steam.classList.add('on');
   phase = 'drink';
   hint('hint', g('اعمل نيّة… وضلّك ضاغط عالفنجان لتشرب ☕', 'اعملي نيّة… وضلّك ضاغطة عالفنجان لتشربي ☕'));
@@ -428,7 +428,7 @@ function drinkLoop(ts) {
   if (!drinking || phase !== 'drink') return;
   if (!drinkLoop.last) drinkLoop.last = ts;
   const dt = Math.min(64, ts - drinkLoop.last); drinkLoop.last = ts;
-  setLevel(Math.min(24, level + dt * .0105));
+  setLevel(Math.min(24, level + dt * (FAST ? .017 : .0105)));
   if ((sipT += dt) > 520) { sipT = 0; SFX.sip(); }
   gsap.set('#cupG', { rotation: -6 * Math.min(1, level / 6), svgOrigin: '180 300' });
   if (level >= 24) return finishDrink();
@@ -449,7 +449,7 @@ async function flip() {
   action('action', '');
   SFX.swirl();
   const tl = gsap.timeline();
-  tl.to('#cupG', { rotation: 10, svgOrigin: '180 300', duration: .22, yoyo: true, repeat: 5, ease: 'sine.inOut' })
+  tl.to('#cupG', { rotation: 10, svgOrigin: '180 300', duration: .22, yoyo: true, repeat: FAST ? 3 : 5, ease: 'sine.inOut' })
     .to('#cupG', { y: -70, rotation: 180, svgOrigin: '180 300', duration: .75, ease: 'power2.inOut' })
     .to('#cupG', { y: 6, duration: .35, ease: 'power2.in' });
   await tl;
@@ -457,7 +457,7 @@ async function flip() {
   gsap.fromTo('#cupG', { y: 6 }, { y: 4, duration: .12, yoyo: true, repeat: 1 });
   phase = 'cooling';
   hint('hint', g('استنّى شوي… ليبرد 🤫', 'استنّي شوي… ليبرد 🤫'));
-  for (const n of ['٣', '٢', '١']) { action('action', `<span class="count">${n}</span>`); SFX.tick(); await sleep(reduce || FAST ? 380 : 1000); }
+  for (const n of ['٣', '٢', '١']) { action('action', `<span class="count">${n}</span>`); SFX.tick(); await sleep(reduce ? 380 : FAST ? 220 : 1000); }
   action('action', '');
   phase = 'lift';
   hint('hint', g('ارفع الفنجان… وخلّينا نشوف 👀', 'ارفعي الفنجان… وخلّينا نشوف 👀'));
