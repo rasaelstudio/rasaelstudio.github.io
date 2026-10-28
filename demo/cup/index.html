@@ -1,0 +1,583 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>في حدا بدو يقرالك فنجانك</title>
+<!-- Link preview (WhatsApp / Instagram). Change per client. -->
+<meta property="og:title" content="في حدا بدو يقرالك فنجانك ☕">
+<meta property="og:description" content="افتح الرابط… وخلّينا نشوف شو مكتوبلك">
+<meta name="theme-color" content="#1E120C">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=El+Messiri:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --wood: #1E120C;
+    --wood-2: #2E1C12;
+    --copper: #C07A45;
+    --gold: #D8B26A;
+    --cream: #F6EBDD;
+    --porcelain: #F3E9DB;
+    --coffee: #3A2215;
+    --grounds: #4A2C1A;
+    --cobalt: #2F4C7E;
+    --cardamom: #8FA36A;
+    --soft: rgba(246, 235, 221, .72);
+    --ease: cubic-bezier(.2, .7, .2, 1);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    background-color: var(--wood);
+    /* a Damascene mosaic table: faint mother-of-pearl stars inlaid in dark walnut */
+    background-image:
+      radial-gradient(ellipse 85% 60% at 50% 42%, rgba(120, 72, 40, .55) 0%, rgba(30, 18, 12, 0) 70%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%23F6EBDD' stroke-opacity='.07' stroke-width='1'%3E%3Cpath d='M32 14l5 13 13 5-13 5-5 13-5-13-13-5 13-5z'/%3E%3Cpath d='M32 20l8.5 3.5L44 32l-3.5 8.5L32 44l-8.5-3.5L20 32l3.5-8.5z'/%3E%3C/g%3E%3C/svg%3E");
+    color: var(--cream); font-family: "Amiri", serif; font-size: 18px; line-height: 1.8;
+    -webkit-font-smoothing: antialiased; overflow: hidden;
+  }
+  button { font: inherit; color: inherit; border: 0; background: none; cursor: pointer; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+  :focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+  svg { display: block; }
+
+  .screen {
+    position: fixed; inset: 0; z-index: 10;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: calc(20px + env(safe-area-inset-top)) 22px calc(22px + env(safe-area-inset-bottom));
+    text-align: center;
+    opacity: 0; visibility: hidden;
+    transition: opacity .7s var(--ease), visibility 0s .7s;
+  }
+  .screen.on { opacity: 1; visibility: visible; transition: opacity .7s var(--ease); }
+
+  .kicker { font-family: "El Messiri", sans-serif; font-weight: 500; font-size: 15px; letter-spacing: .12em; color: var(--gold); }
+  .w { display: inline-block; opacity: 0; transform: translateY(12px); filter: blur(3px); }
+  .on .w { animation: rise .8s var(--ease) forwards; animation-delay: calc(var(--i) * 90ms + 250ms); }
+  @keyframes rise { to { opacity: 1; transform: none; filter: blur(0); } }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px; min-height: 52px; padding: 12px 30px;
+    border-radius: 999px; font-family: "El Messiri", sans-serif; font-weight: 600; font-size: 18px;
+    background: var(--cream); color: var(--wood); box-shadow: 0 14px 30px -14px rgba(0,0,0,.8);
+    transition: transform .2s var(--ease);
+  }
+  .btn:active { transform: scale(.96); }
+  .btn.ghost { background: transparent; color: var(--cream); box-shadow: inset 0 0 0 1.5px rgba(246,235,221,.4); }
+
+  /* ===== Intro ===== */
+  .intro-cup { width: 92px; margin-bottom: 18px; color: var(--gold); }
+  .intro-name { font-family: "Aref Ruqaa", serif; font-weight: 700; font-size: clamp(54px, 15vw, 74px); line-height: 1.2; color: var(--cream); }
+  .intro-line { font-size: clamp(22px, 6vw, 27px); margin: 10px 0 38px; color: var(--soft); text-wrap: balance; }
+  .steam-mini path { animation: wisp 3.2s ease-in-out infinite; opacity: 0; }
+  .steam-mini path:nth-child(2) { animation-delay: 1s; }
+  .steam-mini path:nth-child(3) { animation-delay: 2s; }
+
+  /* ===== Cup scene ===== */
+  .hint { min-height: 92px; display: flex; align-items: center; justify-content: center; font-size: clamp(21px, 5.8vw, 25px); line-height: 1.6; text-wrap: balance; max-width: 340px; }
+  .hint span { display: inline-block; }
+  .stage { width: min(100%, 380px); flex: none; touch-action: none; user-select: none; -webkit-user-select: none; }
+  .stage svg { width: 100%; height: auto; overflow: visible; }
+  #pot, #cupG { cursor: pointer; }
+  .steam path { opacity: 0; }
+  .steam.on path { animation: wisp 3s ease-in-out infinite; }
+  .steam.on path:nth-child(2) { animation-delay: 1s; }
+  .steam.on path:nth-child(3) { animation-delay: 2s; }
+  @keyframes wisp { 0% { opacity: 0; transform: translateY(14px); } 35% { opacity: .55; } 100% { opacity: 0; transform: translateY(-34px); } }
+  .action { min-height: 64px; margin-top: 8px; display: flex; align-items: center; justify-content: center; }
+  .count { font-family: "El Messiri", sans-serif; font-weight: 700; font-size: 44px; color: var(--gold); }
+
+  /* ===== Reading ===== */
+  #sRead { justify-content: flex-start; padding-top: calc(34px + env(safe-area-inset-top)); }
+  .read-top { min-height: 60px; }
+  .bowl { position: relative; width: min(86vw, 340px); aspect-ratio: 1; margin: 6px auto 0; flex: none; }
+  .bowl svg { width: 100%; height: 100%; }
+  .shape { opacity: .28; transition: opacity 1s var(--ease); }
+  .shape.seen { opacity: .95; }
+  .glow { fill: none; stroke: var(--gold); stroke-width: 2; opacity: 0; }
+  #thumbHit { cursor: pointer; }
+  .reading { position: relative; width: min(100%, 360px); min-height: 150px; margin-top: 18px; padding: 18px 20px 16px; border-radius: 22px; background: rgba(246,235,221,.08); box-shadow: inset 0 0 0 1px rgba(216,178,106,.25); }
+  .reading p { font-size: clamp(20px, 5.4vw, 23px); line-height: 1.75; text-wrap: balance; }
+  .reading .tag { display: block; font-family: "El Messiri", sans-serif; font-size: 13px; letter-spacing: .1em; color: var(--gold); margin-bottom: 4px; }
+  .read-dots { display: flex; gap: 7px; justify-content: center; margin: 12px 0 0; }
+  .read-dots i { width: 7px; height: 7px; border-radius: 50%; background: rgba(246,235,221,.25); transition: background .4s; }
+  .read-dots i.on { background: var(--gold); }
+
+  /* ===== Letter ===== */
+  #sLetter { justify-content: flex-start; overflow-y: auto; -webkit-overflow-scrolling: touch; padding-top: calc(48px + env(safe-area-inset-top)); }
+  .paper {
+    position: relative; width: min(100%, 420px); margin: 0 auto; padding: 40px 28px 34px; text-align: right;
+    background: var(--cream); color: #2A1810; border-radius: 6px;
+    background-image: radial-gradient(circle at 16% 9%, transparent 0 38px, rgba(140,90,50,.16) 39px 43px, rgba(140,90,50,.07) 44px 46px, transparent 47px);
+    box-shadow: 0 30px 60px -28px rgba(0,0,0,.9);
+  }
+  .paper .stain { position: absolute; top: 14px; left: 18px; font-family: "El Messiri"; font-size: 12px; color: rgba(120,80,40,.5); }
+  .paper h2 { font-family: "Aref Ruqaa", serif; font-weight: 700; font-size: clamp(34px, 9vw, 42px); line-height: 1.4; margin-bottom: 10px; color: #3A1F12; }
+  .paper p { font-size: 20px; line-height: 1.95; margin-bottom: 14px; }
+  .paper .sign { text-align: left; margin-top: 18px; font-family: "Aref Ruqaa", serif; font-size: 26px; line-height: 1.5; }
+  .paper .sign small { display: block; font-family: "Amiri", serif; font-size: 17px; color: #7A5A44; }
+  .ending { padding: 60px 0 30px; display: grid; justify-items: center; gap: 18px; }
+  .ending h3 { font-family: "Aref Ruqaa", serif; font-size: clamp(34px, 9vw, 44px); line-height: 1.35; color: var(--cream); text-wrap: balance; }
+  .ending .row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+  .credit { font-family: "El Messiri", sans-serif; font-size: 13px; color: rgba(246,235,221,.5); margin-top: 22px; }
+  .credit a { color: var(--gold); text-decoration: none; direction: ltr; display: inline-block; }
+
+  #music { position: fixed; z-index: 60; left: 16px; bottom: calc(16px + env(safe-area-inset-bottom)); width: 46px; height: 46px; border-radius: 50%; background: rgba(246,235,221,.12); display: grid; place-items: center; backdrop-filter: blur(4px); }
+  #music svg { width: 22px; height: 22px; stroke: var(--cream); fill: none; stroke-width: 1.8; }
+  #music.off .wave { display: none; }
+  #fx { position: fixed; inset: 0; z-index: 55; pointer-events: none; width: 100%; height: 100%; }
+
+  @media (prefers-reduced-motion: reduce) { .w { animation: none !important; opacity: 1; transform: none; filter: none; } }
+</style>
+</head>
+<body>
+
+<!-- ===== 1. Intro ===== -->
+<section class="screen on" id="sIntro" aria-labelledby="introName">
+  <svg class="intro-cup" viewBox="0 0 100 100" aria-hidden="true">
+    <g class="steam-mini" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" opacity=".8">
+      <path d="M40 34c-6-8 6-12 0-22"/><path d="M52 34c-6-8 6-12 0-22"/><path d="M64 34c-6-8 6-12 0-22"/>
+    </g>
+    <path d="M22 44h56c0 22-10 38-28 38S22 66 22 44z" fill="currentColor"/>
+    <path d="M77 52c12-2 13 16-1 16" fill="none" stroke="currentColor" stroke-width="5"/>
+    <ellipse cx="50" cy="88" rx="38" ry="5" fill="currentColor" opacity=".55"/>
+  </svg>
+  <h1 class="intro-name" id="introName"></h1>
+  <p class="intro-line" id="introLine"></p>
+  <button class="btn" id="startBtn" type="button"></button>
+</section>
+
+<!-- ===== 2. Pour, drink, flip ===== -->
+<section class="screen" id="sCup" aria-live="polite">
+  <p class="hint" id="hint"></p>
+  <div class="stage" id="stage">
+    <svg viewBox="0 0 360 400" role="img" aria-label="ركوة وفنجان قهوة">
+      <defs>
+        <linearGradient id="copper" x1="0" x2="1">
+          <stop offset="0" stop-color="#8E4E26"/><stop offset=".35" stop-color="#E0A06A"/><stop offset=".6" stop-color="#C07A45"/><stop offset="1" stop-color="#7A3F1E"/>
+        </linearGradient>
+        <linearGradient id="porc" x1="0" x2="1">
+          <stop offset="0" stop-color="#D9CBB6"/><stop offset=".3" stop-color="#FBF5EC"/><stop offset=".7" stop-color="#F1E6D6"/><stop offset="1" stop-color="#C9B89F"/>
+        </linearGradient>
+        <radialGradient id="saucerG" cx=".5" cy=".4" r=".7">
+          <stop offset="0" stop-color="#FBF5EC"/><stop offset="1" stop-color="#D3C3AB"/>
+        </radialGradient>
+        <clipPath id="mouth"><ellipse cx="180" cy="250" rx="58" ry="10.5"/></clipPath>
+      </defs>
+
+      <!-- saucer -->
+      <ellipse cx="180" cy="368" rx="122" ry="22" fill="rgba(0,0,0,.35)"/>
+      <ellipse cx="180" cy="360" rx="118" ry="21" fill="url(#saucerG)"/>
+      <ellipse cx="180" cy="360" rx="118" ry="21" fill="none" stroke="#D8B26A" stroke-width="2.5"/>
+      <ellipse cx="180" cy="358" rx="70" ry="11" fill="none" stroke="rgba(150,120,90,.35)" stroke-width="1.5"/>
+
+      <!-- cup -->
+      <g id="cupG">
+        <g id="cupBody">
+          <path d="M236 268c34-8 36 50-6 50" fill="none" stroke="#E8DCCA" stroke-width="11" stroke-linecap="round"/>
+          <path d="M236 268c34-8 36 50-6 50" fill="none" stroke="#D8B26A" stroke-width="2"/>
+          <path d="M120 250C120 312 140 354 180 354S240 312 240 250Z" fill="url(#porc)"/>
+          <path d="M127 282c18 10 88 10 106 0" fill="none" stroke="var(--cobalt)" stroke-width="7"/>
+          <path d="M127 282c18 10 88 10 106 0" fill="none" stroke="#D8B26A" stroke-width="1.6" stroke-dasharray="1 7" stroke-linecap="round"/>
+          <path d="M140 304c14 6 66 6 80 0" fill="none" stroke="#D8B26A" stroke-width="1.3"/>
+          <!-- the inside, seen over the rim -->
+          <g clip-path="url(#mouth)">
+            <ellipse cx="180" cy="250" rx="58" ry="10.5" fill="#E6D8C3"/>
+            <ellipse cx="180" cy="246" rx="58" ry="10.5" fill="#CDBBA2"/>
+            <g id="coffee" transform="translate(0 24)">
+              <ellipse cx="180" cy="252" rx="60" ry="11" fill="var(--coffee)"/>
+              <ellipse cx="180" cy="252" rx="46" ry="7.6" fill="#7A4B2A" opacity=".75"/>
+              <ellipse cx="180" cy="252.5" rx="30" ry="4.6" fill="#9A6A42" opacity=".6"/>
+            </g>
+          </g>
+          <ellipse cx="180" cy="250" rx="60" ry="11" fill="none" stroke="#D8B26A" stroke-width="2.6"/>
+        </g>
+      </g>
+      <g class="steam" id="steam" fill="none" stroke="rgba(246,235,221,.55)" stroke-width="3" stroke-linecap="round" style="filter:blur(1.2px)">
+        <path d="M160 236c-10-14 10-22 0-38"/><path d="M182 232c-10-14 10-22 0-40"/><path d="M204 236c-10-14 10-22 0-38"/>
+      </g>
+
+      <!-- the coffee stream -->
+      <path id="stream" d="M205 143Q192 190 183 248" fill="none" stroke="var(--coffee)" stroke-width="5" stroke-linecap="round" opacity="0"/>
+
+      <!-- rakweh (Syrian coffee pot) -->
+      <g id="pot" transform="translate(262 112)">
+        <path d="M30 -18L112 -30L114 -22L32 -8Z" fill="#5B3A22"/>
+        <path d="M96 -28L114 -31L116 -21L98 -19Z" fill="#D8B26A"/>
+        <path d="M-28 -30C-26 -10 -46 18 -44 36Q-43 46 -32 46L32 46Q43 46 44 36C46 18 26 -10 28 -30Z" fill="url(#copper)"/>
+        <path d="M-30 -34L30 -34L28 -26L-28 -26Z" fill="#E0A06A"/>
+        <path d="M-30 -34Q-44 -40 -52 -36L-40 -28L-28 -28Z" fill="#C07A45"/>
+        <path d="M-40 20Q0 30 40 20" fill="none" stroke="rgba(255,230,190,.35)" stroke-width="2"/>
+        <g fill="rgba(255,235,200,.25)"><circle cx="-14" cy="6" r="2"/><circle cx="8" cy="12" r="1.6"/><circle cx="20" cy="-2" r="1.8"/><circle cx="-24" cy="26" r="1.7"/><circle cx="2" cy="32" r="1.5"/></g>
+      </g>
+    </svg>
+  </div>
+  <div class="action" id="action"></div>
+</section>
+
+<!-- ===== 3. Reading the cup ===== -->
+<section class="screen" id="sRead">
+  <p class="hint read-top" id="readHint"></p>
+  <div class="bowl">
+    <svg viewBox="0 0 300 300" role="img" aria-label="قعر الفنجان">
+      <defs>
+        <radialGradient id="inner" cx=".5" cy=".5" r=".5">
+          <stop offset="0" stop-color="#F6EEE2"/><stop offset=".75" stop-color="#EADDCB"/><stop offset="1" stop-color="#C8B497"/>
+        </radialGradient>
+        <!-- turns clean shapes into wet coffee grounds -->
+        <filter id="grain" x="-20%" y="-20%" width="140%" height="140%">
+          <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="7" result="n"/>
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="7" xChannelSelector="R" yChannelSelector="G" result="d"/>
+          <feComponentTransfer in="n" result="speck"><feFuncA type="discrete" tableValues="0 0 1 1 0 1"/></feComponentTransfer>
+          <feComposite in="d" in2="speck" operator="in" result="dots"/>
+          <feMerge><feMergeNode in="d"/><feMergeNode in="dots"/></feMerge>
+        </filter>
+        <filter id="soft"><feGaussianBlur stdDeviation="1.4"/></filter>
+        <clipPath id="bowlClip"><circle cx="150" cy="150" r="117"/></clipPath>
+      </defs>
+      <circle cx="150" cy="150" r="148" fill="#E9DCC8"/>
+      <circle cx="150" cy="150" r="148" fill="none" stroke="#D8B26A" stroke-width="2"/>
+      <circle cx="150" cy="150" r="126" fill="#FBF5EC"/>
+      <circle cx="150" cy="150" r="122" fill="none" stroke="#D8B26A" stroke-width="3"/>
+      <circle cx="150" cy="150" r="117" fill="url(#inner)"/>
+      <g clip-path="url(#bowlClip)">
+        <g id="blots" fill="var(--grounds)" filter="url(#grain)"></g>
+        <g id="shapes" fill="var(--grounds)" stroke="none" filter="url(#grain)"></g>
+        <g id="thumb" opacity="0" fill="none" stroke="#3A2215" stroke-width="1.6" stroke-linecap="round" filter="url(#soft)"></g>
+      </g>
+      <g id="glows"></g>
+      <circle id="thumbHit" cx="150" cy="150" r="60" fill="transparent"/>
+    </svg>
+  </div>
+  <div class="reading" id="reading" aria-live="polite"><span class="tag" id="readTag"></span><p id="readText"></p></div>
+  <div class="read-dots" id="readDots"></div>
+  <div class="action" id="readAction"></div>
+</section>
+
+<!-- ===== 4. Her letter ===== -->
+<section class="screen" id="sLetter">
+  <article class="paper">
+    <h2 id="letterTo"></h2>
+    <div id="letterBody"></div>
+    <p class="sign"><small id="signoff"></small><span id="fromName"></span></p>
+  </article>
+  <div class="ending">
+    <h3 id="closing"></h3>
+    <div class="row">
+      <a class="btn" id="replyBtn" target="_blank" rel="noopener"></a>
+      <button class="btn ghost" id="againBtn" type="button">من الأول ☕</button>
+    </div>
+    <p class="credit"><span id="creditLabel"></span> <a id="creditLink" target="_blank" rel="noopener"></a></p>
+  </div>
+</section>
+
+<button id="music" type="button" aria-label="الصوت">
+  <svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path class="wave" d="M16 9a4 4 0 010 6M18.5 6.5a7.5 7.5 0 010 11"/></svg>
+</button>
+<canvas id="fx"></canvas>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script>
+/* ============================================================
+   EDIT THIS PER CLIENT — everything on the page comes from here
+   ============================================================ */
+const CUP = {
+  to: 'يزن',
+  from: 'جود',
+  forHim: true,                       // true = the page talks to a man (اضغط), false = to a woman (اضغطي)
+  intro: 'في حدا بدو يقرالك فنجانك ☕',
+  initials: ['ج', 'ي'],              // the two letters "found" at the bottom of the cup: hers, then his
+  readings: [
+    // shape: road | ring | bird | heart | letters (the initials above)
+    { shape: 'road',  text: 'شايفة طريق أبيض طويل… وبآخرو بيت صغير إلنا التنين 🤍' },
+    { shape: 'ring',  text: 'وفي خاتم… مبيّن إنو في حدا ناطر يوم العرس أكتر منك 💍' },
+    { shape: 'bird',  text: 'وطير جايب خبرية حلوة: في بنت بتحبك أكتر ما بتتخيّل' },
+    { shape: 'heart', text: 'وقلب كبير بنص الفنجان… هاد قلبي، وكلّو إلك' },
+    { shape: 'letters', text: 'وبقعر الفنجان… حرفين لازقين ببعض، ما في شي بيفرّقهن' }
+  ],
+  letter: [
+    'بعرف إنك ما بتآمن بالفنجان… بس آمن فيني.',
+    'كل يوم الصبح بشرب قهوتي وبتخيّلك قاعد مقابيلي، عم تحكيلي عن نهارك وأنا عم إضحك على أتفه شي بتقولو.',
+    'إنتَ مو بس خطيبي… إنتَ صاحبي، وأماني، والشخص اللي بدي إشرب معو آخر فنجان بعمري.',
+    'ومهما صار، رح ضل إقلبلك فنجاني كل يوم… وإقرا فيه نفس الشي: إنتَ.'
+  ],
+  signoff: 'اللي قرأت فنجانك… وقلبك،',
+  closing: 'فنجانك… كلّو أنا 🤍',
+  replyText: 'قرأت فنجاني ☕🤍',
+  whatsapp: '963983896568',          // her number: the reply button opens a chat with her
+  music: '',                         // e.g. 'music.mp3' next to this file; empty = sound effects only
+  credit: { label: 'صُمّم هالفنجان بواسطة', handle: '@rasael.studio', url: 'https://instagram.com/rasael.studio' }
+};
+/* ============================================================ */
+
+const $ = id => document.getElementById(id);
+const g = (m, f) => CUP.forHim ? m : f;
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const FAST = /[?&]fast\b/.test(location.search);   // reel recording: shorter wait while the cup cools
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const words = s => s.split(/\s+/).map((w, i) => `<span class="w" style="--i:${i}">${w}</span>`).join(' ');
+
+/* ---------- sound: everything is made here, no files ---------- */
+let ac, master, muted = false, bgm;
+function audio() {
+  if (!ac) {
+    ac = new (window.AudioContext || window.webkitAudioContext)();
+    master = ac.createGain(); master.gain.value = .9; master.connect(ac.destination);
+  }
+  if (ac.state === 'suspended') ac.resume();
+  return ac;
+}
+function noiseBuf(sec) {
+  const b = ac.createBuffer(1, Math.ceil(ac.sampleRate * sec), ac.sampleRate), d = b.getChannelData(0);
+  for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+  return b;
+}
+function noise(sec, type, f, q, vol, shape) {
+  if (muted) return; audio();
+  const s = ac.createBufferSource(); s.buffer = noiseBuf(sec);
+  const flt = ac.createBiquadFilter(); flt.type = type; flt.frequency.value = f; flt.Q.value = q;
+  const gn = ac.createGain(), t = ac.currentTime;
+  shape(gn.gain, t, flt);
+  s.connect(flt).connect(gn).connect(master); s.start(t); s.stop(t + sec);
+  gn.gain.setValueAtTime(vol * 0, t); gn.gain.linearRampToValueAtTime(vol, t + .05);
+  return { gn, flt, t };
+}
+const SFX = {
+  pour() {   // a gurgling stream into porcelain
+    if (muted) return; audio();
+    const n = noise(2.3, 'bandpass', 700, 2.2, .5, () => {}); if (!n) return;
+    for (let k = 0; k < 24; k++) n.flt.frequency.setValueAtTime(520 + Math.random() * 900 + k * 18, n.t + k * .09);
+    n.gn.gain.setValueAtTime(.5, n.t + 1.9); n.gn.gain.linearRampToValueAtTime(0, n.t + 2.3);
+  },
+  sip() { const n = noise(.28, 'lowpass', 1300, .7, .35, () => {}); if (n) n.gn.gain.exponentialRampToValueAtTime(.001, n.t + .28); },
+  swirl() { const n = noise(1.1, 'bandpass', 400, 1.5, .25, () => {}); if (n) { n.flt.frequency.linearRampToValueAtTime(1400, n.t + 1); n.gn.gain.linearRampToValueAtTime(0, n.t + 1.1); } },
+  clink() {  // porcelain on porcelain
+    if (muted) return; audio(); const t = ac.currentTime;
+    [2380, 3710, 5230, 6890].forEach((f, i) => {
+      const o = ac.createOscillator(), gn = ac.createGain();
+      o.frequency.value = f; gn.gain.setValueAtTime(.16 / (i + 1), t); gn.gain.exponentialRampToValueAtTime(.0005, t + .5 - i * .08);
+      o.connect(gn).connect(master); o.start(t); o.stop(t + .6);
+    });
+  },
+  tick() { const n = noise(.05, 'highpass', 3000, .7, .3, () => {}); if (n) n.gn.gain.exponentialRampToValueAtTime(.001, n.t + .05); },
+  chime(k = 0) {   // a soft bell on the maqam Nahawand, a step higher each reading
+    if (muted) return; audio(); const t = ac.currentTime, f = 440 * 2 ** (([0, 3, 5, 7, 10, 12][k % 6] + 3) / 12);
+    [1, 2.01, 3.02].forEach((m, i) => {
+      const o = ac.createOscillator(), gn = ac.createGain();
+      o.frequency.value = f * m; gn.gain.setValueAtTime(.12 / (i + 1.5), t); gn.gain.exponentialRampToValueAtTime(.0005, t + 1.8);
+      o.connect(gn).connect(master); o.start(t); o.stop(t + 2);
+    });
+  }
+};
+$('music').addEventListener('click', () => {
+  muted = !muted; $('music').classList.toggle('off', muted);
+  if (bgm) muted ? bgm.pause() : bgm.play().catch(() => {});
+});
+if (CUP.music) { bgm = new Audio(CUP.music); bgm.loop = true; bgm.volume = .55; }
+
+/* ---------- screens ---------- */
+function go(id) { document.querySelectorAll('.screen').forEach(s => s.classList.toggle('on', s.id === id)); }
+function hint(el, text) {
+  const box = typeof el === 'string' ? $(el) : el;
+  if (reduce) { box.textContent = text; return; }
+  gsap.to(box, { opacity: 0, y: -6, duration: .2, onComplete: () => {
+    box.innerHTML = `<span>${text}</span>`; gsap.fromTo(box, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: .45, ease: 'power2.out' });
+  } });
+}
+function action(el, html, onClick) {
+  const box = $(el); box.innerHTML = html || '';
+  if (html && onClick) { const b = box.querySelector('button'); b.addEventListener('click', onClick, { once: true }); gsap.from(b, { scale: .7, opacity: 0, duration: .5, ease: 'back.out(2)' }); }
+}
+
+/* ---------- intro ---------- */
+$('introName').textContent = CUP.to + '…';
+$('introLine').innerHTML = words(CUP.intro);
+$('startBtn').textContent = g('يلا اقلبلي ياه ☕', 'يلا اقلبيلي ياه ☕');
+document.title = `${CUP.to}… ${CUP.intro}`;
+$('startBtn').addEventListener('click', () => { audio(); if (bgm && !muted) bgm.play().catch(() => {}); startCup(); }, { once: true });
+
+/* ---------- pour, drink, flip, cool, lift ---------- */
+const coffee = $('coffee'), steam = $('steam');
+let level = 24;   // 24 = empty (the surface sits below the rim), 0 = full
+const setLevel = v => { level = v; coffee.setAttribute('transform', `translate(0 ${v})`); };
+let phase = 'idle';
+
+function startCup() {
+  go('sCup');
+  phase = 'pour';
+  hint('hint', g('اضغط عالركوة… لنصبّلك قهوة', 'اضغطي عالركوة… لنصبّلك قهوة'));
+  gsap.to('#pot', { y: -4, duration: 1.2, yoyo: true, repeat: -1, ease: 'sine.inOut' });
+}
+async function pour() {
+  if (phase !== 'pour') return; phase = 'pouring';
+  gsap.killTweensOf('#pot');
+  SFX.pour();
+  await gsap.to('#pot', { rotation: -55, svgOrigin: '262 112', duration: .6, ease: 'power2.inOut' });
+  gsap.set('#stream', { opacity: 1 });
+  gsap.fromTo('#stream', { strokeDasharray: 140, strokeDashoffset: 140 }, { strokeDashoffset: 0, duration: .25 });
+  const o = { v: 24 };
+  await gsap.to(o, { v: 0, duration: 1.5, ease: 'power1.out', onUpdate: () => setLevel(o.v) });
+  gsap.to('#stream', { opacity: 0, duration: .2 });
+  await gsap.to('#pot', { rotation: 0, x: 70, y: -60, opacity: 0, svgOrigin: '262 112', duration: .7, ease: 'power2.inOut' });
+  steam.classList.add('on');
+  phase = 'drink';
+  hint('hint', g('اعمل نيّة… وضلّك ضاغط عالفنجان لتشرب ☕', 'اعملي نيّة… وضلّك ضاغطة عالفنجان لتشربي ☕'));
+}
+let drinking = false, sipT = 0;
+function drinkLoop(ts) {
+  if (!drinking || phase !== 'drink') return;
+  if (!drinkLoop.last) drinkLoop.last = ts;
+  const dt = Math.min(64, ts - drinkLoop.last); drinkLoop.last = ts;
+  setLevel(Math.min(24, level + dt * .0105));
+  if ((sipT += dt) > 520) { sipT = 0; SFX.sip(); }
+  gsap.set('#cupG', { rotation: -6 * Math.min(1, level / 6), svgOrigin: '180 300' });
+  if (level >= 24) return finishDrink();
+  requestAnimationFrame(drinkLoop);
+}
+function drinkStart() { if (phase !== 'drink' || drinking) return; drinking = true; drinkLoop.last = 0; sipT = 400; requestAnimationFrame(drinkLoop); }
+function drinkStop() { drinking = false; if (phase === 'drink') gsap.to('#cupG', { rotation: 0, svgOrigin: '180 300', duration: .3 }); }
+async function finishDrink() {
+  drinking = false; phase = 'drunk';
+  steam.classList.remove('on');
+  await gsap.to('#cupG', { rotation: 0, svgOrigin: '180 300', duration: .3 });
+  SFX.clink();
+  hint('hint', g('صحتين 🤍 هلّق دوّرو تلات مرات… واقلبو', 'صحتين 🤍 هلّق دوّريه تلات مرات… واقلبيه'));
+  action('action', `<button class="btn" type="button">${g('اقلب الفنجان', 'اقلبي الفنجان')} 🔄</button>`, flip);
+}
+async function flip() {
+  if (phase !== 'drunk') return; phase = 'flipping';
+  action('action', '');
+  SFX.swirl();
+  const tl = gsap.timeline();
+  tl.to('#cupG', { rotation: 10, svgOrigin: '180 300', duration: .22, yoyo: true, repeat: 5, ease: 'sine.inOut' })
+    .to('#cupG', { y: -70, rotation: 180, svgOrigin: '180 300', duration: .75, ease: 'power2.inOut' })
+    .to('#cupG', { y: 6, duration: .35, ease: 'power2.in' });
+  await tl;
+  SFX.clink();
+  gsap.fromTo('#cupG', { y: 6 }, { y: 4, duration: .12, yoyo: true, repeat: 1 });
+  phase = 'cooling';
+  hint('hint', g('استنّى شوي… ليبرد 🤫', 'استنّي شوي… ليبرد 🤫'));
+  for (const n of ['٣', '٢', '١']) { action('action', `<span class="count">${n}</span>`); SFX.tick(); await sleep(reduce || FAST ? 380 : 1000); }
+  action('action', '');
+  phase = 'lift';
+  hint('hint', g('ارفع الفنجان… وخلّينا نشوف 👀', 'ارفعي الفنجان… وخلّينا نشوف 👀'));
+}
+async function lift() {
+  if (phase !== 'lift') return; phase = 'lifting';
+  SFX.clink();
+  await gsap.to('#cupG', { y: -120, opacity: 0, duration: .7, ease: 'power2.in' });
+  startRead();
+}
+$('pot').addEventListener('click', pour);
+$('cupG').addEventListener('click', () => { if (phase === 'lift') lift(); });
+const cupEl = $('cupG');
+cupEl.addEventListener('pointerdown', e => { if (phase === 'drink') { e.preventDefault(); drinkStart(); } });
+['pointerup', 'pointercancel', 'pointerleave'].forEach(t => cupEl.addEventListener(t, drinkStop));
+$('stage').addEventListener('contextmenu', e => e.preventDefault());
+
+/* ---------- the bottom of the cup ---------- */
+// seeded random so every guest sees the same grounds
+let seed = [...CUP.to + CUP.from].reduce((a, c) => a * 31 + c.charCodeAt(0) | 0, 7);
+const rnd = () => { seed = (seed * 1664525 + 1013904223) | 0; return ((seed >>> 0) % 10000) / 10000; };
+(function grounds() {
+  let html = '';
+  for (let i = 0; i < 105; i++) {           // speckles clinging to the walls, denser near the rim
+    const a = rnd() * Math.PI * 2, r = 70 + Math.pow(rnd(), .6) * 46, s = .8 + rnd() * 3.4;
+    html += `<ellipse cx="${150 + Math.cos(a) * r}" cy="${150 + Math.sin(a) * r}" rx="${s * (1 + rnd())}" ry="${s}" transform="rotate(${a * 57.3} ${150 + Math.cos(a) * r} ${150 + Math.sin(a) * r})" opacity="${.35 + rnd() * .5}"/>`;
+  }
+  for (let i = 0; i < 8; i++) {            // streaks where the coffee ran down when the cup was turned
+    const a = rnd() * Math.PI * 2, r1 = 112, r2 = 64 + rnd() * 30;
+    html += `<path d="M${150 + Math.cos(a) * r1} ${150 + Math.sin(a) * r1}Q${150 + Math.cos(a + .2) * (r1 + r2) / 2} ${150 + Math.sin(a + .2) * (r1 + r2) / 2} ${150 + Math.cos(a + .05) * r2} ${150 + Math.sin(a + .05) * r2}" stroke="var(--grounds)" stroke-width="${2 + rnd() * 5}" fill="none" stroke-linecap="round" opacity=".45"/>`;
+  }
+  html += '<circle cx="150" cy="150" r="114" fill="none" stroke="var(--grounds)" stroke-width="7" opacity=".35"/>';
+  $('blots').innerHTML = html;
+  // a thumbprint: concentric ridges
+  let th = '';
+  for (let k = 0; k < 7; k++) th += `<ellipse cx="150" cy="150" rx="${4 + k * 2.6}" ry="${6 + k * 3.3}" stroke-dasharray="${8 + k * 3} ${2 + (k % 3)}" transform="rotate(14 150 150)"/>`;
+  $('thumb').innerHTML = th;
+})();
+const SHAPES = {
+  road:  { x: 92,  y: 86,  svg: '<path d="M60 112C72 96 66 82 84 72S108 64 116 50" fill="none" stroke="var(--grounds)" stroke-width="7" stroke-linecap="round"/><path d="M60 112C72 96 66 82 84 72S108 64 116 50" fill="none" stroke="#EADDCB" stroke-width="2" stroke-dasharray="4 6"/>' },
+  ring:  { x: 214, y: 112, svg: '<circle cx="214" cy="118" r="17" fill="none" stroke="var(--grounds)" stroke-width="6"/><path d="M206 96l8-10 8 10-8 6z"/>' },
+  bird:  { x: 160, y: 58,  svg: '<path d="M132 64c10-12 20-12 28 0 8-12 18-12 28 0-10-4-18-2-28 8-10-10-18-12-28-8z"/>' },
+  heart: { x: 150, y: 196, svg: '<path d="M150 222c-26-16-34-30-28-42 5-10 20-11 28 0 8-11 23-10 28 0 6 12-2 26-28 42z"/>' },
+  letters: { x: 96, y: 170, svg: () => `<text x="96" y="182" font-family="Aref Ruqaa" font-size="40" font-weight="700" text-anchor="middle">${CUP.initials[0]}</text><text x="96" y="182" dx="-26" dy="-6" font-family="Aref Ruqaa" font-size="30" font-weight="700" text-anchor="middle">${CUP.initials[1]}</text>` }
+};
+CUP.readings.forEach((r, i) => {
+  const s = SHAPES[r.shape]; if (!s) return;
+  $('shapes').insertAdjacentHTML('beforeend', `<g class="shape" data-i="${i}">${typeof s.svg === 'function' ? s.svg() : s.svg}</g>`);
+  $('glows').insertAdjacentHTML('beforeend', `<circle class="glow" data-i="${i}" cx="${s.x}" cy="${s.y + 10}" r="30"/>`);
+});
+$('readDots').innerHTML = CUP.readings.map(() => '<i></i>').join('');
+
+let readPhase = 'thumb', ri = -1;
+function startRead() {
+  go('sRead');
+  hint('readHint', g('بصّم بقعر الفنجان 👆', 'بصّمي بقعر الفنجان 👆'));
+  $('readTag').textContent = ''; $('readText').textContent = g('حط إصبعك بالنص… ونيّتك بقلبك', 'حطي إصبعك بالنص… ونيّتك بقلبك');
+  readPhase = 'thumb';
+}
+async function thumb() {
+  if (readPhase !== 'thumb') return; readPhase = 'reading';
+  SFX.sip();
+  gsap.to('#thumb', { opacity: .55, duration: .5 });
+  gsap.fromTo('#thumbHit', { attr: { r: 20 } }, { attr: { r: 60 }, duration: .4 });
+  await sleep(700);
+  hint('readHint', 'خلّيني شوف… 👀');
+  nextReading();
+}
+function burst(x, y) {
+  if (reduce) return;
+  const cv = $('fx'), ctx = cv.getContext('2d'), dpr = devicePixelRatio || 1;
+  cv.width = innerWidth * dpr; cv.height = innerHeight * dpr; ctx.scale(dpr, dpr);
+  const ps = Array.from({ length: 26 }, () => ({ x, y, vx: (Math.random() - .5) * 4, vy: -Math.random() * 4 - 1, l: 1 }));
+  (function f() {
+    ctx.clearRect(0, 0, innerWidth, innerHeight); let alive = 0;
+    for (const p of ps) { p.x += p.vx; p.y += p.vy; p.vy += .12; p.l -= .018; if (p.l > 0) { alive++; ctx.globalAlpha = p.l; ctx.fillStyle = '#D8B26A'; ctx.beginPath(); ctx.arc(p.x, p.y, 2.2, 0, 7); ctx.fill(); } }
+    if (alive) requestAnimationFrame(f); else ctx.clearRect(0, 0, innerWidth, innerHeight);
+  })();
+}
+async function nextReading() {
+  ri++;
+  const r = CUP.readings[ri];
+  if (!r) return toLetter();
+  const shape = document.querySelector(`.shape[data-i="${ri}"]`), glow = document.querySelector(`.glow[data-i="${ri}"]`);
+  shape.classList.add('seen');
+  SFX.chime(ri);
+  gsap.fromTo(glow, { opacity: .9, attr: { r: 18 } }, { opacity: 0, attr: { r: 46 }, duration: 1.4, ease: 'power2.out' });
+  const b = glow.getBoundingClientRect(); burst(b.left + b.width / 2, b.top + b.height / 2);
+  document.querySelectorAll('#readDots i').forEach((d, k) => d.classList.toggle('on', k <= ri));
+  $('readTag').textContent = ['أول شي', 'وبعدين', 'وهون', 'وبالنص', 'وبالآخر'][Math.min(ri, 4)];
+  $('readText').innerHTML = words(r.text);
+  gsap.fromTo('#readText .w', { opacity: 0, y: 10, filter: 'blur(3px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', stagger: .07, duration: .6, ease: 'power2.out' });
+  const last = ri === CUP.readings.length - 1;
+  await sleep(reduce ? 200 : 1200);
+  action('readAction', `<button class="btn${last ? '' : ' ghost'}" type="button">${last ? 'في شي ما بيبيّن بالفنجان… 💌' : 'وشو كمان؟ 👀'}</button>`, nextReading);
+}
+$('thumbHit').addEventListener('click', thumb);
+
+/* ---------- the letter ---------- */
+$('letterTo').textContent = CUP.to + '،';
+$('letterBody').innerHTML = CUP.letter.map(p => `<p>${p}</p>`).join('');
+$('signoff').textContent = CUP.signoff;
+$('fromName').textContent = CUP.from;
+$('closing').textContent = CUP.closing;
+$('replyBtn').textContent = g('ردّ عليها 💬', 'ردّي عليه 💬');
+$('replyBtn').href = `https://wa.me/${CUP.whatsapp}?text=${encodeURIComponent(CUP.replyText + '\n')}`;
+$('creditLabel').textContent = CUP.credit.label;
+$('creditLink').textContent = CUP.credit.handle; $('creditLink').href = CUP.credit.url;
+function toLetter() {
+  action('readAction', '');
+  go('sLetter');
+  $('sLetter').scrollTop = 0;
+  if (reduce) return;
+  gsap.from('.paper', { y: 60, opacity: 0, rotate: -2, duration: 1, ease: 'power3.out', delay: .3 });
+  gsap.from('#letterBody p, .paper .sign', { opacity: 0, y: 14, filter: 'blur(4px)', stagger: .6, duration: .9, delay: 1 });
+}
+$('againBtn').addEventListener('click', () => location.reload());
+
+// handles for the reel studio
+window.CUPAPI = { start: () => $('startBtn').click(), pour, drinkStart, drinkStop, flip, lift, thumb, next: nextReading, toLetter, setLevel, get phase() { return phase; } };
+</script>
+</body>
+</html>

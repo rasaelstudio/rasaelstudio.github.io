@@ -85,6 +85,7 @@
       <div class="kinds">
         <div class="kind"><input type="radio" name="kind" id="k-wedding" value="wedding"><label for="k-wedding"><img src="../assets/wedding-closed.jpg" alt="">دعوة عرس</label></div>
         <div class="kind"><input type="radio" name="kind" id="k-engage" value="engage"><label for="k-engage"><img src="../assets/engage-closed.jpg" alt="">خطوبة / كتب كتاب</label></div>
+        <div class="kind"><input type="radio" name="kind" id="k-cup" value="cup"><label for="k-cup"><img src="../assets/cup-closed.jpg" alt="">اقريلو فنجانو ☕</label></div>
         <div class="kind"><input type="radio" name="kind" id="k-letter" value="letter"><label for="k-letter"><img src="../assets/letter-closed.jpg" alt="">رسالة حب</label></div>
         <div class="kind"><input type="radio" name="kind" id="k-proposal" value="proposal"><label for="k-proposal"><img src="../assets/proposal-closed.jpg" alt="">طلب زواج</label></div>
         <div class="kind"><input type="radio" name="kind" id="k-birthday" value="birthday"><label for="k-birthday"><img src="../assets/birthday-closed.jpg" alt="">عيد ميلاد</label></div>
@@ -127,7 +128,7 @@
 <script src="../config.js"></script>
 <script>
 const R = window.RASAEL;
-const KIND_NAME = { wedding: 'دعوة عرس', engage: 'دعوة خطوبة / كتب كتاب', letter: 'رسالة حب', proposal: 'طلب زواج', birthday: 'عيد ميلاد', reveal: 'كشف جنس المولود', other: 'هدية لمناسبة' };
+const KIND_NAME = { wedding: 'دعوة عرس', engage: 'دعوة خطوبة / كتب كتاب', letter: 'رسالة حب', proposal: 'طلب زواج', birthday: 'عيد ميلاد', reveal: 'كشف جنس المولود', cup: 'اقريلو فنجانو', other: 'هدية لمناسبة' };
 
 // The questions for each kind. Order of fields = order in the WhatsApp message.
 const FIELDS = {
@@ -160,8 +161,16 @@ const FIELDS = {
     { id: 'story', label: 'محطات من قصتكن (اختياري)', type: 'textarea', ph: 'صيف ٢٠٢٤: أول مرة التقينا…' },
     { id: 'rsvp', label: 'رقم واتساب لتأكيد الحضور', type: 'tel', ph: '9639xxxxxxxx', hint: 'الضيوف بيأكدو مع عدد الأشخاص برسالة لهالرقم' },
   ],
-  letter: [
-    { id: 'to', label: 'لمين الرسالة؟ (الاسم)', req: 1 },
+  cup: [
+    { id: 'to', label: 'اسمو (اللي رح يقرا فنجانو)', req: 1 },
+    { id: 'toGender', label: 'هو ولا هي؟', type: 'select', options: ['هو', 'هي'], req: 1 },
+    { id: 'from', label: 'اسمك متل ما بدك يبيّن', req: 1 },
+    { id: 'initials', label: 'الحرفين اللي بيطلعو بقعر الفنجان', ph: 'مثال: ج و ي' },
+    { id: 'readings', label: 'شو بدك «يشوف» بفنجانو؟ (كل شي بسطر)', type: 'textarea', ph: 'طريق أبيض… وبيت إلنا\nخاتم… وعرس قريب\nأو اكتب «اكتبوها إنتو» واحكيلنا عنكم' },
+    { id: 'letter', label: 'رسالتك بالآخر', type: 'textarea', req: 1, ph: 'اكتب من قلبك… أو «اكتبوها إنتو» واحكيلنا شوي عنكم' },
+    { id: 'replyWa', label: 'رقم واتسابك لزر «ردّ عليها»', type: 'tel', ph: '9639xxxxxxxx' },
+  ],
+  letter: [    { id: 'to', label: 'لمين الرسالة؟ (الاسم)', req: 1 },
     { id: 'toGender', label: 'اللي رح يقراها: هي ولا هو؟', type: 'select', options: ['هي', 'هو'], req: 1 },
     { id: 'from', label: 'اسمك متل ما بدك يبيّن', req: 1 },
     { id: 'nick', label: 'اسم الدلع اللي بتنادو فيه', ph: 'مثال: حياتي، قلبي…' },
