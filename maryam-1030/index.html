@@ -8,7 +8,7 @@
 <!-- Link preview (WhatsApp / Instagram). Change per client. -->
 <meta property="og:title" content="في مفاجأة إلك 🎂">
 <meta property="og:description" content="افتحيها… وجهّزي أمنيتك 🎈">
-<meta name="theme-color" content="#FFF6EC">
+<meta name="theme-color" content="#0E0C0B">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Marhey:wght@400;600;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
@@ -156,6 +156,61 @@
   .rv { opacity: 0; }
   @media (prefers-reduced-motion: reduce) { .gift.idle, .flame, .hero .balloons svg, .garland .bulb { animation: none !important; } }
 </style>
+<!-- client theme: black, gold and silver with a touch of pink -->
+<style>
+  :root {
+    --cream: #0E0C0B; --cream-2: #171412; --cocoa: #F1EBE0; --cocoa-2: #B9B4AC;
+    --berry: #D4AF5A; --berry-2: #E9C77B; --butter: #E9C77B; --apricot: #B8913F; --mint: #C9CCD3; --sky: #9EA3AC; --lilac: #E7A3B1;
+    --gold: #D4AF5A; --gold-2: #F0D58C; --silver: #C9CCD3; --pink: #E7A3B1; --night: #0B0908;
+  }
+  body { background: var(--cream); color: var(--cocoa); }
+  #sGift { background:
+      radial-gradient(circle at 12% 18%, var(--gold) 0 2px, transparent 3px), radial-gradient(circle at 86% 12%, var(--silver) 0 3px, transparent 4px),
+      radial-gradient(circle at 78% 82%, var(--gold-2) 0 2px, transparent 3px), radial-gradient(circle at 18% 76%, var(--pink) 0 3px, transparent 4px),
+      radial-gradient(circle at 50% 8%, var(--silver) 0 2px, transparent 3px), radial-gradient(circle at 92% 50%, var(--gold) 0 2px, transparent 3px),
+      radial-gradient(ellipse 80% 55% at 50% 52%, #241D17 0%, var(--cream) 70%); }
+  .g-title { color: var(--gold-2); }
+  .g-box { background: linear-gradient(90deg, rgba(255,255,255,.04), transparent 30%, transparent 70%, rgba(0,0,0,.25)), #1C1815; box-shadow: inset 0 0 0 1px rgba(212,175,90,.35); }
+  .g-lid { background: linear-gradient(180deg, rgba(255,255,255,.06), transparent 50%), #26201B; box-shadow: inset 0 0 0 1px rgba(212,175,90,.4); }
+  .g-shadow { background: radial-gradient(closest-side, rgba(0,0,0,.6), transparent); }
+  .g-hint .dot { background: var(--pink); }
+  /* the dark room before the candles: his night picture behind the cake */
+  #sCake { background: linear-gradient(180deg, rgba(8,6,5,.86) 0%, rgba(8,6,5,.45) 38%, rgba(8,6,5,.25) 70%, rgba(8,6,5,.7) 100%), url(night.jpg) center 70% / cover no-repeat, var(--night); color: #F7F1E6; }
+  #sCake .lights-on { background: radial-gradient(ellipse 80% 60% at 50% 45%, rgba(240,213,140,.35), rgba(14,12,11,.25) 70%); }
+  #sCake.lit { color: #F7F1E6; }
+  .c-say h2 { text-shadow: 0 2px 18px rgba(0,0,0,.8); }
+  .candle .num { background: repeating-linear-gradient(135deg, #FFF6DD 0 9px, #E2BE6A 9px 18px); -webkit-background-clip: text; background-clip: text; filter: drop-shadow(0 2px 0 #9C7A30) drop-shadow(0 6px 10px rgba(0,0,0,.45)); }
+  .candle .stick { background: repeating-linear-gradient(160deg, #FFF6DD 0 7px, #E2BE6A 7px 14px); }
+  .btn.berry { background: linear-gradient(135deg, var(--gold-2), var(--gold)); color: #1A140E; box-shadow: 0 12px 26px -10px rgba(212,175,90,.7); }
+  .btn.mic { background: var(--silver); color: #141210; box-shadow: 0 10px 30px -8px rgba(201,204,211,.4); }
+  .btn.ghost { background: rgba(241,235,224,.07); color: var(--cocoa); box-shadow: inset 0 0 0 1px rgba(201,204,211,.25); }
+  .kicker { color: var(--gold-2); background: rgba(212,175,90,.12); box-shadow: inset 0 0 0 1px rgba(212,175,90,.3); }
+  .hero { background: radial-gradient(ellipse 80% 60% at 50% 40%, #2A2119, var(--cream) 70%); }
+  .hero h1 .nm { color: var(--pink); }
+  .age { background: radial-gradient(circle at 35% 30%, #F6E3A8, #D4AF5A 55%, #9C7A30); box-shadow: 0 0 0 10px rgba(212,175,90,.18), 0 0 0 11px rgba(201,204,211,.35), 0 30px 60px -24px rgba(212,175,90,.6); }
+  .age b { color: #1A140E; } .age small { color: #3A2C14; }
+  .scroll-cue { border-color: var(--silver); } .scroll-cue::after { background: var(--gold); }
+  .msg { background: linear-gradient(180deg, #19150F, #120F0C); box-shadow: inset 0 0 0 1px rgba(212,175,90,.35), 0 30px 60px -40px rgba(0,0,0,.9); }
+  .msg::before { background: linear-gradient(90deg, #B8913F, #F0D58C, #B8913F); opacity: .8; }
+  .msg .sign { color: var(--pink); }
+  .stat { background: #17130F !important; box-shadow: inset 0 0 0 1px rgba(201,204,211,.18); }
+  .stat:nth-child(1) b, .stat:nth-child(4) b { color: var(--gold-2); } .stat:nth-child(2) b { color: var(--silver); } .stat:nth-child(3) b { color: var(--pink); }
+  .pola { background: #1A1612; box-shadow: inset 0 0 0 1px rgba(212,175,90,.3), 0 18px 30px -20px rgba(0,0,0,.9); }
+  .pola p { color: var(--cocoa); }
+  .end { background: linear-gradient(180deg, var(--cream), #1E1813); }
+  .end .btn.ig { background: linear-gradient(135deg, #F0D58C, #D4AF5A 55%, #E7A3B1); color: #1A140E; box-shadow: 0 12px 26px -10px rgba(212,175,90,.7); }
+  .credit { color: var(--cocoa-2); }
+  /* the distance between them */
+  .dist { text-align: center; background: radial-gradient(ellipse 90% 60% at 50% 45%, #1F1914, var(--cream) 75%); overflow: hidden; }
+  .dist .map { position: relative; width: min(100%, 420px); margin: 30px auto 6px; }
+  .dist .map svg { width: 100%; height: auto; overflow: visible; }
+  .dist .city { font-size: 15px; font-weight: 700; fill: var(--cocoa-2); font-family: "Tajawal", sans-serif; }
+  .dist .km { font-family: "Marhey", sans-serif; font-size: clamp(56px, 17vw, 84px); line-height: 1.1; color: var(--gold-2); margin-top: 6px; }
+  .dist .km small { font-size: .38em; color: var(--silver); margin-inline-start: 6px; }
+  .dist .line1 { font-size: 19px; color: var(--cocoa-2); margin-top: 4px; }
+  .dist .line2 { font-family: "Marhey", sans-serif; font-size: clamp(22px, 6.4vw, 30px); color: var(--cocoa); margin-top: 26px; text-wrap: balance; opacity: 0; }
+  .dist .line2 b { color: var(--pink); font-weight: 700; }
+</style>
 </head>
 <body class="locked">
 <canvas id="fx"></canvas>
@@ -212,8 +267,28 @@
     </div>
   </section>
 
-  <section id="statsSec">
-    <div class="wrap" style="text-align:center">
+  <section class="dist" id="distSec">
+    <div class="wrap">
+      <span class="kicker rv">المسافة</span>
+      <h2 class="h2 rv">قدّيش بعيدين عن بعض؟</h2>
+      <div class="map">
+        <svg viewBox="0 0 400 180" aria-hidden="true">
+          <path d="M340 128Q200 -6 60 128" fill="none" stroke="rgba(201,204,211,.3)" stroke-width="2" stroke-dasharray="3 9" stroke-linecap="round"/>
+          <path id="distTrail" d="M340 128Q200 -6 60 128" fill="none" stroke="#D4AF5A" stroke-width="2.5" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+          <circle cx="340" cy="128" r="16" fill="rgba(212,175,90,.15)"/><circle cx="340" cy="128" r="7" fill="#D4AF5A"/>
+          <circle cx="60" cy="128" r="16" fill="rgba(231,163,177,.15)"/><circle cx="60" cy="128" r="7" fill="#E7A3B1"/>
+          <text class="city" x="340" y="164" text-anchor="middle" id="cityMe"></text>
+          <text class="city" x="60" y="164" text-anchor="middle" id="cityHer"></text>
+          <path id="distHeart" d="M0 6C-9 0-11-6-7-9-4-11-1-9 0-6 1-9 4-11 7-9 11-6 9 0 0 6Z" fill="#E7A3B1" transform="translate(340 128)"/>
+        </svg>
+      </div>
+      <p class="km"><span id="kmNum">٠</span><small id="kmUnit">كم</small></p>
+      <p class="line1" id="distLine1"></p>
+      <p class="line2" id="distLine2"></p>
+    </div>
+  </section>
+
+  <section id="statsSec">    <div class="wrap" style="text-align:center">
       <span class="kicker rv">بالأرقام</span>
       <h2 class="h2 rv" id="statsTitle"></h2>
       <p class="sub rv" id="statsSub"></p>
@@ -247,8 +322,8 @@
       <h2 class="big rv" id="endTitle"></h2>
       <p class="sub rv" id="endSub"></p>
       <div class="actions rv">
-        <a class="btn wa" id="replyBtn" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-3.3-.8-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.2z"/></svg>
+        <a class="btn ig" id="replyBtn" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
           <span id="replyLbl"></span>
         </a>
         <button class="btn ghost" id="againBtn">🎂 <span id="againLbl"></span></button>
@@ -297,7 +372,8 @@ Happy 20th Birthday, My heart’s twin. 🥹❤️‍🩹`,
   ],
   coupons: [                         // scratch-off gift coupons; empty list = section hidden
   ],
-  whatsapp: '963900000000',          // sender's number: the thank-you button opens a chat with him
+  instagram: 'https://www.instagram.com/t.m.x_0963',   // the reply button opens his profile
+  distance: { me: 'أنا', her: 'إنتِ', km: 880 },                 // their two cities and the km between them; km 0 = section hidden
   music: 'music.mp3',                // e.g. 'music.mp3' next to this file; plays when the gift opens
   credit: '@rasael.studio',
 };
@@ -344,7 +420,7 @@ $('endTitle').textContent = 'عقبال المية 🤍';
 $('endSub').textContent = g(`وكل سنة وإنتِ أحلى يا ${BDAY.nick}`, `وكل سنة وإنتَ أحلى يا ${BDAY.nick}`);
 $('replyLbl').textContent = g(`ردّي على ${BDAY.from}`, `ردّ على ${BDAY.from}`);
 $('againLbl').textContent = g('طفّي الشموع مرة تانية', 'طفّي الشموع مرة تانية');
-$('replyBtn').href = `https://wa.me/${BDAY.whatsapp}?text=${encodeURIComponent(g('شكراً عالمفاجأة… كتير حبّيتها 🤍🎂', 'شكراً عالمفاجأة… كتير حبّيتها 🤍🎂'))}`;
+$('replyBtn').href = BDAY.instagram;   // he wants her reply on his Instagram
 $('credit').textContent = `صُنعت بحب 🤍 ${BDAY.credit}`;
 
 /* stats */
@@ -365,8 +441,38 @@ else $('photos').innerHTML = BDAY.photos.map(p => `<figure class="pola"><img src
 if (!BDAY.coupons.length) $('couponSec').remove();
 else $('coupons').innerHTML = BDAY.coupons.map(c => `<div class="coupon rv"><div class="in"><h3>${esc(c.title)}</h3><p>${esc(c.text)}</p></div><canvas></canvas></div>`).join('');
 
+/* ---------- the distance: a heart flies from his city to hers, the km count up… then melt to zero ---------- */
+(function distance() {
+  const D = BDAY.distance;
+  if (!D || !D.km) return $('distSec').remove();
+  $('cityMe').textContent = D.me; $('cityHer').textContent = D.her;
+  $('distLine1').textContent = `بيناتنا ${num(D.km)} كيلومتر…`;
+  $('distLine2').innerHTML = g('بس الحقيقة؟ إنتِ <b>أقرب من هيك بكتير</b>… إنتِ هون، بقلبي 🤍', 'بس الحقيقة؟ إنتَ <b>أقرب من هيك بكتير</b>… إنتَ هون، بقلبي 🤍');
+  const trail = $('distTrail'), heart = $('distHeart'), kmEl = $('kmNum');
+  const finish = () => {
+    kmEl.textContent = 'صفر'; $('kmUnit').textContent = 'كم من قلبي';
+    $('distLine2').style.opacity = 1; trail.style.strokeDashoffset = 0;
+    const p = trail.getPointAtLength(trail.getTotalLength()); heart.setAttribute('transform', `translate(${p.x} ${p.y})`);
+  };
+  if (!hasGsap || reduceMotion) return finish();
+  const L = trail.getTotalLength(), o = { t: 0, km: 0 };
+  ScrollTrigger.create({ trigger: '#distSec .map', start: 'top 75%', once: true, onEnter: () => {
+    gsap.timeline()
+      .to(o, { t: 1, km: D.km, duration: 2.6, ease: 'power2.inOut', onUpdate: () => {
+        trail.style.strokeDashoffset = 1 - o.t;
+        const p = trail.getPointAtLength(L * o.t); heart.setAttribute('transform', `translate(${p.x} ${p.y}) scale(${1 + Math.sin(o.t * Math.PI) * .6})`);
+        kmEl.textContent = num(Math.round(o.km));
+      } })
+      .add(() => { const r = heart.getBoundingClientRect(); burst(r.left + r.width / 2, r.top, 40, .5); })
+      .from('#distLine1', { opacity: 0, y: 10, duration: .5 })
+      .to(o, { km: 0, duration: 1.6, ease: 'power3.in', delay: 1.1, onUpdate: () => { kmEl.textContent = num(Math.round(o.km)); } })
+      .add(() => { kmEl.textContent = 'صفر'; $('kmUnit').textContent = 'كم من قلبي'; })   // the Arabic zero is only a dot
+      .to('#distLine2', { opacity: 1, y: 0, duration: .8, ease: 'power3.out' });
+  } });
+})();
+
 /* ---------- balloons ---------- */
-const BALLOON_COLORS = ['#E2546B', '#FFD98A', '#9AD3BC', '#A9D2E8', '#CDB8E8', '#F6A04D'];
+const BALLOON_COLORS = ['#D4AF5A', '#C9CCD3', '#1F1B19', '#E7A3B1', '#F0D58C', '#9EA3AC'];
 function balloonSvg(c) {
   return `<svg viewBox="0 0 64 120" aria-hidden="true"><path d="M32 82c2 10-6 16 0 24s-4 10 0 14" fill="none" stroke="rgba(58,34,25,.35)" stroke-width="1.5"/>
     <path d="M32 2C14 2 4 18 4 34c0 22 18 40 28 46 10-6 28-24 28-46C60 18 50 2 32 2z" fill="${c}"/>
@@ -385,7 +491,7 @@ const fx = $('fx'), ctx = fx.getContext('2d');
 let parts = [], fxRun = false;
 function sizeFx() { const r = devicePixelRatio || 1; fx.width = innerWidth * r; fx.height = innerHeight * r; ctx.setTransform(r, 0, 0, r, 0, 0); }
 sizeFx(); addEventListener('resize', sizeFx);
-const CONF = ['#E2546B', '#FFD98A', '#9AD3BC', '#A9D2E8', '#CDB8E8', '#F6A04D', '#FFFFFF'];
+const CONF = ['#D4AF5A', '#F0D58C', '#C9CCD3', '#FFFFFF', '#E7A3B1', '#9EA3AC', '#B8913F'];
 function burst(x, y, n = 120, spread = 1) {
   if (reduceMotion) return;
   for (let i = 0; i < n; i++) {
@@ -452,26 +558,26 @@ function flyBalloons(cx, cy) {
     return d + ` L${x + w} ${y} L${x + w} ${y - 14} L${x} ${y - 14}Z`;
   };
   let spr = '';
-  const SC = ['#9AD3BC', '#FFD98A', '#A9D2E8', '#FFFFFF', '#CDB8E8'];
+  const SC = ['#D9B25F', '#F3E3B5', '#C9CCD3', '#FFFFFF', '#E7A3B1'];
   for (let i = 0; i < 26; i++) { const x = 50 + rnd() * 220, y = 168 + rnd() * 62; spr += `<rect x="${x}" y="${y}" width="9" height="3.2" rx="1.6" fill="${SC[i % 5]}" transform="rotate(${rnd() * 180} ${x} ${y})"/>`; }
   for (let i = 0; i < 12; i++) { const x = 100 + rnd() * 120, y = 74 + rnd() * 50; spr += `<circle cx="${x}" cy="${y}" r="2" fill="${SC[i % 5]}"/>`; }
   $('cakeSvg').innerHTML = `
     <ellipse cx="160" cy="236" rx="150" ry="12" fill="rgba(0,0,0,.25)"/>
-    <ellipse cx="160" cy="230" rx="146" ry="14" fill="#F5E9DD"/><ellipse cx="160" cy="226" rx="146" ry="12" fill="#FFFFFF"/>
-    <rect x="34" y="146" width="252" height="84" rx="14" fill="#F4A6B3"/>
+    <ellipse cx="160" cy="230" rx="146" ry="14" fill="#9A9CA3"/><ellipse cx="160" cy="226" rx="146" ry="12" fill="#D9DBE0"/>
+    <rect x="34" y="146" width="252" height="84" rx="14" fill="#2B1C16"/>
     <rect x="34" y="146" width="252" height="84" rx="14" fill="url(#shade)"/>
-    <path d="${drip(34, 160, 252, 26)}" fill="#FFF6EC"/>
-    <rect x="34" y="212" width="252" height="10" fill="#E2546B" opacity=".9"/>
-    ${[...Array(12)].map((_, i) => `<circle cx="${46 + i * 21}" cy="217" r="4.6" fill="#FFF6EC"/>`).join('')}
-    <rect x="82" y="60" width="156" height="92" rx="12" fill="#FFF6EC"/>
+    <path d="${drip(34, 160, 252, 26)}" fill="#D9B25F"/>
+    <rect x="34" y="212" width="252" height="10" fill="#B8913F" opacity=".9"/>
+    ${[...Array(12)].map((_, i) => `<circle cx="${46 + i * 21}" cy="217" r="4.6" fill="#F3E3B5"/>`).join('')}
+    <rect x="82" y="60" width="156" height="92" rx="12" fill="#F1ECE4"/>
     <rect x="82" y="60" width="156" height="92" rx="12" fill="url(#shade)"/>
-    <path d="${drip(82, 74, 156, 24)}" fill="#E2546B"/>
+    <path d="${drip(82, 74, 156, 24)}" fill="#E7A3B1"/>
     ${spr}
     <defs><linearGradient id="shade" x1="0" x2="1"><stop offset="0" stop-color="#000" stop-opacity=".06"/><stop offset=".3" stop-color="#000" stop-opacity="0"/><stop offset=".75" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".1"/></linearGradient></defs>`;
 })();
 // fairy lights garland
 (function drawGarland() {
-  const C = ['#FFD98A', '#F7B7C2', '#9AD3BC', '#A9D2E8', '#FFFFFF'];
+  const C = ['#F0D58C', '#FFFFFF', '#D9B25F', '#E7A3B1', '#F3E3B5'];
   let b = '';
   for (let i = 0; i <= 16; i++) {
     const x = i * 25, y = 20 + Math.sin(i / 16 * Math.PI) * 44 + (i % 2 ? 6 : 0);
