@@ -251,7 +251,6 @@
   .music.muted .off { display: block; }
 
   @media (max-height: 560px) { .intro { gap: 14px; } .stage { width: min(84vw, 300px); } }
-  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; } }
 </style>
 </head>
 <body class="locked">
@@ -449,7 +448,8 @@ const LETTER = {
 const LOCALE = 'ar-SY-u-nu-arab';
 const num = (n, pad = 1) => new Intl.NumberFormat(LOCALE, { minimumIntegerDigits: pad, useGrouping: n >= 10000 }).format(n);
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const hasGsap = !!(window.gsap && window.ScrollTrigger) && !reduceMotion;
+// battery-saver modes switch on reduce-motion by themselves; the ink writing is the gift, so it always plays
+const hasGsap = !!(window.gsap && window.ScrollTrigger);
 const $ = id => document.getElementById(id);
 const words = s => s.split(/\s+/).map(w => `<span class="w">${w}</span>`).join(' ');
 
