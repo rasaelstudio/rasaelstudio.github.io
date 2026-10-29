@@ -108,9 +108,10 @@
   .age b { font-family: "Marhey", sans-serif; font-size: 92px; line-height: 1; color: var(--cocoa); }
   .age small { position: absolute; bottom: 30px; font-size: 15px; font-weight: 700; color: var(--cocoa-2); }
   .hero .date { color: var(--cocoa-2); font-size: 16px; margin-top: 12px; }
-  .scroll-cue { position: absolute; bottom: calc(24px + env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); width: 26px; height: 42px; border: 2px solid var(--cocoa-2); border-radius: 20px; opacity: .55; }
-  .scroll-cue::after { content: ""; position: absolute; left: 50%; top: 8px; width: 4px; height: 8px; margin-left: -2px; border-radius: 4px; background: var(--cocoa-2); animation: cue 1.8s infinite; }
-  @keyframes cue { 0% { transform: translateY(0); opacity: 1; } 80% { transform: translateY(14px); opacity: 0; } 100% { opacity: 0; } }
+  /* swipe-up hint: words, not an icon, so nobody misses that the page goes on */
+  .scroll-cue { position: absolute; bottom: calc(22px + env(safe-area-inset-bottom)); left: 0; right: 0; display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 16px; font-weight: 700; color: var(--cocoa); white-space: nowrap; animation: cue 1.8s ease-in-out infinite; }
+  .scroll-cue svg { width: 26px; height: 26px; stroke: var(--berry); fill: none; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+  @keyframes cue { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
   .msg { background: #FFFFFF; border-radius: 26px; padding: 34px 26px 30px; box-shadow: 0 30px 60px -40px rgba(58,34,25,.45); position: relative; }
   .msg::before { content: ""; position: absolute; top: -14px; left: 50%; width: 110px; height: 28px; transform: translateX(-50%) rotate(-2deg); background: rgba(246,160,77,.55); border-radius: 3px; }
@@ -199,7 +200,7 @@
     <h1 data-r id="heroTitle"></h1>
     <div class="age" data-r id="ageBadge"><b id="ageNum"></b><small id="ageLbl"></small></div>
     <p class="date" data-r id="heroDate"></p>
-    <span class="scroll-cue" aria-hidden="true"></span>
+    <div class="scroll-cue" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 15l6-6 6 6"/><path d="M6 21l6-6 6 6" opacity=".45"/></svg><span id="cueTxt"></span></div>
   </section>
 
   <section id="msgSec">
@@ -319,8 +320,12 @@ $('heroTitle').innerHTML = `سنة حلوة يا <span class="nm">${esc(BDAY.nic
 $('ageNum').textContent = num(age);
 $('ageLbl').textContent = 'سنة حلوة';
 if (!BDAY.showAge) $('ageBadge').remove();
+$('cueTxt').textContent = g('اسحبي الشاشة لفوق… في كمان 👆', 'اسحب الشاشة لفوق… في كمان 👆');
 $('heroDate').textContent = new Intl.DateTimeFormat('ar-SY-u-nu-arab', { day: 'numeric', month: 'long' }).format(bdayThisYear);
-$('msgBody').innerHTML = BDAY.message.split(/(\s+)/).map(w => /^\s+$/.test(w) ? w : `<span class="w">${esc(w)}</span>`).join('');
+// word-by-word reveal; a line in English stays one left-to-right piece so its words don't flip
+$('msgBody').innerHTML = BDAY.message.split('\n').map(line => /[A-Za-z]/.test(line) && !/[\u0600-\u06FF]/.test(line)
+  ? `<span dir="ltr" style="display:inline-block;max-width:100%">${line.split(/(\s+)/).map(w => /^\s+$/.test(w) || !w ? w : `<span class="w">${esc(w)}</span>`).join('')}</span>`
+  : line.split(/(\s+)/).map(w => /^\s+$/.test(w) || !w ? w : `<span class="w">${esc(w)}</span>`).join('')).join('\n');
 $('msgSign').textContent = `— ${BDAY.from}`;
 $('statsTitle').textContent = g('عمرك بالأرقام', 'عمرك بالأرقام');
 $('statsSub').textContent = g('وكل رقم فيهن كان أحلى لأنك فيه', 'وكل رقم فيهن كان أحلى لأنك فيه');

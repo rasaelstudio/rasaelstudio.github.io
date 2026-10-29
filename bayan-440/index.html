@@ -593,7 +593,14 @@ $('bigHeart').addEventListener('click', e => {
   $('heartHint').textContent = hearts === 1 ? 'كمان؟ 🙈' : `${num(hearts)} قلوب`;
   $('heartReply').classList.add('show');
 });
-$('againBtn').addEventListener('click', () => scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' }));
+// read again: back to the top, then the ink writes the letter once more
+$('againBtn').addEventListener('click', () => {
+  scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+  setTimeout(writeLetter, reduceMotion ? 0 : 700);
+});
+// coming back to the tab (e.g. from Instagram or WhatsApp) must not show a frozen, already-written copy
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+addEventListener('pageshow', e => { if (e.persisted) location.reload(); });
 
 /* ---------- Music ---------- */
 const musicBtn = $('music');
