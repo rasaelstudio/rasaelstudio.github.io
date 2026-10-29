@@ -210,6 +210,18 @@
   .dist .line1 { font-size: 19px; color: var(--cocoa-2); margin-top: 4px; }
   .dist .line2 { font-family: "Marhey", sans-serif; font-size: clamp(22px, 6.4vw, 30px); color: var(--cocoa); margin-top: 26px; text-wrap: balance; opacity: 0; }
   .dist .line2 b { color: var(--pink); font-weight: 700; }
+  /* how long they've been together */
+  .tog { text-align: center; }
+  .tog-days { margin-top: 18px; }
+  .tog-days b { display: block; font-family: "Marhey", sans-serif; font-size: clamp(76px, 24vw, 112px); line-height: 1.05; background: linear-gradient(180deg, #F6E3A8, #D4AF5A 60%, #9C7A30); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .tog-days small { font-size: 18px; color: var(--silver); }
+  .tog-clock { display: flex; justify-content: center; gap: 12px; margin-top: 18px; }
+  .tog-clock div { width: 84px; padding: 12px 0 8px; border-radius: 18px; background: #17130F; box-shadow: inset 0 0 0 1px rgba(201,204,211,.18); }
+  .tog-clock b { display: block; font-family: "Marhey", sans-serif; font-size: 26px; color: var(--cocoa); line-height: 1.3; }
+  .tog-clock span { font-size: 13px; color: var(--cocoa-2); }
+  .tog-since { margin-top: 18px; color: var(--cocoa-2); font-size: 15px; }
+  .tog-quote { margin: 22px auto 0; max-width: 22ch; font-family: "Marhey", sans-serif; font-size: clamp(22px, 6.2vw, 28px); line-height: 1.6; color: var(--cocoa); text-wrap: balance; }
+  .tog-quote b { color: var(--pink); font-weight: 700; }
 </style>
 </head>
 <body class="locked">
@@ -288,7 +300,19 @@
     </div>
   </section>
 
-  <section id="statsSec">    <div class="wrap" style="text-align:center">
+  <section class="tog" id="togSec">
+    <div class="wrap">
+      <span class="kicker rv">سوا</span>
+      <h2 class="h2 rv">صرلنا مع بعض</h2>
+      <p class="tog-days rv"><b id="togDays">٠</b><small>يوم</small></p>
+      <div class="tog-clock rv"><div><b id="togH">٠٠</b><span>ساعة</span></div><div><b id="togM">٠٠</b><span>دقيقة</span></div><div><b id="togS">٠٠</b><span>ثانية</span></div></div>
+      <p class="tog-since rv" id="togSince"></p>
+      <p class="tog-quote rv" id="togQuote"></p>
+    </div>
+  </section>
+
+  <section id="statsSec">
+    <div class="wrap" style="text-align:center">
       <span class="kicker rv">بالأرقام</span>
       <h2 class="h2 rv" id="statsTitle"></h2>
       <p class="sub rv" id="statsSub"></p>
@@ -374,6 +398,8 @@ Happy 20th Birthday, My heart’s twin. 🥹❤️‍🩹`,
   ],
   instagram: 'https://www.instagram.com/t.m.x_0963',   // the reply button opens his profile
   distance: { me: 'أنا', her: 'إنتِ', km: 880 },                 // their two cities and the km between them; km 0 = section hidden
+  together: '2026-07-19',                                         // the day they started; '' = section hidden
+  replyName: 'توتي',                                              // the name on the reply button
   music: 'music.mp3',                // e.g. 'music.mp3' next to this file; plays when the gift opens
   credit: '@rasael.studio',
 };
@@ -418,7 +444,22 @@ $('couponTitle').textContent = g('هداياكِ 🎁', 'هداياك 🎁');
 $('couponSub').textContent = g('حكّي بإصبعك لتشوفي شو مخبّى', 'حكّ بإصبعك لتشوف شو مخبّى');
 $('endTitle').textContent = 'عقبال المية 🤍';
 $('endSub').textContent = g(`وكل سنة وإنتِ أحلى يا ${BDAY.nick}`, `وكل سنة وإنتَ أحلى يا ${BDAY.nick}`);
-$('replyLbl').textContent = g(`ردّي على ${BDAY.from}`, `ردّ على ${BDAY.from}`);
+$('replyLbl').textContent = g(`ردّي على ${BDAY.replyName || BDAY.from}`, `ردّ على ${BDAY.replyName || BDAY.from}`);
+
+/* together since: a live counter and a short quote */
+(function together() {
+  if (!BDAY.together) return $('togSec').remove();
+  const since = new Date(BDAY.together + 'T00:00:00');
+  $('togSince').textContent = 'من ' + new Intl.DateTimeFormat('ar-SY-u-nu-arab', { day: 'numeric', month: 'long', year: 'numeric' }).format(since);
+  $('togQuote').innerHTML = 'بعاد بالكيلومترات… بس <b>قريبين بكل يوم</b> 🤍';
+  const pad = n => new Intl.NumberFormat('ar-SY-u-nu-arab', { minimumIntegerDigits: 2 }).format(n);
+  const tick = () => {
+    const s = Math.max(0, Math.floor((Date.now() - since) / 1000));
+    $('togDays').textContent = num(Math.floor(s / 86400));
+    $('togH').textContent = pad(Math.floor(s / 3600) % 24); $('togM').textContent = pad(Math.floor(s / 60) % 60); $('togS').textContent = pad(s % 60);
+  };
+  tick(); setInterval(tick, 1000);
+})();
 $('againLbl').textContent = g('طفّي الشموع مرة تانية', 'طفّي الشموع مرة تانية');
 $('replyBtn').href = BDAY.instagram;   // he wants her reply on his Instagram
 $('credit').textContent = `صُنعت بحب 🤍 ${BDAY.credit}`;
