@@ -371,8 +371,8 @@
       <p class="heart-reply" id="heartReply" data-text="heartReply"></p>
       <div class="actions">
         <a class="btn solid" id="replyBtn" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 20l1.3-4A8 8 0 1 1 8 18.7L4 20z"/></svg>
-          ردّي على الرسالة
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          ردّي على زكريا
         </a>
         <button class="btn ghost" id="againBtn" type="button">اقرئيها من جديد</button>
       </div>
@@ -462,8 +462,8 @@ document.title = `رسالة إلى ${LETTER.to}`;
 $('letterBody').innerHTML = LETTER.body.map(p => `<p>${words(p)}</p>`).join('');
 $('poemText').innerHTML = words(LETTER.poem);
 
-// Reply on WhatsApp
-$('replyBtn').href = `https://wa.me/${LETTER.whatsapp}?text=${encodeURIComponent(`وصلتني رسالتك يا ${LETTER.from} 💌\n`)}`;
+// Reply on his Instagram, as he asked
+$('replyBtn').href = 'https://www.instagram.com/zakariaahmedsarmdawi';
 
 /* ---------- Together counter ---------- */
 const met = new Date(LETTER.metDate);
