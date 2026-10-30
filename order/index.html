@@ -85,6 +85,7 @@
       <div class="kinds">
         <div class="kind"><input type="radio" name="kind" id="k-wedding" value="wedding"><label for="k-wedding"><img src="../assets/wedding-closed.jpg" alt="">دعوة عرس</label></div>
         <div class="kind"><input type="radio" name="kind" id="k-engage" value="engage"><label for="k-engage"><img src="../assets/engage-closed.jpg" alt="">خطوبة / كتب كتاب</label></div>
+        <div class="kind"><input type="radio" name="kind" id="k-sorry" value="sorry"><label for="k-sorry"><img src="../assets/sorry-closed.jpg" alt="">صالحها 🏳️</label></div>
         <div class="kind"><input type="radio" name="kind" id="k-cup" value="cup"><label for="k-cup"><img src="../assets/cup-closed.jpg" alt="">اقريلو فنجانو ☕</label></div>
         <div class="kind"><input type="radio" name="kind" id="k-letter" value="letter"><label for="k-letter"><img src="../assets/letter-closed.jpg" alt="">رسالة حب</label></div>
         <div class="kind"><input type="radio" name="kind" id="k-proposal" value="proposal"><label for="k-proposal"><img src="../assets/proposal-closed.jpg" alt="">طلب زواج</label></div>
@@ -128,7 +129,7 @@
 <script src="../config.js"></script>
 <script>
 const R = window.RASAEL;
-const KIND_NAME = { wedding: 'دعوة عرس', engage: 'دعوة خطوبة / كتب كتاب', letter: 'رسالة حب', proposal: 'طلب زواج', birthday: 'عيد ميلاد', reveal: 'كشف جنس المولود', cup: 'اقريلو فنجانو', other: 'هدية لمناسبة' };
+const KIND_NAME = { wedding: 'دعوة عرس', engage: 'دعوة خطوبة / كتب كتاب', letter: 'رسالة حب', proposal: 'طلب زواج', birthday: 'عيد ميلاد', reveal: 'كشف جنس المولود', cup: 'اقريلو فنجانو', sorry: 'صالحها (اعتذار)', other: 'هدية لمناسبة' };
 
 // The questions for each kind. Order of fields = order in the WhatsApp message.
 const FIELDS = {
@@ -160,6 +161,16 @@ const FIELDS = {
     { id: 'dress', label: 'ألوان اللبس المقترحة', ph: 'مثال: بيج ووردي وزيتي، أو بلا' },
     { id: 'story', label: 'محطات من قصتكن (اختياري)', type: 'textarea', ph: 'صيف ٢٠٢٤: أول مرة التقينا…' },
     { id: 'rsvp', label: 'رقم واتساب لتأكيد الحضور', type: 'tel', ph: '9639xxxxxxxx', hint: 'الضيوف بيأكدو مع عدد الأشخاص برسالة لهالرقم' },
+  ],
+  sorry: [
+    { id: 'to', label: 'اسمها (اللي زعلانة)', req: 1 },
+    { id: 'toGender', label: 'اللي رح يفتحها: هي ولا هو؟', type: 'select', options: ['هي', 'هو'], req: 1 },
+    { id: 'from', label: 'اسمك متل ما بدك يبيّن', req: 1 },
+    { id: 'what', label: 'شو صار؟ (بكلمتين، ما حدا بيشوفها غيرنا)', type: 'textarea', ph: 'مثال: تأخرت عليها بالرد وزعلت…', hint: 'لنكتبلك الاعتذار صح' },
+    { id: 'letter', label: 'الاعتذار', type: 'textarea', req: 1, ph: 'اكتب من قلبك… أو اكتب «اكتبوها إنتو»' },
+    { id: 'promises', label: 'وعودك إلها (كل وعد بسطر)', type: 'textarea', ph: 'ما رح خلّيكي تنامي زعلانة\nرح إسمعك للآخر' },
+    { id: 'offers', label: 'شو بتعرض عليها إذا ضلّت زعلانة؟ (كل عرض بسطر)', type: 'textarea', ph: 'عشا\nكنافة\nمشوار' },
+    { id: 'replyWa', label: 'رقم واتسابك لزر «ردّي عليه»', type: 'tel', ph: '9639xxxxxxxx' },
   ],
   cup: [
     { id: 'to', label: 'اسمو (اللي رح يقرا فنجانو)', req: 1 },

@@ -1,0 +1,812 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>في حدا رافع الراية البيضا</title>
+<!-- Link preview (WhatsApp / Instagram). Change per client. -->
+<meta property="og:title" content="جاد رافع الراية البيضا… 🏳️">
+<meta property="og:description" content="افتحي الرابط… في حدا ندمان كتير">
+<meta name="theme-color" content="#0F1828">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=El+Messiri:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --night: #0F1828;
+    --cloud: #26324A;
+    --cream: #FBF1E6;
+    --paper: #F8EDDF;
+    --soft: rgba(251, 241, 230, .74);
+    --rose: #F07C8C;
+    --wine: #561A27;
+    --sun: #F4B860;
+    --dawn: #FCE6D6;
+    --ink: #2A1A20;
+    --out: cubic-bezier(.23, 1, .32, 1);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; overscroll-behavior: none; }
+  body {
+    background-color: var(--night);
+    color: var(--cream); font-family: "Amiri", serif; font-size: 18px; line-height: 1.8;
+    -webkit-font-smoothing: antialiased; overflow: hidden; -webkit-tap-highlight-color: transparent;
+  }
+  button { font: inherit; color: inherit; border: 0; background: none; cursor: pointer; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+  :focus-visible { outline: 2px solid var(--rose); outline-offset: 4px; }
+  svg { display: block; }
+
+  /* ---- weather, back to front: rain, lightning, clouds, drops on the glass ---- */
+  #rain, #bolt, #glass, #fx { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  #rain { z-index: 1; }
+  #bolt { z-index: 1; opacity: 0; }
+  #clouds { position: fixed; z-index: 2; left: 0; right: 0; top: 0; height: 200px; pointer-events: none; }
+  .cl { position: absolute; fill: var(--cloud); }
+  .cl.c1 { width: 280px; top: -38px; right: -60px; animation: drift 19s ease-in-out infinite alternate; }
+  .cl.c2 { width: 220px; top: 14px; left: -74px; fill: #303D58; animation: drift 23s ease-in-out infinite alternate-reverse; }
+  .cl.c3 { width: 176px; top: -44px; left: 32%; fill: #1D273C; animation: drift 27s ease-in-out infinite alternate; }
+  @keyframes drift { to { transform: translateX(34px); } }
+  #flash { position: fixed; inset: 0; z-index: 3; background: #E6EEFF; opacity: 0; pointer-events: none; }
+  #glass { z-index: 4; }
+  /* film grain over everything: kills the flat vector look */
+  #grain { position: fixed; inset: 0; z-index: 58; pointer-events: none; opacity: .07; mix-blend-mode: overlay; background-size: 128px; }
+  body.day #grain { opacity: .06; }
+
+  .screen {
+    position: fixed; inset: 0; z-index: 10;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: calc(20px + env(safe-area-inset-top)) 22px calc(22px + env(safe-area-inset-bottom));
+    text-align: center;
+    opacity: 0; visibility: hidden;
+    transition: opacity .7s var(--out), visibility 0s .7s;
+  }
+  .screen.on { opacity: 1; visibility: visible; transition: opacity .7s var(--out); }
+
+  .wr { display: inline-block; opacity: 0; transform: translateY(12px); filter: blur(3px); }
+  .ready .on .wr { animation: rise .8s var(--out) forwards; animation-delay: calc(var(--i) * 90ms + 300ms); }
+  @keyframes rise { to { opacity: 1; transform: none; filter: blur(0); } }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; padding: 12px 30px;
+    border-radius: 999px; font-family: "El Messiri", sans-serif; font-weight: 600; font-size: 18px;
+    background: var(--cream); color: var(--ink); box-shadow: 0 14px 30px -14px rgba(0,0,0,.8);
+    transition: transform .18s var(--out); text-decoration: none;
+  }
+  .btn:active { transform: scale(.95); }
+  .btn.ghost { background: transparent; color: var(--cream); box-shadow: inset 0 0 0 1.5px rgba(251,241,230,.4); }
+  .action { min-height: 76px; display: flex; align-items: center; justify-content: center; }
+
+  /* ===== 1. Intro: a white flag in the rain ===== */
+  .flag { width: 150px; height: 140px; margin-bottom: 10px; overflow: visible; }
+  .intro-from { font-family: "El Messiri", sans-serif; font-size: 17px; color: var(--soft); }
+  .intro-from b { font-family: "Aref Ruqaa", serif; font-size: 1.55em; color: var(--rose); margin-inline-start: 4px; }
+  .intro-name { font-family: "Aref Ruqaa", serif; font-weight: 700; font-size: clamp(56px, 16vw, 78px); line-height: 1.2; margin-top: 2px; }
+  .intro-line { font-size: clamp(22px, 6vw, 27px); margin: 8px 0 34px; color: var(--soft); max-width: 330px; text-wrap: balance; }
+
+  /* ===== 2. His letter, in handwriting ===== */
+  #sLetter { justify-content: flex-start; overflow-y: auto; -webkit-overflow-scrolling: touch; padding-top: calc(70px + env(safe-area-inset-top)); }
+  .paper {
+    position: relative; width: min(100%, 420px); margin: 0 auto; padding: 40px 26px 30px; text-align: right; flex: none;
+    background-color: var(--paper); color: var(--ink); border-radius: 4px;
+    /* warm edges, like paper that has been held */
+    box-shadow: inset 0 0 60px rgba(150, 100, 60, .16), 0 30px 60px -28px rgba(0,0,0,.95);
+  }
+  .paper .doodle { position: absolute; top: 16px; left: 16px; width: 70px; color: var(--wine); opacity: .45; }
+  .paper h2 { font-family: "Aref Ruqaa", serif; font-weight: 700; font-size: clamp(36px, 9.5vw, 44px); line-height: 1.4; margin-bottom: 6px; color: var(--wine); }
+  .paper p { font-family: "Aref Ruqaa", serif; font-size: 23px; line-height: 1.9; margin-bottom: 12px; color: #2E1B22; }
+  .lw { display: inline-block; opacity: 0; transform: translateY(.35em); filter: blur(4px); }
+  .paper .sign { text-align: left; margin: 18px 0 0; font-family: "Aref Ruqaa", serif; font-size: 40px; line-height: 1.4; color: var(--wine); opacity: 0; transform: translateY(10px); }
+  .paper .sign small { display: block; font-size: 19px; color: #7A5A60; }
+  #sLetter .action { flex: none; padding: 22px 0 36px; min-height: 120px; }
+
+  /* ===== 3. Promises, stamped ===== */
+  .title { font-family: "Aref Ruqaa", serif; font-weight: 700; font-size: clamp(36px, 10vw, 46px); line-height: 1.35; margin-bottom: 20px; text-wrap: balance; }
+  .promises { list-style: none; width: min(100%, 380px); display: grid; gap: 16px; }
+  .promise {
+    position: relative; min-height: 92px; display: flex; align-items: center;
+    background-color: var(--paper); color: var(--ink); border-radius: 16px; padding: 16px 20px 16px 98px;
+    text-align: right; font-family: "Aref Ruqaa", serif; font-size: 22px; line-height: 1.6; opacity: 0;
+    box-shadow: inset 0 0 40px rgba(150, 100, 60, .14), 0 18px 34px -18px rgba(0,0,0,.85);
+  }
+  .stamp {
+    position: absolute; left: 14px; top: 50%; width: 72px; height: 72px; margin-top: -36px; border-radius: 50%;
+    border: 3px solid #8E1F33; box-shadow: inset 0 0 0 4px var(--paper), inset 0 0 0 6px #8E1F33;
+    color: #8E1F33; display: grid; place-items: center;
+    font-family: "Aref Ruqaa", serif; font-weight: 700; font-size: 24px; line-height: 1;
+    opacity: 0; filter: url(#ink);       /* worn rubber: every stamp prints a little patchy */
+  }
+
+  /* ===== 4. How upset are you? ===== */
+  .face { width: min(50vw, 196px); margin: 0 auto; overflow: visible; }
+  .pct { font-family: "El Messiri", sans-serif; font-weight: 600; font-size: 22px; color: var(--rose); margin-top: 2px; }
+  .said { min-height: 84px; display: flex; align-items: center; justify-content: center; font-size: clamp(21px, 5.6vw, 24px); line-height: 1.6; max-width: 340px; text-wrap: balance; }
+  .meter { width: min(100%, 340px); }
+  .meter input {
+    -webkit-appearance: none; appearance: none; width: 100%; height: 56px; background: transparent; direction: rtl; cursor: grab; touch-action: none;
+    --p: 100%;
+  }
+  .meter input::-webkit-slider-runnable-track { height: 14px; border-radius: 99px; background: linear-gradient(to left, var(--rose) 0 var(--p), rgba(251,241,230,.16) var(--p) 100%); }
+  .meter input::-webkit-slider-thumb { -webkit-appearance: none; width: 48px; height: 48px; margin-top: -17px; border-radius: 50%; background: var(--cream); border: 6px solid var(--rose); box-shadow: 0 8px 20px -6px rgba(0,0,0,.7); transition: transform .15s var(--out); }
+  .meter input:active::-webkit-slider-thumb { transform: scale(1.15); }
+  .meter input::-moz-range-track { height: 14px; border-radius: 99px; background: rgba(251,241,230,.16); }
+  .meter input::-moz-range-progress { height: 14px; border-radius: 99px; background: var(--rose); }
+  .meter input::-moz-range-thumb { width: 36px; height: 36px; border-radius: 50%; background: var(--cream); border: 6px solid var(--rose); }
+  .ends { display: flex; justify-content: space-between; font-family: "El Messiri", sans-serif; font-size: 14px; color: var(--soft); margin-top: -6px; }
+  .drag-hint { font-family: "El Messiri", sans-serif; font-size: 15px; color: var(--soft); margin-top: 10px; }
+  .drag-hint span { display: inline-block; animation: nudge 1.4s ease-in-out infinite; }
+  @keyframes nudge { 50% { transform: translateX(8px); } }
+
+  /* ===== 5. The question ===== */
+  .ask { font-family: "Aref Ruqaa", serif; font-weight: 700; font-size: clamp(58px, 16vw, 76px); line-height: 1.2; }
+  .bubble {
+    position: relative; margin: 22px 0 34px; min-height: 104px; width: min(100%, 340px);
+    background-color: var(--paper); color: var(--ink); border-radius: 22px; padding: 28px 20px 14px;
+    display: flex; align-items: center; justify-content: center; font-family: "Aref Ruqaa", serif; font-size: 23px; line-height: 1.55; text-wrap: balance;
+    box-shadow: 0 18px 34px -18px rgba(0,0,0,.85);
+  }
+  .bubble::after { content: ""; position: absolute; bottom: -11px; right: 46px; border: 11px solid transparent; border-top-color: var(--paper); border-bottom: 0; }
+  .bubble .who { position: absolute; top: 7px; right: 18px; font-family: "El Messiri", sans-serif; font-weight: 600; font-size: 13px; color: var(--wine); }
+  .choices { display: flex; gap: 16px; align-items: center; justify-content: center; flex-wrap: wrap; min-height: 96px; }
+  #yesWrap { display: inline-block; }
+  .btn.yes { background: var(--rose); color: #fff; font-size: 20px; padding: 12px 34px; }
+
+  /* ===== 6. The sun comes back ===== */
+  body.day { color: var(--ink); }
+  #sEnd { justify-content: safe center; overflow-y: auto; }
+  .sky { width: min(64vw, 250px); overflow: visible; margin-bottom: 26px; flex: none; }
+  #sEnd h2 { font-family: "Aref Ruqaa", serif; font-weight: 700; font-size: clamp(34px, 9.5vw, 44px); line-height: 1.35; color: var(--wine); text-wrap: balance; max-width: 360px; }
+  #sEnd .sub { font-size: 20px; color: #6B4A50; max-width: 330px; margin: 6px 0 18px; text-wrap: balance; }
+  /* a certificate she will want to screenshot */
+  .cert {
+    position: relative; width: min(100%, 340px); padding: 16px 22px 14px 96px; margin-bottom: 20px; text-align: right; flex: none;
+    background-color: #FFF8F1; border-radius: 14px; box-shadow: inset 0 0 0 1.5px rgba(86,26,39,.22), 0 16px 30px -18px rgba(86,26,39,.5);
+  }
+  .cert .k { font-family: "El Messiri", sans-serif; font-size: 12px; letter-spacing: .06em; color: #9A7078; }
+  .cert .v { font-family: "Aref Ruqaa", serif; font-size: 21px; line-height: 1.5; color: var(--ink); }
+  .cert .date { font-family: "El Messiri", sans-serif; font-size: 12px; color: #9A7078; margin-top: 4px; }
+  .cert .seal {
+    position: absolute; left: 12px; top: 50%; width: 76px; height: 76px; margin-top: -38px; border-radius: 50%;
+    border: 2.5px solid #8E1F33; box-shadow: inset 0 0 0 3px #FFF8F1, inset 0 0 0 5px #8E1F33;
+    display: grid; place-items: center; text-align: center; color: #8E1F33;
+    font-family: "Aref Ruqaa", serif; font-weight: 700; font-size: 17px; line-height: 1.15; filter: url(#ink); opacity: 0;
+  }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+  .btn.wine { background: var(--wine); color: var(--cream); }
+  .btn.line { background: transparent; color: var(--wine); box-shadow: inset 0 0 0 1.5px rgba(86,26,39,.35); }
+  .credit { font-family: "El Messiri", sans-serif; font-size: 13px; color: rgba(42,26,32,.55); margin-top: 20px; }
+  .credit a { color: var(--wine); text-decoration: none; direction: ltr; display: inline-block; }
+  .rise { opacity: 0; transform: translateY(16px); }
+
+  #music { position: fixed; z-index: 60; left: 16px; bottom: calc(16px + env(safe-area-inset-bottom)); width: 46px; height: 46px; border-radius: 50%; background: rgba(251,241,230,.12); display: grid; place-items: center; }
+  #music svg { width: 22px; height: 22px; stroke: var(--cream); fill: none; stroke-width: 1.8; }
+  body.day #music { background: rgba(86,26,39,.1); }
+  body.day #music svg { stroke: var(--wine); }
+  #music.off .wave { display: none; }
+  #fx { z-index: 55; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <!-- eats small random bites out of the stamp ink -->
+  <filter id="ink" x="-10%" y="-10%" width="120%" height="120%">
+    <feTurbulence type="fractalNoise" baseFrequency=".75" numOctaves="2" seed="4" result="n"/>
+    <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.6 1.62" result="m"/>
+    <feComposite in="SourceGraphic" in2="m" operator="in"/>
+  </filter>
+</svg>
+
+<canvas id="rain" aria-hidden="true"></canvas>
+<canvas id="bolt" aria-hidden="true"></canvas>
+<div id="clouds" aria-hidden="true">
+  <svg class="cl c1" viewBox="0 0 200 90"><path d="M40 82Q8 82 10 60Q12 38 38 40Q44 12 76 14Q98 0 122 20Q152 10 162 40Q192 42 190 64Q188 82 160 82Z"/></svg>
+  <svg class="cl c2" viewBox="0 0 200 90"><path d="M40 82Q8 82 10 60Q12 38 38 40Q44 12 76 14Q98 0 122 20Q152 10 162 40Q192 42 190 64Q188 82 160 82Z"/></svg>
+  <svg class="cl c3" viewBox="0 0 200 90"><path d="M40 82Q8 82 10 60Q12 38 38 40Q44 12 76 14Q98 0 122 20Q152 10 162 40Q192 42 190 64Q188 82 160 82Z"/></svg>
+</div>
+<div id="flash"></div>
+<canvas id="glass" aria-hidden="true"></canvas>
+
+<!-- ===== 1. Intro ===== -->
+<section class="screen on" id="sIntro" aria-labelledby="introName">
+  <svg class="flag" viewBox="0 0 150 140" aria-hidden="true">
+    <path id="cloth" fill="#FBF1E6"/>
+    <path id="clothShade" fill="none" stroke="rgba(42,26,32,.12)" stroke-width="2"/>
+    <rect x="34" y="12" width="6" height="128" rx="3" fill="#B98B5E"/>
+    <circle cx="37" cy="11" r="6" fill="#D9B07A"/>
+  </svg>
+  <p class="intro-from" id="introFrom"></p>
+  <h1 class="intro-name" id="introName"></h1>
+  <p class="intro-line" id="introLine"></p>
+  <button class="btn" id="startBtn" type="button"></button>
+</section>
+
+<!-- ===== 2. His letter ===== -->
+<section class="screen" id="sLetter">
+  <article class="paper" id="paper">
+    <svg class="doodle" viewBox="0 0 80 60" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M18 38Q6 38 7 29Q8 21 17 22Q19 10 32 11Q41 4 50 13Q62 9 65 21Q75 22 74 31Q73 38 63 38Z"/>
+      <path d="M40 34c-5-3-7-6-6-8.5 1-2 4-2.4 6-.4 2-2 5-1.6 6 .4 1 2.5-1 5.5-6 8.5z" fill="currentColor"/>
+      <path d="M24 44l-3 8M38 45l-3 8M52 44l-3 8"/>
+    </svg>
+    <h2 id="letterTo"></h2>
+    <div id="letterBody"></div>
+    <p class="sign" id="sign"><small id="signoff"></small><span id="fromName"></span></p>
+  </article>
+  <div class="action" id="letterNext"></div>
+</section>
+
+<!-- ===== 3. Promises ===== -->
+<section class="screen" id="sPromise">
+  <h2 class="title" id="promiseTitle"></h2>
+  <ul class="promises" id="promises"></ul>
+  <div class="action" id="promiseNext"></div>
+</section>
+
+<!-- ===== 4. How upset are you? ===== -->
+<section class="screen" id="sMeter">
+  <h2 class="title" id="meterTitle"></h2>
+  <svg class="face" viewBox="0 0 200 200" aria-hidden="true">
+    <g id="storm">
+      <path d="M72 40Q60 40 61 31Q62 23 71 24Q73 13 86 14Q95 7 104 16Q116 12 119 24Q129 25 128 33Q127 40 117 40Z" fill="#5A6680"/>
+      <path d="M78 48l-3 7M94 49l-3 7M110 48l-3 7" stroke="#9FB2D4" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+    <circle id="faceC" cx="100" cy="122" r="74" fill="#FBF1E6"/>
+    <circle id="cheekL" cx="58" cy="140" r="13" fill="#F07C8C" opacity="0"/>
+    <circle id="cheekR" cx="142" cy="140" r="13" fill="#F07C8C" opacity="0"/>
+    <g id="eyesOpen" fill="#2A1A20"><ellipse id="eyeL" cx="74" cy="116" rx="6.5" ry="8.5"/><ellipse id="eyeR" cx="126" cy="116" rx="6.5" ry="8.5"/></g>
+    <g id="eyesHappy" fill="none" stroke="#2A1A20" stroke-width="5" stroke-linecap="round" opacity="0"><path d="M64 118Q74 106 84 118"/><path d="M116 118Q126 106 136 118"/></g>
+    <g fill="none" stroke="#2A1A20" stroke-width="5" stroke-linecap="round">
+      <path id="browL"/><path id="browR"/><path id="mouth" stroke-width="6"/>
+    </g>
+  </svg>
+  <p class="pct" id="pct"></p>
+  <p class="said" id="said" aria-live="polite"></p>
+  <div class="meter">
+    <input type="range" id="range" min="0" max="100" value="100" step="1">
+    <div class="ends"><span id="endLo"></span><span id="endHi"></span></div>
+  </div>
+  <p class="drag-hint" id="dragHint"></p>
+  <div class="action" id="meterNext"></div>
+</section>
+
+<!-- ===== 5. The question ===== -->
+<section class="screen" id="sAsk">
+  <h2 class="ask" id="askTitle"></h2>
+  <div class="bubble" aria-live="polite"><span class="who" id="bubbleWho"></span><span id="bubbleText"></span></div>
+  <div class="choices">
+    <span id="yesWrap"><button class="btn yes" id="yesBtn" type="button">سامحتك 🤍</button></span>
+    <button class="btn ghost" id="noBtn" type="button"></button>
+  </div>
+</section>
+
+<!-- ===== 6. The sun comes back ===== -->
+<section class="screen" id="sEnd">
+  <svg class="sky" viewBox="0 0 300 200" aria-hidden="true">
+    <g id="bow" fill="none" stroke-width="7" stroke-linecap="round" opacity=".8">
+      <path d="M20 190A130 130 0 0 1 280 190" stroke="#F07C8C" pathLength="1"/>
+      <path d="M32 190A118 118 0 0 1 268 190" stroke="#F6A97A" pathLength="1"/>
+      <path d="M44 190A106 106 0 0 1 256 190" stroke="#F2CF74" pathLength="1"/>
+      <path d="M56 190A94 94 0 0 1 244 190" stroke="#A9C79B" pathLength="1"/>
+      <path d="M68 190A82 82 0 0 1 232 190" stroke="#9EBBE0" pathLength="1"/>
+    </g>
+    <g id="sun">
+      <g id="rays" stroke="#F4B860" stroke-width="5" stroke-linecap="round"></g>
+      <circle cx="150" cy="150" r="36" fill="#F4B860"/>
+      <g fill="none" stroke="#B9692B" stroke-width="3.2" stroke-linecap="round">
+        <path d="M134 146Q139 140 144 146"/><path d="M156 146Q161 140 166 146"/><path d="M138 158Q150 168 162 158"/>
+      </g>
+      <circle cx="132" cy="157" r="5" fill="#F07C8C" opacity=".55"/><circle cx="168" cy="157" r="5" fill="#F07C8C" opacity=".55"/>
+    </g>
+  </svg>
+  <h2 class="rise" id="closing"></h2>
+  <p class="sub rise" id="closingSub"></p>
+  <div class="cert rise" id="cert">
+    <span class="seal" id="seal">تمّت<br>المسامحة</span>
+    <p class="k" id="certK1"></p>
+    <p class="v" id="certV1"></p>
+    <p class="date" id="certDate"></p>
+  </div>
+  <div class="row rise">
+    <a class="btn wine" id="replyBtn" target="_blank" rel="noopener"></a>
+    <button class="btn line" id="againBtn" type="button">من الأول</button>
+  </div>
+  <p class="credit rise"><span id="creditLabel"></span> <a id="creditLink" target="_blank" rel="noopener"></a></p>
+</section>
+
+<button id="music" type="button" aria-label="الصوت">
+  <svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path class="wave" d="M16 9a4 4 0 010 6M18.5 6.5a7.5 7.5 0 010 11"/></svg>
+</button>
+<canvas id="fx"></canvas>
+<div id="grain" aria-hidden="true"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script>
+/* ============================================================
+   EDIT THIS PER CLIENT — everything on the page comes from here
+   ============================================================ */
+const SORRY = {
+  to: 'رهف',
+  from: 'جاد',
+  toHer: true,                        // true = the page talks to a woman (سامحتيني؟), false = to a man (سامحتني؟)
+  intro: 'في حدا زعلان… وفي حدا ندمان كتير',
+  letter: [
+    'بعرف إني زعّلتك… وبعرف إن «آسف» لحالها ما بتكفي.',
+    'بس من وقت ما زعلتي، الدني كلها صارت رمادية… حتى القهوة صار طعمها غلط.',
+    'إنتِ أحلى شي بنهاري، وما بدي يمرق يوم وإنتِ بعيدة عني بقلبك.',
+    'سامحيني… وأنا رح عوّضك عن كل دقيقة زعل.'
+  ],
+  signoff: 'اللي ما بيعرف ينام وإنتِ زعلانة،',
+  promises: [
+    'ما رح خلّيكي تنامي وإنتِ زعلانة',
+    'رح إسمعك للآخر… قبل ما إحكي',
+    'وكل ما عصّبت، رح إتذكّر قدّيش بحبك'
+  ],
+  // what he says while she drags the meter down: [shown at or below this %, text]
+  meter: [
+    [100, 'عارف إنك زعلانة… ومعك حق'],
+    [80, 'نزّليه شوي كمان… كرمال عيوني'],
+    [55, 'نص زعل؟ هاد تقدّم كبير 😅'],
+    [30, 'شايف ضحكة صغيرة عم تهرب 👀'],
+    [8, 'هيك أحلى بكتير 🤍']
+  ],
+  // each press of «لسا زعلانة» raises his offer (prize = what she "won", shown on her certificate)
+  offers: [
+    { text: 'طيب… وإذا عزمتك عالعشا؟ 🍽️', prize: 'عشا' },
+    { text: 'وكنافة بعد العشا كمان؟ 🍰', prize: 'كنافة' },
+    { text: 'وبمشي معك بالسوق قد ما بدك… بلا ولا تأفيفة 😅', prize: 'مشوار سوق' }
+  ],
+  noLabels: ['لسا زعلانة 😒', 'متأكدة؟ 🥺', 'طيب… لسا؟ 😅'],   // the "no" button's text after each press
+  lastWord: 'خلص… ما ضل غير زر واحد 😌',
+  closing: 'رجعت الشمس… ورجعت ضحكتك',
+  closingSub: 'وأنا؟ رح ضل جنبك… حتى بالأيام الماطرة 🤍',
+  replyText: 'سامحتك… بس آخر مرة 😒🤍',
+  whatsapp: '963983896568',           // his number: the reply button opens a chat with him
+  replyUrl: '',                       // or a link instead (e.g. his Instagram); overrides WhatsApp when set
+  music: '',                          // e.g. 'music.mp3' next to this file; empty = rain + sound effects only
+  credit: { label: 'صُمّمت هالصفحة بواسطة', handle: '@rasael.studio', url: 'https://instagram.com/rasael.studio' }
+};
+/* ============================================================ */
+
+const $ = id => document.getElementById(id);
+const g = (her, him) => SORRY.toHer ? her : him;          // wording for the person reading
+const FAST = /[?&]fast\b/.test(location.search);           // reel recording: quicker writing and stamps
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const ar = n => Math.round(n).toLocaleString('ar-EG');
+const tell = (n, a) => { if (window.__reel) window.__reel(n, a); };   // the reel studio listens for sound cues
+const DPR = Math.min(devicePixelRatio || 1, 1.5);
+let stage = 'intro', touched = false;
+Promise.race([document.fonts.ready, sleep(2500)]).then(() => document.body.classList.add('ready'));   // no Arabic jumping when the fonts land (but never wait on a slow line)
+
+/* ---------- touch you can feel (Android) ---------- */
+const BUZZ = { tick: 8, thud: 35, pop: 18, heart: [30, 90, 45], rumble: [0, 80, 60, 140] };
+const buzz = k => { if (touched && !muted && navigator.vibrate) try { navigator.vibrate(BUZZ[k]); } catch (e) {} };
+
+/* ---------- sound: everything is made here, no files ---------- */
+let ac, master, muted = false, bgm, rainGain, rainLp;
+function audio() {
+  if (!ac) {
+    ac = new (window.AudioContext || window.webkitAudioContext)();
+    master = ac.createGain(); master.gain.value = .9; master.connect(ac.destination);
+  }
+  if (ac.state === 'suspended') ac.resume();
+  return ac;
+}
+function noiseBuf(sec, brown) {
+  const b = ac.createBuffer(1, Math.ceil(ac.sampleRate * sec), ac.sampleRate), d = b.getChannelData(0);
+  let last = 0;
+  for (let i = 0; i < d.length; i++) { const w = Math.random() * 2 - 1; d[i] = brown ? (last = (last + .02 * w) / 1.02) * 3.5 : w; }
+  return b;
+}
+function tone(type, f0, f1, dur, vol, delay = 0) {
+  if (muted || !ac) return;
+  const o = ac.createOscillator(), gn = ac.createGain(), t = ac.currentTime + delay;
+  o.type = type; o.frequency.setValueAtTime(f0, t); if (f1) o.frequency.exponentialRampToValueAtTime(f1, t + dur * .4);
+  gn.gain.setValueAtTime(vol, t); gn.gain.exponentialRampToValueAtTime(.0005, t + dur);
+  o.connect(gn).connect(master); o.start(t); o.stop(t + dur + .05);
+  return o;
+}
+function hiss(sec, type, f, vol, brown) {
+  if (muted || !ac) return;
+  const s = ac.createBufferSource(); s.buffer = noiseBuf(sec, brown);
+  const fl = ac.createBiquadFilter(); fl.type = type; fl.frequency.value = f;
+  const gn = ac.createGain(), t = ac.currentTime;
+  gn.gain.setValueAtTime(0, t); gn.gain.linearRampToValueAtTime(vol, t + .01); gn.gain.exponentialRampToValueAtTime(.001, t + sec);
+  s.connect(fl).connect(gn).connect(master); s.start(t);
+  return fl;
+}
+const SFX = {
+  stamp() { tone('sine', 140, 48, .3, .55); hiss(.08, 'lowpass', 1400, .45); },                 // rubber on paper on a desk
+  pop(k = 0) { tone('sine', 420 * (1 + k * .12), 900 * (1 + k * .12), .16, .2); },
+  boing(k = 0) {   // the button wobbling as it shrinks
+    const o = tone('triangle', 160 * (1 + k * .25), 330 * (1 + k * .25), .5, .24); if (!o) return;
+    const l = ac.createOscillator(), lg = ac.createGain(); l.frequency.value = 13; lg.gain.value = 26;
+    l.connect(lg).connect(o.frequency); l.start(); l.stop(ac.currentTime + .5);
+  },
+  chime() { [0, 4, 7, 12, 16, 19].forEach((s, i) => { const f = 523.25 * 2 ** (s / 12); tone('sine', f, 0, 1.8, .1, i * .08); tone('sine', f * 2.01, 0, 1, .03, i * .08); }); },
+  swell() { [0, 7, 12, 16].forEach((s, i) => { const o = tone('sine', 261.6 * 2 ** (s / 12), 0, 3.4, .05, .3 + i * .05); }); },
+  thunder() { const f = hiss(3, 'lowpass', 160, .9, true); if (f) f.frequency.exponentialRampToValueAtTime(60, ac.currentTime + 2.6); }
+};
+// steady rain under everything; its volume and brightness follow how hard it is raining
+function rainSound() {
+  if (rainGain || !ac) return;
+  const s = ac.createBufferSource(); s.buffer = noiseBuf(3); s.loop = true;
+  const hp = ac.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 400;
+  rainLp = ac.createBiquadFilter(); rainLp.type = 'lowpass'; rainLp.frequency.value = 1500;
+  rainGain = ac.createGain(); rainGain.gain.value = 0;
+  s.connect(hp).connect(rainLp).connect(rainGain).connect(master); s.start();
+  rainVol();
+}
+function rainVol() {
+  if (!rainGain) return;
+  rainGain.gain.setTargetAtTime(muted ? 0 : .2 * rain.amount * (bgm ? .6 : 1), ac.currentTime, .25);
+  rainLp.frequency.setTargetAtTime(700 + 1300 * rain.amount, ac.currentTime, .25);
+}
+$('music').addEventListener('click', () => {
+  muted = !muted; $('music').classList.toggle('off', muted);
+  if (bgm) muted ? bgm.pause() : bgm.play().catch(() => {});
+  rainVol();
+});
+if (SORRY.music) { bgm = new Audio(SORRY.music); bgm.loop = true; bgm.volume = .55; }
+
+/* ---------- grain ---------- */
+(function grain() {
+  const c = document.createElement('canvas'); c.width = c.height = 128;
+  const x = c.getContext('2d'), im = x.createImageData(128, 128);
+  for (let i = 0; i < im.data.length; i += 4) { const v = Math.random() * 255; im.data[i] = im.data[i + 1] = im.data[i + 2] = v; im.data[i + 3] = 255; }
+  x.putImageData(im, 0, 0);
+  $('grain').style.backgroundImage = `url(${c.toDataURL()})`;
+})();
+
+/* ---------- weather ---------- */
+// three depths of rain on one wind; the wind leans harder the angrier she is
+const rain = { amount: 1, wind: .3, drops: [], splashes: [] };
+const LAYERS = [
+  { share: .5, v: [6, 8], l: [8, 13], w: .8, a: [.12, .22] },     // far
+  { share: .36, v: [10, 13], l: [15, 22], w: 1.2, a: [.22, .38] }, // middle
+  { share: .14, v: [15, 19], l: [26, 36], w: 1.9, a: [.32, .5] }   // near
+];
+const rcv = $('rain'), rctx = rcv.getContext('2d');
+let RW = 0, RH = 0;
+function sizeCanvas(cv) { cv.width = RW * DPR; cv.height = RH * DPR; const c = cv.getContext('2d'); c.setTransform(DPR, 0, 0, DPR, 0, 0); return c; }
+function sizeAll() { RW = innerWidth; RH = innerHeight; sizeCanvas(rcv); sizeCanvas($('glass')); }
+sizeAll(); addEventListener('resize', sizeAll);
+const rr = ([a, b]) => a + Math.random() * (b - a);
+function newDrop(anywhere) {
+  const p = Math.random(), z = p < LAYERS[0].share ? 0 : p < LAYERS[0].share + LAYERS[1].share ? 1 : 2, L = LAYERS[z];
+  return { z, x: Math.random() * (RW + 200) - 20, y: anywhere ? Math.random() * RH : -Math.random() * 80 - 10, v: rr(L.v), l: rr(L.l), a: rr(L.a) };
+}
+let started = false;
+function rainLoop() {
+  rctx.clearRect(0, 0, RW, RH);
+  const want = Math.round(170 * rain.amount * Math.min(1.6, RW / 390));
+  while (rain.drops.length < want) rain.drops.push(newDrop(!started));
+  started = true;
+  rctx.lineCap = 'round';
+  for (let z = 0; z < 3; z++) {
+    rctx.lineWidth = LAYERS[z].w;
+    for (let i = rain.drops.length - 1; i >= 0; i--) {
+      const d = rain.drops[i]; if (d.z !== z) continue;
+      d.y += d.v; d.x -= d.v * rain.wind;
+      if (d.y - d.l > RH) {
+        if (z && Math.random() < .35) rain.splashes.push({ x: d.x, y: RH - 4 - Math.random() * 40, r: 1, a: .4 });
+        if (rain.drops.length > want) { rain.drops.splice(i, 1); continue; }
+        Object.assign(d, newDrop(false));
+      }
+      rctx.strokeStyle = `rgba(186,204,234,${d.a})`;
+      rctx.beginPath(); rctx.moveTo(d.x, d.y); rctx.lineTo(d.x + d.l * rain.wind, d.y - d.l); rctx.stroke();
+    }
+  }
+  rctx.lineWidth = 1;
+  for (let i = rain.splashes.length - 1; i >= 0; i--) {
+    const s = rain.splashes[i]; s.r += .8; s.a -= .028;
+    if (s.a <= 0) { rain.splashes.splice(i, 1); continue; }
+    rctx.strokeStyle = `rgba(186,204,234,${s.a})`;
+    rctx.beginPath(); rctx.ellipse(s.x, s.y, s.r * 1.8, s.r * .5, 0, 0, 7); rctx.stroke();
+  }
+  glassStep();
+  requestAnimationFrame(rainLoop);
+}
+
+// drops sitting on the phone's glass; now and then a big one runs down and leaves a trail
+const glass = { drops: [], trail: [], ctx: $('glass').getContext('2d') };
+const newBead = () => ({ x: Math.random() * RW, y: Math.random() * RH, r: Math.random() < .2 ? 4 + Math.random() * 4 : 1.2 + Math.random() * 2.6, vy: 0, run: false, a: 0 });
+function glassStep() {
+  const c = glass.ctx, want = Math.round(46 * rain.amount);
+  c.clearRect(0, 0, RW, RH);
+  if (glass.drops.length < want && Math.random() < .25) glass.drops.push(newBead());
+  if (Math.random() < .012) { const big = glass.drops.find(d => d.r > 4 && !d.run); if (big) big.run = true; }
+  for (let i = glass.trail.length - 1; i >= 0; i--) {
+    const t = glass.trail[i]; t.a -= .004; if (t.a <= 0) { glass.trail.splice(i, 1); continue; }
+    c.fillStyle = `rgba(200,215,240,${t.a})`; c.beginPath(); c.arc(t.x, t.y, t.r, 0, 7); c.fill();
+  }
+  for (let i = glass.drops.length - 1; i >= 0; i--) {
+    const d = glass.drops[i];
+    d.a = Math.min(1, d.a + .05);
+    if (d.run || stage === 'end') {
+      d.vy = Math.min(stage === 'end' ? 9 : 3.2, d.vy + .06); d.y += d.vy; d.x += (Math.random() - .5) * .8;
+      if (Math.random() < .3) glass.trail.push({ x: d.x, y: d.y - d.r, r: d.r * .3, a: .35 });
+      if (d.y - d.r > RH) { glass.drops.splice(i, 1); continue; }
+    }
+    c.globalAlpha = d.a;
+    c.fillStyle = 'rgba(205,220,245,.10)'; c.beginPath(); c.arc(d.x, d.y, d.r, 0, 7); c.fill();
+    c.strokeStyle = 'rgba(5,10,22,.45)'; c.lineWidth = Math.max(1, d.r * .28);
+    c.beginPath(); c.arc(d.x, d.y, d.r * .86, .2, Math.PI - .2); c.stroke();                       // dark lower rim
+    c.fillStyle = 'rgba(255,255,255,.7)'; c.beginPath(); c.ellipse(d.x - d.r * .32, d.y - d.r * .38, d.r * .24, d.r * .15, -.6, 0, 7); c.fill();   // highlight
+    c.globalAlpha = 1;
+  }
+}
+requestAnimationFrame(rainLoop);
+
+// lightning: a jagged bolt built by midpoint displacement, a flicker, then thunder
+function boltPath(x0, y0, x1, y1, off, depth, out) {
+  if (!depth) { out.push([x1, y1]); return; }
+  const mx = (x0 + x1) / 2 + (Math.random() - .5) * off, my = (y0 + y1) / 2 + (Math.random() - .5) * off * .3;
+  boltPath(x0, y0, mx, my, off / 2, depth - 1, out); boltPath(mx, my, x1, y1, off / 2, depth - 1, out);
+}
+function flash() {
+  const cv = $('bolt'), c = sizeCanvas(cv), x0 = RW * (.25 + Math.random() * .5), pts = [[x0, 40]];
+  boltPath(x0, 40, x0 + (Math.random() - .5) * 160, RH * .6, 140, 6, pts);
+  const draw = (p, w) => { c.beginPath(); c.moveTo(...p[0]); p.forEach(q => c.lineTo(...q)); c.lineWidth = w; c.stroke(); };
+  c.strokeStyle = '#F2F6FF'; c.shadowColor = '#BFD4FF'; c.shadowBlur = 22; c.lineJoin = 'round';
+  draw(pts, 2.6);
+  const k = 20 + Math.random() * 20 | 0, br = [pts[k]];                                         // one branch
+  boltPath(...pts[k], pts[k][0] + (Math.random() - .5) * 220, pts[k][1] + 160, 80, 5, br);
+  draw(br, 1.4);
+  gsap.timeline()
+    .set(cv, { opacity: 1 }).to('#flash', { opacity: .7, duration: .04 }).to('#flash', { opacity: .15, duration: .08 })
+    .to('#flash', { opacity: .55, duration: .04 }).to('#flash', { opacity: 0, duration: .5 })
+    .to(cv, { opacity: 0, duration: .35 }, .2);
+  setTimeout(() => { SFX.thunder(); buzz('rumble'); }, 700 + Math.random() * 600);
+}
+setTimeout(() => { if (stage === 'intro') flash(); }, 1300);
+setInterval(() => { if (stage === 'intro' || (stage === 'meter' && rain.amount > .7)) flash(); }, 8500);
+
+// colour grade: night blue, clearing to a lighter blue as the anger goes, then a sunrise through rose and amber
+const NIGHT = [15, 24, 40], CLEAR = [52, 72, 102];
+const mixc = (a, b, t) => `rgb(${a.map((v, i) => Math.round(v + (b[i] - v) * t)).join(',')})`;
+
+/* ---------- the white flag waves ---------- */
+(function wave(ts) {
+  if (stage === 'intro') {
+    const t = ts / 1000, top = [], bot = [];
+    for (let x = 0; x <= 100; x += 10) {
+      const k = x / 100, dy = Math.sin(t * 4.2 - x * .075) * 7 * k;
+      top.push(`${40 + x} ${16 + dy - k * 3}`); bot.unshift(`${40 + x} ${70 + dy + k * 4}`);
+    }
+    $('cloth').setAttribute('d', `M${top.join('L')}L${bot.join('L')}Z`);
+    const mid = []; for (let x = 20; x <= 100; x += 10) { const k = x / 100; mid.push(`${40 + x} ${42 + Math.sin(t * 4.2 - x * .075) * 7 * k}`); }
+    $('clothShade').setAttribute('d', `M${mid.join('L')}`);
+  }
+  requestAnimationFrame(wave);
+})(0);
+
+/* ---------- screens ---------- */
+function go(id) { document.querySelectorAll('.screen').forEach(s => s.classList.toggle('on', s.id === id)); }
+function action(el, html, onClick) {
+  const box = $(el); box.innerHTML = html || '';
+  if (html && onClick) { const b = box.querySelector('button'); b.addEventListener('click', () => { buzz('pop'); onClick(); }, { once: true }); gsap.from(b, { scale: .7, opacity: 0, duration: .5, ease: 'back.out(2)' }); }
+}
+const btn = (label, cls = '') => `<button class="btn ${cls}" type="button">${label}</button>`;
+
+/* ---------- 1. intro ---------- */
+$('introFrom').innerHTML = `وصلك رسالة من <b>${SORRY.from}</b>`;
+$('introName').textContent = SORRY.to + '…';
+$('introLine').innerHTML = SORRY.intro.split(/\s+/).map((w, i) => `<span class="wr" style="--i:${i}">${w}</span>`).join(' ');
+$('startBtn').textContent = g('شو بدو؟ 🙄', 'شو بدها؟ 🙄');
+document.title = `${SORRY.from} ${g('رافع', 'رافعة')} الراية البيضا…`;
+$('startBtn').addEventListener('click', () => {
+  touched = true; audio(); rainSound(); buzz('pop');
+  if (bgm && !muted) bgm.play().catch(() => {});
+  toLetter();
+}, { once: true });
+
+/* ---------- 2. the letter writes itself, with a human rhythm ---------- */
+$('letterTo').textContent = SORRY.to + '،';
+$('letterBody').innerHTML = SORRY.letter.map(p => `<p>${p.split(/\s+/).map(w => `<span class="lw">${w}</span>`).join(' ')}</p>`).join('');
+$('letterBody').setAttribute('aria-label', SORRY.letter.join(' '));
+$('signoff').textContent = SORRY.signoff;
+$('fromName').textContent = SORRY.from;
+let writing;
+function writeTimeline() {
+  // ~90 ms a word, a breath after a comma, a longer one after a full stop or "…", and a beat between paragraphs
+  const tl = gsap.timeline(), k = FAST ? .38 : 1;
+  let t = 0;
+  document.querySelectorAll('#letterBody p').forEach(p => {
+    p.querySelectorAll('.lw').forEach(w => {
+      tl.to(w, { opacity: 1, y: 0, filter: 'blur(0px)', duration: .45, ease: 'expo.out' }, t);
+      const s = w.textContent;
+      t += (.09 + (/[،,]$/.test(s) ? .26 : /[.…؟!»]$/.test(s) ? .55 : 0)) * k;
+    });
+    t += .3 * k;
+  });
+  return tl;
+}
+async function toLetter() {
+  stage = 'letter';
+  go('sLetter'); $('sLetter').scrollTop = 0;
+  await sleep(650);
+  writing = writeTimeline();
+  await writing;
+  await gsap.to('#sign', { opacity: 1, y: 0, duration: .8, ease: 'power2.out' });
+  action('letterNext', btn('وفي كمان شي… 👇'), toPromises);
+  const sl = $('sLetter');
+  gsap.to(sl, { scrollTop: sl.scrollHeight - sl.clientHeight, duration: 1, ease: 'power3.inOut' });
+}
+$('paper').addEventListener('click', () => { if (writing && writing.isActive()) writing.progress(1); });   // tap to skip the writing
+
+/* ---------- 3. promises, stamped one by one ---------- */
+$('promiseTitle').textContent = 'ووعد منّي إلك…';
+$('promises').innerHTML = SORRY.promises.map(p => `<li class="promise"><span>${p}</span><span class="stamp">وعد</span></li>`).join('');
+async function toPromises() {
+  stage = 'promises';
+  go('sPromise');
+  await sleep(FAST ? 300 : 700);
+  const cards = [...document.querySelectorAll('.promise')];
+  for (const [i, c] of cards.entries()) {
+    await gsap.fromTo(c, { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: .5, ease: 'power3.out' });
+    await sleep(FAST ? 180 : 420);
+    const rot = gsap.utils.random(-18, -6);
+    await gsap.fromTo(c.querySelector('.stamp'), { scale: 2.6, opacity: 0, rotate: rot - 22 }, { scale: 1, opacity: .94, rotate: rot, duration: .22, ease: 'power4.in' });
+    SFX.stamp(); buzz('thud'); tell('stamp', i);
+    gsap.timeline().to(c, { x: 2.5, duration: .035, yoyo: true, repeat: 3 }).fromTo(c, { y: 4, scale: .985 }, { y: 0, scale: 1, duration: .5, ease: 'elastic.out(1,.4)' }, 0);
+    await sleep(FAST ? 300 : 750);
+  }
+  action('promiseNext', btn('خلّيني إسألك شي 👀'), toMeter);
+}
+
+/* ---------- 4. how upset are you? (this one value drives the whole sky) ---------- */
+$('meterTitle').textContent = g('قدّيش لسا زعلانة مني؟', 'قدّيش لسا زعلان مني؟');
+// a right-to-left range starts (0) on the right, so "not at all" sits on the right and "very" on the left
+$('endLo').textContent = 'ولا شي';
+$('endHi').textContent = 'كتير';
+$('dragHint').innerHTML = g('نزّلي الزعل', 'نزّل الزعل') + ' <span>👉</span>';
+const range = $('range');
+let anger = 100, lineIdx = -1, meterDone = false;
+function face(a) {   // a: 0 calm … 1 furious
+  $('browL').setAttribute('d', `M58 ${92 - 4 * a}L88 ${86 + 14 * a}`);
+  $('browR').setAttribute('d', `M142 ${92 - 4 * a}L112 ${86 + 14 * a}`);
+  $('mouth').setAttribute('d', `M76 158Q100 ${182 - 50 * a} 124 158`);
+  $('faceC').setAttribute('fill', mixc([251, 241, 230], [244, 190, 186], a));
+  $('cheekL').setAttribute('opacity', .6 * (1 - a)); $('cheekR').setAttribute('opacity', .6 * (1 - a));
+  $('storm').setAttribute('opacity', Math.max(0, a * 1.4 - .4));
+  const happy = a < .15;
+  $('eyesOpen').setAttribute('opacity', happy ? 0 : 1); $('eyesHappy').setAttribute('opacity', happy ? 1 : 0);
+  // the eyes glance toward the slider thumb
+  const look = (1 - a) * 2 - 1;
+  $('eyeL').setAttribute('cx', 74 + look * 2.5); $('eyeR').setAttribute('cx', 126 + look * 2.5);
+}
+function setAnger(v) {
+  anger = v;
+  const a = v / 100;
+  range.value = v; range.style.setProperty('--p', v + '%');
+  face(a);
+  $('pct').textContent = `${g('زعلانة', 'زعلان')} ${ar(v)}٪`;
+  rain.amount = a; rain.wind = .08 + .24 * a; rainVol();
+  document.body.style.backgroundColor = mixc(CLEAR, NIGHT, a);
+  $('clouds').style.opacity = .3 + .7 * a;
+  let k = 0; SORRY.meter.forEach(([at], i) => { if (v <= at) k = i; });
+  if (k !== lineIdx) {
+    if (lineIdx >= 0) { SFX.pop(k); buzz('tick'); }
+    lineIdx = k;
+    const said = $('said');
+    said.textContent = SORRY.meter[k][1];
+    gsap.fromTo(said, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: .35, ease: 'power2.out' });
+  }
+  if (v <= 30 && !meterDone) {
+    meterDone = true;
+    gsap.to('#dragHint', { opacity: 0, duration: .3 });
+    action('meterNext', btn('خلص… عندي سؤال أخير'), toAsk);
+  }
+}
+range.addEventListener('input', () => setAnger(+range.value));
+function toMeter() { stage = 'meter'; go('sMeter'); setAnger(100); }
+
+/* ---------- 5. the question ---------- */
+$('askTitle').textContent = g('سامحتيني؟', 'سامحتني؟');
+$('bubbleWho').textContent = SORRY.from;
+$('noBtn').textContent = SORRY.noLabels[0];
+let noTries = 0, forgiven = false, pulse;
+function bubble(text) {
+  $('bubbleText').textContent = text;
+  gsap.fromTo('.bubble', { scale: 1.06 }, { scale: 1, duration: .5, ease: 'elastic.out(1,.55)' });
+}
+function toAsk() {
+  stage = 'ask'; go('sAsk');
+  bubble(g('فكّري منيح قبل ما تجاوبي 🤭', 'فكّر منيح قبل ما تجاوب 🤭'));
+}
+$('noBtn').addEventListener('click', () => {
+  if (forgiven || noTries >= SORRY.offers.length) return;
+  bubble(SORRY.offers[noTries].text);
+  SFX.boing(noTries); buzz('pop');
+  noTries++;
+  const k = noTries / SORRY.offers.length;
+  if (SORRY.noLabels[noTries]) $('noBtn').textContent = SORRY.noLabels[noTries];
+  gsap.to('#noBtn', { scale: 1 - .42 * k, duration: .5, ease: 'back.out(3)' });
+  gsap.fromTo('#noBtn', { rotate: -8 }, { rotate: 0, duration: .6, ease: 'elastic.out(1,.3)' });
+  gsap.to('#yesWrap', { scale: 1 + .3 * k, duration: .5, ease: 'back.out(3)' });
+  if (!pulse) pulse = gsap.to('#yesBtn', { scale: 1.05, duration: .6, yoyo: true, repeat: -1, ease: 'sine.inOut' });
+  if (noTries === SORRY.offers.length) setTimeout(() => {
+    if (forgiven) return;
+    tell('drop');
+    const r = $('noBtn').getBoundingClientRect(); burst(r.left + r.width / 2, r.top + r.height / 2, 18, false);   // the last "no" bursts into petals
+    gsap.to('#noBtn', { scale: 0, opacity: 0, duration: .35, ease: 'back.in(2)', onComplete: () => { $('noBtn').style.display = 'none'; } });
+    bubble(SORRY.lastWord);
+  }, FAST ? 1300 : 2200);
+});
+$('yesBtn').addEventListener('click', forgive);
+
+/* ---------- 6. the sun comes back ---------- */
+$('closing').textContent = SORRY.closing;
+$('closingSub').textContent = SORRY.closingSub;
+$('replyBtn').textContent = `${g('ردّي', 'ردّ')} على ${SORRY.from} 💬`;
+$('creditLabel').textContent = SORRY.credit.label;
+$('creditLink').textContent = SORRY.credit.handle; $('creditLink').href = SORRY.credit.url;
+$('rays').innerHTML = Array.from({ length: 12 }, (_, i) => {
+  const a = i * Math.PI / 6, c = Math.cos(a), s = Math.sin(a);
+  return `<line x1="${150 + c * 46}" y1="${150 + s * 46}" x2="${150 + c * 58}" y2="${150 + s * 58}"/>`;
+}).join('');
+function burst(x, y, n = 34, fall = true) {
+  const cv = $('fx'), ctx = sizeCanvas(cv);
+  const cols = ['#F07C8C', '#F9B3BF', '#FBF1E6', '#F6C28B', '#F4A3A8'];
+  const ps = Array.from({ length: n }, () => ({ x, y, vx: (Math.random() - .5) * 9, vy: -Math.random() * 9 - 2, r: 0, vr: (Math.random() - .5) * .3, s: 5 + Math.random() * 4, c: cols[Math.random() * 5 | 0], burst: 1 }))
+    .concat(fall ? Array.from({ length: 70 }, () => ({ x: Math.random() * RW, y: -20 - Math.random() * RH * .9, vx: 0, vy: 1.4 + Math.random() * 1.8, ph: Math.random() * 6, r: Math.random() * 6, vr: (Math.random() - .5) * .08, s: 5 + Math.random() * 5, c: cols[Math.random() * 5 | 0] })) : []);
+  (function f() {
+    ctx.clearRect(0, 0, RW, RH); let alive = 0;
+    for (const p of ps) {
+      if (p.burst) { p.vy += .3; p.vx *= .985; } else p.vx = Math.sin(p.ph + p.y * .02) * .9;
+      p.x += p.vx; p.y += p.vy; p.r += p.vr;
+      if (p.y > RH + 20) continue;
+      alive++;
+      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.r); ctx.fillStyle = p.c; ctx.globalAlpha = .92;
+      ctx.beginPath(); ctx.ellipse(0, 0, p.s, p.s * .55, 0, 0, 7); ctx.fill(); ctx.restore();
+    }
+    if (alive) requestAnimationFrame(f); else ctx.clearRect(0, 0, RW, RH);
+  })();
+}
+const times = n => n === 1 ? 'مرة وحدة' : n === 2 ? 'مرتين' : `${ar(n)} مرات`;
+function certificate() {
+  const prizes = SORRY.offers.slice(0, noTries).map(o => o.prize);
+  $('certK1').textContent = noTries ? `${g('رفضتي', 'رفضت')} ${times(noTries)}… و${g('ربحتي', 'ربحت')}:` : g('سامحتي من أول مرة… و ربحتي:', 'سامحت من أول مرة… و ربحت:');
+  $('certV1').textContent = noTries ? prizes.join(' + ') : 'قلبي كلّو 🤍';
+  $('certDate').textContent = new Date().toLocaleDateString('ar-SY', { day: 'numeric', month: 'long', year: 'numeric' });
+  const brag = noTries ? `(رفضت ${times(noTries)} وربحت: ${prizes.join(' + ')} 😂)` : '';
+  return SORRY.replyText + (brag ? '\n' + brag : '');
+}
+async function forgive() {
+  if (forgiven) return; forgiven = true; stage = 'end';
+  if (pulse) pulse.kill();
+  SFX.chime(); SFX.swell(); buzz('heart');
+  const r = $('yesBtn').getBoundingClientRect(); burst(r.left + r.width / 2, r.top + r.height / 2);
+  $('replyBtn').href = SORRY.replyUrl || `https://wa.me/${SORRY.whatsapp}?text=${encodeURIComponent(certificate())}`;
+  if (SORRY.replyUrl) certificate();
+  gsap.to(rain, { amount: 0, duration: .9, onUpdate: rainVol });
+  gsap.to('#clouds .cl', { y: -240, opacity: 0, duration: 1.3, stagger: .1, ease: 'power2.in' });
+  // sunrise: through rose and amber, never through grey
+  gsap.timeline()
+    .to(document.body, { backgroundColor: '#C98A8A', duration: .55, ease: 'none' })
+    .to(document.body, { backgroundColor: '#F2B27A', duration: .55, ease: 'none' })
+    .to(document.body, { backgroundColor: '#FCE6D6', duration: .9, ease: 'power2.out' });
+  document.body.classList.add('day');
+  document.querySelector('meta[name=theme-color]').content = '#FCE6D6';
+  go('sEnd');
+  gsap.fromTo('#sun', { y: 90, opacity: 0 }, { y: 0, opacity: 1, duration: 1.6, ease: 'power3.out', delay: .2 });
+  gsap.to('#rays', { rotation: 360, svgOrigin: '150 150', duration: 40, repeat: -1, ease: 'none' });
+  gsap.fromTo('#bow path', { strokeDasharray: 1, strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 1.4, stagger: .12, ease: 'power2.inOut', delay: .7 });
+  gsap.to('#sEnd .rise', { opacity: 1, y: 0, duration: .8, stagger: .16, ease: 'power3.out', delay: 1.1 });
+  await sleep(2300);
+  gsap.fromTo('#seal', { scale: 2.4, opacity: 0, rotate: -40 }, { scale: 1, opacity: .94, rotate: -12, duration: .22, ease: 'power4.in', onComplete: () => {
+    SFX.stamp(); buzz('thud'); tell('stamp', 9);
+    gsap.fromTo('#cert', { x: 2.5 }, { x: 0, duration: .3, ease: 'elastic.out(1,.3)' });
+  } });
+}
+$('againBtn').addEventListener('click', () => location.reload());
+
+// coming back to the tab must start fresh, never a frozen half-finished page
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+addEventListener('pageshow', e => { if (e.persisted) location.reload(); });
+
+// handles for the reel studio
+window.SORRYAPI = { setAnger, flash, forgive, get stage() { return stage; }, get anger() { return anger; } };
+</script>
+</body>
+</html>
