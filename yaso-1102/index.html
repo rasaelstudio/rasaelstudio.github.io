@@ -691,8 +691,8 @@ $('seal').addEventListener('click', () => {
 <!-- rasael-lock: password screen (premium). Set a password to turn it on; leave it empty for no lock. -->
 <script>
 const LOCK = {
-  password: 'حمووووووودي',                     // e.g. '1203' or 'نور' — empty = no lock
-  hint: 'شو بتناديني؟ 😌',                                  // shown under the box, e.g. 'تاريخ أول لقاء (يوم وشهر)'
+  password: '2/11/2026',                       // e.g. '1203' or 'نور' — empty = no lock
+  hint: 'تاريخ بتعرفيه منيح (يوم/شهر/سنة) 🤍',                                // shown under the box, e.g. 'تاريخ أول لقاء (يوم وشهر)'
   forHim: false,                               // true = the texts speak to a man
 };
 </script>
@@ -716,7 +716,7 @@ const LOCK = {
 <script>
 (() => {
   if (!LOCK.password) return;
-  const norm = s => String(s).trim().toLowerCase().replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[\s\/.\-_]/g, '').replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي').replace(/(.)\1+/g, '$1');   // any number of و: حمودي = حموووودي
+  const norm = s => String(s).trim().toLowerCase().replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/(^|\D)0+(?=\d)/g, '$1').replace(/[\s\/\\.\-_]/g, '').replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي');   // 02/11/2026 = 2/11/2026
   const KEY = 'rlock:' + location.pathname;
   try { if (sessionStorage.getItem(KEY) === '1') return; } catch {}
   const el = document.createElement('div');
