@@ -5,8 +5,7 @@ window.RASAEL = {
   instagram: 'rasael.studio',
   prices: {
     gift: [                        // love letter / proposal / birthday / Eid pages
-      { id: 'basic', name: 'أساسي', price: 500, desc: 'الأسماء ورسالتك بتصميم جاهز' },
-      { id: 'popular', name: 'الأكثر طلباً', price: 1000, desc: '+ موسيقى + صور + مفاجأة تفاعلية', best: true },
+      { id: 'popular', name: 'الأكثر طلباً', price: 1000, desc: 'الأسماء ورسالتك + موسيقى + صور + مفاجأة تفاعلية', best: true },
       { id: 'premium', name: 'مميز', price: 1500, desc: '+ نكتبلك الرسالة + كلمة سر + أولوية بالتسليم' },
     ],
     wedding: [
