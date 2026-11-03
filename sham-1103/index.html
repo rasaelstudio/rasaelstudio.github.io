@@ -309,9 +309,9 @@
     </div>
   </section>
 
-  <div class="edge-bg" style="--bg:var(--wine-2);display:none"><div class="edge"></div></div>
+  <div class="edge-bg" style="--bg:var(--wine-2)"><div class="edge"></div></div>
   <!-- ===== 3. Counter ===== -->
-  <section class="on-paper" id="counter" style="display:none">
+  <section class="on-paper" id="counter">
     <div class="wrap">
       <p class="kicker"><svg><use href="#heart"/></svg>صرلنا مع بعض<svg><use href="#heart"/></svg></p>
       <p class="count-big" id="cDays">٠</p>
@@ -324,10 +324,10 @@
       <p class="since" id="since"></p>
     </div>
   </section>
-  <div class="edge flip" style="display:none"></div>
+  <div class="edge flip"></div>
 
   <!-- ===== 4. Reasons ===== -->
-  <section class="on-wine" id="reasons" style="display:none">
+  <section class="on-wine" id="reasons">
     <div class="wrap">
       <p class="kicker">ليش بحبك؟</p>
       <h2 class="h2">لأنك…</h2>
@@ -337,19 +337,19 @@
     </div>
   </section>
 
-  <div class="edge" style="display:none"></div>
+  <div class="edge"></div>
   <!-- ===== 5. Our story ===== -->
-  <section class="on-paper" id="storySec" style="display:none">
+  <section class="on-paper" id="storySec">
     <div class="wrap">
       <p class="kicker">حكايتنا</p>
       <h2 class="h2">من أول يوم لهلأ</h2>
       <ol class="story" id="story"></ol>
     </div>
   </section>
-  <div class="edge-bg" style="--bg:var(--wine-2);display:none"><div class="edge flip"></div></div>
+  <div class="edge-bg" style="--bg:var(--wine-2)"><div class="edge flip"></div></div>
 
   <!-- ===== 6. Open when ===== -->
-  <section class="on-wine-2" id="openWhen" style="display:none">
+  <section class="on-wine-2" id="openWhen">
     <div class="wrap">
       <p class="kicker">رسائل صغيرة</p>
       <h2 class="h2">افتحيها لمّا…</h2>
@@ -405,17 +405,33 @@ const LETTER = {
   letterDate: '٣ تشرين التاني ٢٠٢٦',
   body: [
     'بحبك كتير شمشومة، وما بقدر عبّرلك عن حبي إلك وقدّيش أنا بعزّك، وبشوف حالي فيكي، بطيبتك وبمحبتك.',
-    'هنن صح أقل من سنتين، بس بكل هالأيام، كل يوم بتاكلي قطعة من قلبي… وبحبك كتير ❤️❤️',
-    'وضحكتك اللي بتوصل لآخر الدنيا… صح بتزعجني، بس بموت بهالصوت 🤣❤️',
-    'ووقت تشتاقيلي أو تزعلي مني، فوتي لهون واتذكري قدّيش غلاوتك عندي كبيرة، وعازّة عليّ الدنيا.'
+    'هنن صح أقل من سنتين، بس بكل هالأيام، كل يوم بتاكلي قطعة من قلبي… وبحبك كتير ❤️❤️'
   ],
   signoff: 'حبيبك،',
   poem: 'الحبُّ في الأرضِ بعضٌ من تخيُّلِنا، لو لم نجدْهُ عليها لاخترعناهُ',
   poemBy: 'نزار قباني',
   metDate: '2025-01-12T00:00:00',   // the day they met (for the "together" counter)
-  reasons: ['ضحكتك'],
-  story: [{ icon: 'meet', date: '١٢ كانون التاني ٢٠٢٥', title: 'البداية', text: '', photo: '' }],
-  openWhen: [{ title: 'لمّا تشتاقيلي', text: '' }],
+  reasons: [
+    'ضحكتك اللي بتوصل لآخر الدنيا… صح بتزعجني، بس بموت بهالصوت 🤣❤️',
+    'طيبتك اللي ما بتشبه حدا',
+    'محبتك اللي بشوف حالي فيها',
+    'لأنك قلبي وحياتي… مو بس كلمة',
+    'كل يوم بتاكلي قطعة من قلبي… وأنا مبسوط 😌',
+    'لأنو معك الدنيا أحلى'
+  ],
+  story: [
+    // icon: meet | chat | trip | ring | home | star ; photo: optional file name next to this page
+    { icon: 'meet', date: '١٢ كانون التاني ٢٠٢٥', title: 'البداية', text: 'من هون بلّش كل شي… ومن يومها صرتي قلبي وحياتي.', photo: '' },
+    { icon: 'chat', date: 'كل يوم من يومها', title: 'قطعة قطعة', text: 'كل يوم أخدتي قطعة من قلبي، لحتى صار كلّو إلك.', photo: '' },
+    { icon: 'ring', date: '١٢ كانون التاني ٢٠٢٦', title: 'سنتنا الأولى', text: 'سنة كاملة… وما زهقت من ضحكتك ولا يوم 🤣❤️', photo: '' },
+    { icon: 'star', date: 'هلّق', title: 'وهلّق…', text: 'أقل من سنتين، بس كأنهن عمر. ولسّا الجاي أحلى 🤍', photo: '' }
+  ],
+  openWhen: [
+    { title: 'لمّا تشتاقيلي', text: 'فوتي لهون واتذكري قدّيش غلاوتك عندي كبيرة، وعازّة عليّ الدنيا ❤️' },
+    { title: 'لمّا تزعلي مني', text: 'فوتي لهون واتذكري إنو ما في شي بيسوى زعلك… وإنتي عازّة عليّ الدنيا كلها. سامحيني، وتعي نحكي 🤍' },
+    { title: 'لمّا ما يجيكي نوم', text: 'سكّري عيونك وتخيّلي صوت ضحكتك اللي بتوصل لآخر الدنيا… هاد أحلى صوت بسمعو 🤣❤️' },
+    { title: 'لمّا تنسي قدّيش بحبك', text: 'ارجعي لأول الرسالة واقريها من جديد… وتذكّري إنك قلبي وحياتي، مو بس كلمة.' }
+  ],
   closing: 'بحبك يا قلبي وحياتي',
   heartReply: 'وأنا بحبك أكتر 🤍',
   whatsapp: '963995477865',          // sender's number: the reply button opens a chat with him
