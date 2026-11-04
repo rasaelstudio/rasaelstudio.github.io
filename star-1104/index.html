@@ -249,6 +249,12 @@
   .music.muted .on-i { display: none; }
   .music.muted .off { display: block; }
 
+  .en-to { direction: ltr; font-family: "Great Vibes", cursive !important; }
+  .panel.mid .en-to { font-size: clamp(24px, 6.6vw, 32px); line-height: 1.2; }
+  .en-to small { font-family: "Great Vibes", cursive !important; font-size: .6em !important; margin: 2px 0; }
+  .env-to.en-to { font-size: clamp(26px, 7vw, 32px); }
+  /* no heart doodle or signature under the letter */
+  .letter .doodle, .letter .sign { display: none; }
   /* moments gallery */
   .moments { display: grid; gap: 34px; margin-top: 44px; justify-items: center; }
   .pola { width: min(86%, 320px); padding: 12px 12px 16px; background: #fff; box-shadow: 0 18px 34px -16px rgba(0,0,0,.45); transform: rotate(-3deg); }
@@ -286,12 +292,12 @@
       <span class="env-back"></span>
       <div class="sheet" id="sheet">
         <div class="panel top"></div>
-        <div class="panel mid"><p><small>إلى</small><span data-text="to"></span></p></div>
+        <div class="panel mid"><p class="en-to">To Enjy<small>from</small>Her Shooting Star</p></div>
         <div class="panel bot"></div>
       </div>
       <span class="env-pocket"></span>
       <span class="env-flap" id="flap"></span>
-      <p class="env-to"><small>إلى</small><span data-text="to"></span></p>
+      <p class="env-to en-to">To Enjy</p>
       <span class="stamp"><span><svg><use href="#heart"/></svg></span></span>
       <svg class="postmark" viewBox="0 0 66 66" aria-hidden="true"><circle cx="33" cy="33" r="30" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="33" cy="33" r="22" fill="none" stroke="currentColor" stroke-width="1"/><path d="M-4 26q9-6 18 0t18 0 18 0 18 0 18 0M-4 40q9-6 18 0t18 0 18 0 18 0 18 0" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
       <button class="seal" id="seal" type="button" aria-label="افتح الرسالة">
@@ -329,15 +335,14 @@
   <!-- ===== 3. Counter ===== -->
   <section class="on-paper" id="counter">
     <div class="wrap">
-      <p class="kicker"><svg><use href="#heart"/></svg>مواليد نجمتي<svg><use href="#heart"/></svg></p>
       <p class="count-big">19</p>
-      <p class="count-unit">سنة حلوة… وعقبال الـ١٠٠</p>
+      <p class="count-unit">سنة حلوة… وعقبال الـ100</p>
       <div class="count-small">
-        <div><b>٤</b><span>تشرين التاني</span></div>
+        <div><b>4</b><span>November</span></div>
         <div><b>🌠</b><span>نجمتي</span></div>
-        <div><b>١٠٠</b><span>عقبال</span></div>
+        <div><b>100</b><span>عقبال</span></div>
       </div>
-      <p class="since">٤ / ١١… أهمّ تاريخ بالنسبة إلي 🤍</p>
+      <p class="since">4 / 11… أهمّ تاريخ بالنسبة إلي 🫀</p>
     </div>
   </section>
   <div class="edge flip"></div>
@@ -349,7 +354,7 @@
       <h2 class="h2">بحب…</h2>
       <p class="sub">اضغطي على الكرت لتشوفي اللي بعدو</p>
       <div class="deck" id="deck"></div>
-      <p class="deck-meta"><b id="deckNow">١</b> من <span id="deckAll"></span></p>
+      <p class="deck-meta"><b id="deckNow">1</b> من <span id="deckAll"></span></p>
     </div>
   </section>
 
@@ -360,9 +365,9 @@
       <p class="kicker">لحظاتنا سوا</p>
       <h2 class="h2">أحلى لحظاتي… معك</h2>
       <div class="moments">
-        <figure class="pola"><img src="m1.jpg" alt=""><p>إنتي وأنا… وبس 🤍</p></figure>
+        <figure class="pola"><img src="m1.jpg" alt=""><p>إنتي وأنا… بتالت مشوار إلنا 🤍</p></figure>
         <figure class="pola"><img src="m2.jpg" alt=""><p>أحلى بنوتة بالدنيا 🌷</p></figure>
-        <figure class="pola"><img src="m3.jpg" alt=""><p>عيونك… وبس 🙈</p></figure>
+        <figure class="pola"><img src="m3.jpg" alt=""><p>الشهل 😩</p></figure>
       </div>
       <ol class="story" id="story" hidden></ol>
     </div>
@@ -382,7 +387,7 @@
   <section class="starline" id="starline">
     <div class="sky" id="sky"></div><span class="shoot"></span>
     <p class="en">I hope to see you again soon .. my star 🙏🏻🌠</p>
-    <p class="ar">لنجمتي، بعيد ميلادها الـ١٩</p>
+    <p class="ar">لنجمتي، بعيد ميلادها الـ19</p>
   </section>
   <!-- ===== 7. Ending ===== -->
   <section class="on-paper ending" id="ending">
@@ -427,12 +432,12 @@ const LETTER = {
   to: 'نجمتي',
   from: 'حبيبك',
   greeting: 'حبيبة عمري وأغلى ما عندي،',
-  letterDate: '٤ تشرين التاني ٢٠٢٦',
+  letterDate: '⁦4 November 2026⁩',
   body: [
-    'صار عمرك ١٩ سنة، وعقبال ما يصيرو ١٠٠ سنة… حلوين متل وجهك وقلبك.',
+    'صار عمرك 19 سنة، وعقبال ما يصيرو 100 سنة… حلوين متل وجهك وقلبك.',
     'العمر كلّو يا توليبتي، ويا بنّوتة روحي. العمر الطويل إن شاء الله، يا أغلى وأحلى وأهضم حدا دخل حياتي.',
     'إن شاء الله بشوفك محقّقة كل اللي بتتمنّيه، يا صوصي الغنوج.',
-    '٤ / تشرين التاني… أهمّ تاريخ بالنسبة إلي، مواليد نجمتي ⭐',
+    '⁦4 / November⁩… أهمّ تاريخ بالنسبة إلي، مواليد نجمتي ⭐',
     'يخلّيلي ياكي يا روح الروح إنتي، ويا أحنّ حدا 🙏🏻'
   ],
   signoff: 'للأبد،',
@@ -440,29 +445,29 @@ const LETTER = {
   poemBy: 'نزار قباني',
   metDate: '2007-11-04T00:00:00',   // unused: the counter shows her age instead
   reasons: [
-    'عيونك',
+    'عيونك الشهل',
     'ضحكتك',
-    'صوتك',
+    'صوتك الناعم',
     'غنجك يا صوصي',
     'حنّيتك… يا أحنّ حدا',
     'وكلّك… كلّك على بعضك 🤍'
   ],
   story: [],
   openWhen: [
-    { title: 'لمّا تشتاقيلي', text: 'تطلّعي عالسما بالليل، ودوري على أحلى نجمة… وتذكّري إنو في حدا عم يطلّع عليكي إنتي، ويستنى يشوفك من جديد 🌠' },
+    { title: 'لمّا تشتاقيلي', text: 'تطلّعي عالسما بالليل، ودوري على أكتر نجمة مضواية… وتذكّري إنو شُهبك بضل يقلّك هالحكي، ويستنى يشوفك من جديد 🌠' },
     { title: 'لمّا تكوني زعلانة', text: 'ما في شي بيستاهل يطفي ضحكتك يا توليبتي. ابعتيلي كلمة وحدة، وأنا بكون جنبك.' },
-    { title: 'لمّا ما يجيكي نوم', text: 'سكّري عيونك الحلوين، وتخيّلي صوتي عم قلك: تصبحي على خير يا روح الروح 🤍' },
-    { title: 'بعيد ميلادك الجاي', text: 'افتحيها السنة الجاية، وتذكّري إنو كل سنة بتكبري فيها… بحبك فيها أكتر 🎂' }
+    { title: 'لمّا ما يجيكي نوم', text: 'سكّري عيونك الحلوين، وتخيّليني حدّك وعم غنّيلك Die With A Smile 🥹🫂' },
+    { title: 'بعيد ميلادك الجاي', text: 'افتحيها السنة الجاية، وتذكّري إنو كل سنة بتكبري فيها… رح حبك، ورح نضل سوا إن شاء الله 🙏🏻' }
   ],
-  closing: 'يخلّيلي ياكي يا روح الروح',
-  heartReply: 'وإنتَ أغلى ما عندي 🤍',
+  closing: 'يخلّيلي ياكي يا روح الروح.. من جادي',
+  heartReply: 'وإنتَ أغلى ما عندي 💙',
   whatsapp: '963900000000',          // sender's number: the reply button opens a chat with him
   music: 'music.mp3',                // Die With A Smile, starts at 0:11
   credit: { label: 'صُمّمت هذه الرسالة بواسطة', handle: '@rasael.studio', url: 'https://instagram.com/rasael.studio' }
 };
 /* ============================================================ */
 
-const LOCALE = 'ar-SY-u-nu-arab';
+const LOCALE = 'ar-SY-u-nu-latn';
 const num = (n, pad = 1) => new Intl.NumberFormat(LOCALE, { minimumIntegerDigits: pad, useGrouping: n >= 10000 }).format(n);
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 // battery-saver modes switch on reduce-motion by themselves; the ink writing is the gift, so it always plays
@@ -609,7 +614,7 @@ $('bigHeart').addEventListener('click', e => {
   const r = $('endFx').getBoundingClientRect(), b = e.currentTarget.getBoundingClientRect();
   endFx.burst(b.left + b.width / 2 - r.left, b.top + b.height / 2 - r.top);
   hearts++;
-  $('heartHint').textContent = hearts === 1 ? 'كمان؟ 🙈' : `${num(hearts)} قلوب`;
+  $('heartHint').textContent = hearts === 1 ? 'لسا' : `${num(hearts)} قلوب`;
   $('heartReply').classList.add('show');
 });
 // read again: back to the top, then the ink writes the letter once more
