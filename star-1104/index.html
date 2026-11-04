@@ -462,7 +462,7 @@ const LETTER = {
   closing: 'يخلّيلي ياكي يا روح الروح.. من جادي',
   heartReply: '⁦Always and Forever 🦢⁩',
   whatsapp: '963983500461',          // sender's number: the reply button opens a chat with him
-  music: 'music.mp3',                // Die With A Smile, starts at 0:11
+  music: 'song.mp3',                 // Die With A Smile, already cut to start at 0:11
   credit: { label: 'صُمّمت هذه الرسالة بواسطة', handle: '@rasael.studio', url: 'https://instagram.com/rasael.studio' }
 };
 /* ============================================================ */
@@ -630,7 +630,7 @@ addEventListener('pageshow', e => { if (e.persisted) location.reload(); });
 const musicBtn = $('music');
 let audio = null;
 if (LETTER.music) {
-  audio = new Audio(LETTER.music); audio.preload = 'auto'; audio.addEventListener('loadedmetadata', () => { if (audio.currentTime < 11) audio.currentTime = 11; }, { once: true }); audio.addEventListener('ended', () => { audio.currentTime = 11; audio.play(); }); musicBtn.classList.add('on');
+  audio = new Audio(LETTER.music); audio.preload = 'auto'; audio.loop = true; musicBtn.classList.add('on');
   musicBtn.addEventListener('click', () => {
     if (audio.paused) { audio.play(); musicBtn.classList.remove('muted'); } else { audio.pause(); musicBtn.classList.add('muted'); }
   });
@@ -692,7 +692,6 @@ function reveal() {
 $('seal').addEventListener('click', () => {
   if (intro.classList.contains('opening')) return;
   intro.classList.add('opening');
-  if (audio && audio.currentTime < 11) try { audio.currentTime = 11; } catch (e) {}
   if (audio) audio.play().catch(() => musicBtn.classList.add('muted'));
   if (!hasGsap) { reveal(); return; }
 
