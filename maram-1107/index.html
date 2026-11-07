@@ -251,6 +251,7 @@
 
   @media (max-height: 560px) { .intro { gap: 14px; } .stage { width: min(84vw, 300px); } }
   [hidden] { display: none !important; }
+  .his-vid { display: block; width: 100%; aspect-ratio: 1; margin: 26px auto 0; border-radius: 22px; background: #000; box-shadow: 0 24px 50px -20px rgba(0,0,0,.6); }
 </style>
 </head>
 <body class="locked">
@@ -335,6 +336,16 @@
       <p class="sub">اضغطي على الكرت لتشوفي اللي بعدو</p>
       <div class="deck" id="deck"></div>
       <p class="deck-meta"><b id="deckNow">١</b> من <span id="deckAll"></span></p>
+    </div>
+  </section>
+
+  <!-- ===== His video (added for this order) ===== -->
+  <section class="on-wine" id="vidSec">
+    <div class="wrap">
+      <p class="kicker">ومنّي إلك</p>
+      <h2 class="h2">كلمة بصوتي…</h2>
+      <p class="sub">اضغطي لتشوفيها</p>
+      <video class="his-vid" id="hisVid" src="video.mp4" poster="video-poster.jpg" controls playsinline preload="metadata"></video>
     </div>
   </section>
 
@@ -601,6 +612,10 @@ if (LETTER.music) {
   musicBtn.addEventListener('click', () => {
     if (audio.paused) { audio.play(); musicBtn.classList.remove('muted'); } else { audio.pause(); musicBtn.classList.add('muted'); }
   });
+  // his video talks over the music: pause it while the video plays, bring it back after
+  let resume = false;
+  $('hisVid').addEventListener('play', () => { resume = !audio.paused; audio.pause(); });
+  $('hisVid').addEventListener('pause', () => { if (resume) audio.play(); resume = false; });
 }
 
 /* ---------- Scroll animations ---------- */
