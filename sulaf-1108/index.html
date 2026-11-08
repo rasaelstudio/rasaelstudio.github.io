@@ -257,8 +257,8 @@
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
-    <symbol id="heart" viewBox="0 0 32 30"><path d="M16 29C5 21 0 15 0 8.5 0 3.8 3.6 0 8.2 0c3.3 0 6 1.9 7.8 4.6C17.8 1.9 20.5 0 23.8 0 28.4 0 32 3.8 32 8.5 32 15 27 21 16 29Z" fill="currentColor"/></symbol>
-    <symbol id="heartline" viewBox="0 0 32 30"><path d="M16 27C6 20 2 14.5 2 8.8 2 5 5 2 8.6 2c3 0 5.5 2 7.4 4.6C17.9 4 20.4 2 23.4 2 27 2 30 5 30 8.8 30 14.5 26 20 16 27Z" fill="none" stroke="currentColor" stroke-width="2.2"/></symbol>
+    <symbol id="heart" viewBox="0 0 32 30"><path d="M16 15C13 9.5 4 8.5 3 15c1 6.5 10 5.5 13 0 3-5.5 12-6.5 13 0-1 6.5-10 5.5-13 0Z" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linejoin="round"/></symbol>
+    <symbol id="heartline" viewBox="0 0 32 30"><path d="M16 15C13 9.5 4 8.5 3 15c1 6.5 10 5.5 13 0 3-5.5 12-6.5 13 0-1 6.5-10 5.5-13 0Z" fill="none" stroke="currentColor" stroke-width="2.2"/></symbol>
   </defs>
 </svg>
 
@@ -295,7 +295,7 @@
       <p class="date" data-text="letterDate"></p>
       <h1 data-text="greeting"></h1>
       <div class="body" id="letterBody"></div>
-      <svg class="doodle" viewBox="0 0 64 56" aria-hidden="true"><path id="doodle" pathLength="1" d="M32 50C14 38 6 29 6 18 6 10 12 4 19 4c6 0 10 4 13 9 3-5 7-9 13-9 7 0 13 6 13 14 0 11-8 20-26 32"/></svg>
+      <svg class="doodle" viewBox="0 0 64 56" aria-hidden="true"><path id="doodle" pathLength="1" d="M32 28C26 17 8 15 6 28c2 13 20 11 26 0 6-11 24-13 26 0-2 13-20 15-26 0"/></svg>
       <p class="sign"><small data-text="signoff"></small><span data-text="from"></span></p>
     </article>
     <div class="scroll-hint">في شي كمان تحت<span></span></div>
@@ -365,8 +365,8 @@
     <canvas class="canvas-fx" id="endFx"></canvas>
     <div class="wrap">
       <h2 class="h2" data-text="closing"></h2>
-      <button class="big-heart" id="bigHeart" type="button" aria-label="أرسلي قلب"><svg viewBox="0 0 32 30"><use href="#heart"/></svg></button>
-      <p class="heart-hint" id="heartHint">اضغطي على القلب</p>
+      <button class="big-heart" id="bigHeart" type="button" aria-label="رمزنا"><svg viewBox="0 0 32 30"><use href="#heart"/></svg></button>
+      <p class="heart-hint" id="heartHint">اضغطي على رمزنا ♾️</p>
       <p class="heart-reply" id="heartReply" data-text="heartReply"></p>
       <div class="actions">
         <a class="btn solid" id="replyBtn" target="_blank" rel="noopener">
@@ -438,7 +438,7 @@ const LETTER = {
     { title: 'لمّا بدك تضحكي', text: 'اضحكي… بس تذكّري إنو هالضحكة أنا مشتاقلها أكتر من أي شي.' }
   ],
   closing: 'ألف زعلة معك… ولا ضحكة مع غيرك',
-  heartReply: 'وأنا لسّا ناطرك 🤍',
+  heartReply: 'وأنا لسّا ناطرك ♾️',
   whatsapp: '963900000000',          // TODO his number: the reply button opens a chat with him
   music: 'music.mp3',
   credit: { label: 'صُمّمت هذه الرسالة بواسطة', handle: '@rasael.studio', url: 'https://instagram.com/rasael.studio' }
@@ -567,7 +567,7 @@ class Hearts {
     }
     this.start();
   }
-  heart(x, y, s) { const c = this.x; c.beginPath(); c.moveTo(x, y + s * .3); c.bezierCurveTo(x, y, x - s * .5, y - s * .1, x - s * .5, y + s * .3); c.bezierCurveTo(x - s * .5, y + s * .6, x, y + s * .8, x, y + s); c.bezierCurveTo(x, y + s * .8, x + s * .5, y + s * .6, x + s * .5, y + s * .3); c.bezierCurveTo(x + s * .5, y - s * .1, x, y, x, y + s * .3); c.fill(); }
+  heart(x, y, s) { const c = this.x, k = s / 13; c.beginPath(); c.moveTo(x, y); c.bezierCurveTo(x - 3 * k, y - 5.5 * k, x - 12 * k, y - 6.5 * k, x - 13 * k, y); c.bezierCurveTo(x - 12 * k, y + 6.5 * k, x - 3 * k, y + 5.5 * k, x, y); c.bezierCurveTo(x + 3 * k, y - 5.5 * k, x + 12 * k, y - 6.5 * k, x + 13 * k, y); c.bezierCurveTo(x + 12 * k, y + 6.5 * k, x + 3 * k, y + 5.5 * k, x, y); c.strokeStyle = c.fillStyle; c.lineWidth = Math.max(1.5, s * .16); c.stroke(); }   // ♾️ instead of hearts: their symbol
   start() { if (this.run || reduceMotion) return; this.run = true; this.loop(); }
   loop() {
     if (!this.run) return;
@@ -592,7 +592,7 @@ $('bigHeart').addEventListener('click', e => {
   const r = $('endFx').getBoundingClientRect(), b = e.currentTarget.getBoundingClientRect();
   endFx.burst(b.left + b.width / 2 - r.left, b.top + b.height / 2 - r.top);
   hearts++;
-  $('heartHint').textContent = hearts === 1 ? 'كمان؟ 🙈' : `${num(hearts)} قلوب`;
+  $('heartHint').textContent = hearts === 1 ? 'كمان؟ 🙈' : `${num(hearts)} مرة ♾️`;
   $('heartReply').classList.add('show');
 });
 // read again: back to the top, then the ink writes the letter once more
@@ -692,7 +692,7 @@ $('seal').addEventListener('click', () => {
 <script>
 const LOCK = {
   password: 'سلاف',                              // e.g. '1203' or 'نور' — empty = no lock
-  hint: 'اسمك 🤍',
+  hint: 'اسمك ♾️',
   forHim: false,                               // true = the texts speak to a man
 };
 </script>
@@ -741,7 +741,7 @@ const LOCK = {
       setTimeout(() => el.remove(), 800);
     } else {
       tries++;
-      wrong.textContent = tries < 3 ? (LOCK.forHim ? 'مو هي… جرّب كمان مرة 🙈' : 'مو هي… جرّبي كمان مرة 🙈') : (LOCK.forHim ? 'فكّر منيح… شي بتعرفو إنتو التنين بس 🤍' : 'فكّري منيح… شي بتعرفو إنتو التنين بس 🤍');
+      wrong.textContent = tries < 3 ? (LOCK.forHim ? 'مو هي… جرّب كمان مرة 🙈' : 'مو هي… جرّبي كمان مرة 🙈') : (LOCK.forHim ? 'فكّر منيح… شي بتعرفو إنتو التنين بس ♾️' : 'فكّري منيح… شي بتعرفو إنتو التنين بس ♾️');
       el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake');
       input.select();
     }
