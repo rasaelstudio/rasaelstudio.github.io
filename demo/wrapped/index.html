@@ -61,10 +61,11 @@
 
   /* ===== Story player ===== */
   .player {
-    position: fixed; inset: 0; overflow: hidden; background: var(--night);
+    position: fixed; inset: 0; overflow: hidden; background: #000;
     touch-action: manipulation; user-select: none; -webkit-user-select: none;
-    container-type: size; opacity: 0; visibility: hidden;
+    container-type: size; opacity: 0; visibility: hidden; perspective: 1200px;
   }
+  .player.cubing .slide { transition: none !important; }
   .player.live { opacity: 1; visibility: visible; transition: opacity .5s; }
   @media (min-width: 620px) and (min-height: 620px) {
     .player { inset: auto; left: 50%; top: 50%; width: min(440px, 92vw); height: min(880px, 94vh); transform: translate(-50%, -50%); border-radius: 22px; box-shadow: 0 40px 120px -30px #000; }
@@ -95,22 +96,40 @@
     padding: calc(84px + env(safe-area-inset-top)) 24px calc(54px + env(safe-area-inset-bottom));
     opacity: 0; visibility: hidden; transform: scale(1.05);
     transition: opacity .45s, transform .6s var(--ease), visibility 0s .45s;
-    overflow: hidden;
+    overflow: hidden; backface-visibility: hidden; -webkit-backface-visibility: hidden;
   }
   .slide.on { opacity: 1; visibility: visible; transform: none; transition: opacity .45s, transform .6s var(--ease); }
   .slide > * { position: relative; }
   .kick { font-weight: 700; font-size: 15px; letter-spacing: .05em; }
 
-  /* 1. Title */
-  .s-title { background: var(--rose); }
-  .s-title .orb { position: absolute; border-radius: 50%; background: rgba(255,255,255,.09); }
-  .s-title .o1 { width: 130vw; height: 130vw; width: 130cqw; height: 130cqw; top: -40%; right: -55%; animation: drift 9s ease-in-out infinite; }
-  .s-title .o2 { width: 80vw; height: 80vw; width: 80cqw; height: 80cqw; bottom: -18%; left: -30%; background: rgba(43,18,56,.14); animation: drift 11s ease-in-out infinite reverse; }
-  @keyframes drift { 50% { transform: translate(14px, 18px) scale(1.05); } }
-  .s-title .to { font-family: "Aref Ruqaa", serif; font-weight: 700; font-size: 34px; color: #FFE3E7; }
-  .s-title h1 { font-weight: 900; font-size: 19vw; font-size: clamp(56px, 19cqw, 96px); line-height: 1.02; color: var(--cream); margin: 8px 0 18px; text-shadow: 0 6px 30px rgba(120,10,30,.35); }
-  .s-title .sub { font-weight: 500; font-size: 17px; color: #FFE3E7; }
-  .s-title .by { margin-top: 34px; font-size: 14px; color: #FFE3E7; opacity: .85; }
+  /* 1. Title: their photo in a turning ring, sun rays, the title lands word by word */
+  .s-title { background: radial-gradient(ellipse 110% 80% at 50% 32%, #F25A70 0%, var(--rose) 48%, #9E2440 100%); }
+  .s-title .rays { position: absolute; left: 50%; top: 36%; width: 240vh; height: 240vh; width: 240cqh; height: 240cqh; transform: translate(-50%, -50%); border-radius: 50%; background: repeating-conic-gradient(rgba(255,255,255,.08) 0 5deg, transparent 5deg 15deg); -webkit-mask: radial-gradient(circle, #000 6%, transparent 44%); mask: radial-gradient(circle, #000 6%, transparent 44%); animation: rays 90s linear infinite; }
+  @keyframes rays { to { transform: translate(-50%, -50%) rotate(1turn); } }
+  .halo { position: relative; width: 60vw; width: min(62cqw, 34cqh); aspect-ratio: 1; margin-bottom: 14px; }
+  .halo .hring { position: absolute; inset: 0; width: 100%; height: 100%; animation: spin 26s linear infinite; }
+  .halo .orbit { position: absolute; inset: 0; animation: spin 9s linear infinite reverse; }
+  .halo .orbit svg { position: absolute; top: -2%; left: 50%; width: 13%; margin-left: -6.5%; color: var(--gold); filter: drop-shadow(0 3px 6px rgba(80,0,20,.45)); }
+  .halo .ph { position: absolute; inset: 8%; border-radius: 50%; overflow: hidden; border: 4px solid var(--cream); background: linear-gradient(150deg, #FF9BAA, #B92B45); box-shadow: 0 24px 50px -16px rgba(80,0,20,.65); display: flex; align-items: center; justify-content: center; gap: 5%; color: var(--cream); font-family: "Aref Ruqaa", serif; font-size: 13vw; font-size: min(15cqw, 8cqh); line-height: 1; }
+  .halo .ph img { width: 100%; height: 100%; object-fit: cover; }
+  .halo .ph svg { width: 20%; color: var(--cream); }
+  .s-title .to { display: inline-block; padding: 0 20px 4px; border-radius: 999px; background: var(--cream); color: var(--rose-2); font-family: "Aref Ruqaa", serif; font-weight: 700; font-size: 26px; line-height: 1.55; transform: rotate(-4deg); box-shadow: 0 10px 24px -12px rgba(80,0,20,.6); }
+  .s-title h1 { font-weight: 900; font-size: 15vw; font-size: clamp(44px, 15.5cqw, 76px); line-height: 1.15; margin: 12px 0 14px; white-space: nowrap; color: var(--cream); text-shadow: 0 6px 30px rgba(120,10,30,.35); }
+  .s-title h1 .w { display: inline-block; }
+  .s-title .sub { padding: 5px 16px; border-radius: 999px; background: rgba(43,18,56,.22); font-weight: 500; font-size: 15px; color: #FFE3E7; }
+  .s-title .by { margin-top: 12px; font-size: 14px; color: #FFE3E7; opacity: .85; }
+
+  /* Photos: polaroids that drop in one by one, with a camera flash */
+  .s-photos { background: radial-gradient(ellipse 100% 70% at 50% 40%, #4A1B5E 0%, #1C0A27 80%); }
+  .s-photos .kick { color: var(--pink); }
+  .s-photos h2 { font-family: "Aref Ruqaa", serif; font-weight: 700; font-size: 34px; line-height: 1.3; }
+  .pics { position: relative; width: 100%; height: 58vh; height: 58cqh; margin-top: 6px; }
+  .pics .slot { position: absolute; left: 50%; top: 50%; width: var(--w); transform: translate(-50%, -50%) translate(var(--x), var(--y)) rotate(var(--r)); }
+  .pol { position: relative; padding: 3.5% 3.5% 0; background: #FFFDF8; box-shadow: 0 22px 44px -18px rgba(0,0,0,.75); }
+  .pol::before { content: ""; position: absolute; z-index: 1; top: -11px; left: 50%; width: 64px; height: 22px; margin-left: -32px; background: rgba(247,161,174,.7); transform: rotate(-4deg); }
+  .pol img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; background: #2A2030; }
+  .pol p { font-family: "Aref Ruqaa", serif; font-weight: 700; font-size: 21px; line-height: 1.3; color: #3B1F2B; padding: 8px 4px 12px; }
+  .flash { position: absolute; inset: 0; z-index: 5; background: #fff; opacity: 0; pointer-events: none; }
 
   /* 2. Sky */
   .s-sky { background: radial-gradient(ellipse 120% 80% at 50% 42%, #1A2160 0%, #0A0E26 58%, #04050D 100%); }
@@ -239,7 +258,7 @@
   .share .x svg { width: 22px; height: 22px; }
   .share .wait { font-size: 16px; }
 
-  @media (prefers-reduced-motion: reduce) { .ring::before, .ring::after, .s-title .orb, .cv-hint, .hint span, .bigheart svg { animation: none; } }
+  @media (prefers-reduced-motion: reduce) { .ring::before, .ring::after, .s-title .rays, .halo .hring, .halo .orbit, .cv-hint, .hint span, .bigheart svg { animation: none; } }
 </style>
 </head>
 <body>
@@ -276,9 +295,14 @@
 
   <!-- 1. Title -->
   <section class="slide s-title" data-key="title" data-tone="dark">
-    <i class="orb o1"></i><i class="orb o2"></i>
+    <i class="rays"></i>
+    <div class="halo" id="halo">
+      <svg class="hring" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="48.5" fill="none" stroke="rgba(251,241,227,.85)" stroke-width=".9" stroke-dasharray="1.2 3"/></svg>
+      <span class="orbit" aria-hidden="true"><svg viewBox="0 0 32 30"><use href="#heart"/></svg></span>
+      <span class="ph" id="tPh"></span>
+    </div>
     <p class="to" id="tTo"></p>
-    <h1>ملخّص حبّنا</h1>
+    <h1 id="tH1"><span class="w">ملخّص</span> <span class="w">حبّنا</span></h1>
     <p class="sub" id="tSince"></p>
     <p class="by" id="tBy"></p>
   </section>
@@ -301,6 +325,14 @@
     <p class="unit">يوم</p>
     <p class="more">يعني <b id="dHours"></b> ساعة<br>و<b id="dSecs"></b> ثانية… وعم تزيد</p>
     <p class="cap" data-text="daysLine"></p>
+  </section>
+
+  <!-- 3b. Photos -->
+  <section class="slide s-photos" data-key="photos" data-tone="dark">
+    <p class="kick">من ألبومنا</p>
+    <h2 id="phTitle"></h2>
+    <div class="pics" id="pics"></div>
+    <i class="flash" id="phFlash"></i>
   </section>
 
   <!-- 4. Our love in numbers -->
@@ -389,7 +421,15 @@ const WRAP = {
   from: 'يوسف',
   forHim: false,                       // true = she made it for him (texts speak to a man)
   photo: '',                           // optional: his photo next to this file (e.g. 'him.jpg'); empty = first letter of his name
+  titlePhoto: 'us.jpg',                // optional: their photo in the circle on the first screen; empty = their first letters
   metDate: '2023-03-12T18:00:00',      // the day they met: counter + the sky
+
+  photosTitle: 'وهي شوية منّن…',       // the photo screen comes right after the days counter
+  photos: [                            // optional: 1–3 photos (files next to this page), each with a short caption
+    { src: 'photo1.jpg', caption: 'ليلة الشام' },
+    { src: 'photo2.jpg', caption: 'أول قهوة سوا' },
+    { src: 'photo3.jpg', caption: 'أول غروب سوا' }
+  ],
 
   // The sky the night they met (real stars + moon for that date and place)
   sky: { place: 'دمشق', lat: 33.51, lon: 36.29, utc: 3, time: '21:00' },
@@ -467,12 +507,17 @@ $('hint').firstElementChild.textContent = G('اضغطي لتكملي ‹', 'اض
 $('tTo').textContent = `${WRAP.to}…`;
 $('tSince').textContent = `من ${fmtDate(met)} لهلّأ`;
 $('tBy').textContent = `من ${WRAP.from}`;
+const first = s => esc(Array.from(String(s))[0] || '');
+$('tPh').innerHTML = WRAP.titlePhoto ? `<img src="${esc(WRAP.titlePhoto)}" alt="">`
+  : `<b>${first(WRAP.to)}</b><svg viewBox="0 0 32 30" aria-hidden="true"><use href="#heart"/></svg><b>${first(WRAP.from)}</b>`;
 $('creditLabel').textContent = WRAP.credit.label;
 $('creditLink').textContent = WRAP.credit.handle;
 $('creditLink').href = WRAP.credit.url;
 
 /* ---------- Remove the sections that are not filled ---------- */
+const PHOTOS = (WRAP.photos || []).filter(p => p && p.src).slice(0, 3);
 const filled = {
+  photos: PHOTOS.length > 0,
   sky: !!(WRAP.sky && WRAP.sky.lat != null),
   stats: (WRAP.stats || []).length > 0,
   top: (WRAP.top || []).length > 0,
@@ -481,6 +526,66 @@ const filled = {
   letter: !!(WRAP.letter && (WRAP.letter.body || []).length)
 };
 document.querySelectorAll('.slide').forEach(s => { if (filled[s.dataset.key] === false) s.remove(); });
+
+/* ---------- Sound effects (made live with WebAudio, no files) ---------- */
+const SFX = (() => {
+  let ctx = null, out = null, nb = null, muted = false, sc = null;
+  const mtof = m => 440 * 2 ** ((m - 69) / 12);
+  function init() {
+    if (ctx) { if (ctx.state === 'suspended') ctx.resume(); return; }
+    const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
+    ctx = new AC(); out = ctx.createGain(); out.gain.value = .5; out.connect(ctx.destination);
+    nb = ctx.createBuffer(1, ctx.sampleRate, ctx.sampleRate); const d = nb.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+  }
+  const ok = () => ctx && !muted;
+  function tone(f, at = 0, dur = .4, { type = 'sine', vol = .2, to = 0, att = .005 } = {}) {
+    if (!ok()) return;
+    const t = ctx.currentTime + at, o = ctx.createOscillator(), g = ctx.createGain();
+    o.type = type; o.frequency.setValueAtTime(f, t); if (to) o.frequency.exponentialRampToValueAtTime(to, t + dur);
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t + att); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+    o.connect(g); g.connect(out); o.start(t); o.stop(t + dur + .05);
+  }
+  const bell = (m, at = 0, vol = .1, dur = 1.1) => { tone(mtof(m), at, dur, { vol }); tone(mtof(m) * 2.76, at, dur * .4, { vol: vol * .3 }); };
+  function noise(at, dur, { vol = .1, type = 'bandpass', f = 2000, to = 0, q = 1 } = {}) {
+    if (!ok()) return;
+    const t = ctx.currentTime + at, s = ctx.createBufferSource(), fl = ctx.createBiquadFilter(), g = ctx.createGain();
+    s.buffer = nb; s.loop = true; fl.type = type; fl.Q.value = q; fl.frequency.setValueAtTime(f, t); if (to) fl.frequency.exponentialRampToValueAtTime(to, t + dur);
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t + Math.min(.03, dur / 3)); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+    s.connect(fl); fl.connect(g); g.connect(out); s.start(t, Math.random() * .5); s.stop(t + dur + .05);
+  }
+  const STAR = [86, 88, 90, 93, 95, 98, 100, 102];
+  return {
+    init,
+    get muted() { return muted; },
+    set muted(v) { muted = v; if (v && sc) sc.g.gain.value = 0; },
+    whoosh: () => noise(0, .34, { vol: .045, f: 500, to: 2600, q: .7 }),
+    open: () => [74, 78, 81, 86, 90].forEach((m, i) => bell(m + 12, i * .07, .06)),
+    slam: () => { tone(120, 0, .28, { vol: .28, to: 48 }); noise(0, .1, { vol: .05, f: 2600, q: .6 }); },
+    sparkle: (at = 0) => [93, 98, 102, 105].forEach((m, i) => bell(m, at + i * .05, .04, .7)),
+    twinkle: (at = 0) => bell(STAR[Math.floor(Math.random() * STAR.length)], at, .03, .9),
+    chime: () => [74, 78, 81, 85, 88].forEach((m, i) => bell(m + 12, i * .09, .05, 1.4)),
+    tick: () => tone(1900, 0, .025, { type: 'square', vol: .012 }),
+    ding: () => { bell(88, 0, .1); bell(93, .09, .1); },
+    pop: () => { tone(760, 0, .1, { vol: .16, to: 240 }); },
+    bwomp: () => { tone(260, 0, .2, { type: 'triangle', vol: .13, to: 200 }); tone(200, .18, .34, { type: 'triangle', vol: .13, to: 120 }); },
+    tada: () => { [74, 78, 81, 86].forEach((m, i) => bell(m + 12, i * .06, .08, 1.6)); [98, 102, 105].forEach((m, i) => bell(m, .3 + i * .05, .035, .8)); },
+    shutter: () => { noise(0, .045, { vol: .16, f: 4200, q: .5 }); noise(.075, .06, { vol: .12, f: 2600, q: .6 }); tone(1300, 0, .02, { vol: .04 }); },
+    thump: () => { tone(95, 0, .24, { vol: .3, to: 50 }); bell(84, .03, .05, .9); },
+    paper: () => noise(0, .4, { vol: .05, f: 3600, to: 1800, q: .6 }),
+    scratch(speed) {
+      if (!ok()) return;
+      if (!sc) {
+        const s = ctx.createBufferSource(), fl = ctx.createBiquadFilter(), g = ctx.createGain();
+        s.buffer = nb; s.loop = true; fl.type = 'bandpass'; fl.frequency.value = 3000; fl.Q.value = .9; g.gain.value = 0;
+        s.connect(fl); fl.connect(g); g.connect(out); s.start(); sc = { g, fl };
+      }
+      const t = ctx.currentTime;
+      sc.g.gain.cancelScheduledValues(t); sc.g.gain.setTargetAtTime(Math.min(.16, speed * .01), t, .015); sc.g.gain.setTargetAtTime(0, t + .07, .05);
+      sc.fl.frequency.setTargetAtTime(2200 + Math.min(3200, speed * 110), t, .03);
+    },
+    scratchStop() { if (sc) sc.g.gain.setTargetAtTime(0, ctx.currentTime, .03); }
+  };
+})();
 
 /* ---------- Floating hearts / bursts ---------- */
 class Hearts {
@@ -743,6 +848,20 @@ const setDaysExtra = () => {
   $('dSecs').textContent = num(s);
 };
 
+/* ---------- Photos ---------- */
+const PH_LAYOUT = {
+  1: [['min(66cqw, 40cqh)', '0px', '0px', '-3deg']],
+  2: [['min(52cqw, 32cqh)', '13cqw', '-11cqh', '-6deg'], ['min(52cqw, 32cqh)', '-13cqw', '11cqh', '5deg']],
+  3: [['min(44cqw, 27cqh)', '17cqw', '-15cqh', '-6deg'], ['min(44cqw, 27cqh)', '-17cqw', '-1cqh', '5deg'], ['min(44cqw, 27cqh)', '14cqw', '15cqh', '-3deg']]
+};
+if (filled.photos) {
+  $('phTitle').textContent = WRAP.photosTitle || 'وهي شوية منّن…';
+  $('pics').innerHTML = PHOTOS.map((p, i) => {
+    const [w, x, y, r] = PH_LAYOUT[PHOTOS.length][i];
+    return `<div class="slot" style="--w:${w};--x:${x};--y:${y};--r:${r}"><figure class="pol"><img src="${esc(p.src)}" alt="">${p.caption ? `<p>${esc(p.caption)}</p>` : ''}</figure></div>`;
+  }).join('');
+}
+
 /* ---------- Stats & top list ---------- */
 $('stats').innerHTML = (WRAP.stats || []).map(s => `
   <div class="stat"><p class="n" data-n="${typeof s.n === 'number' ? s.n : ''}">${typeof s.n === 'number' ? num(s.n) : esc(s.n)}<small>${esc(s.unit || '')}</small></p><p>${esc(s.text)}</p></div>`).join('');
@@ -784,13 +903,13 @@ $('quiz').addEventListener('click', e => {
     $('quiz').querySelectorAll('.opt').forEach(b => { const j = +b.dataset.k; b.disabled = true; b.classList.add(j === q.answer ? 'right' : j === k ? 'wrong' : 'dim'); });
     const bub = $('qBubble'); bub.querySelector('p').textContent = ok ? q.right : q.wrong; bub.classList.add('show');
     $('qNext').hidden = false;
-    if (ok) burstAt(opt, ['#F2B84B', '#FBF1E3', '#F7A1AE'], 22);
+    if (ok) { SFX.ding(); burstAt(opt, ['#F2B84B', '#FBF1E3', '#F7A1AE'], 22); } else SFX.bwomp();
   } else if (nx) {
     if (quiz.i < QZ.length - 1) { quiz.i++; renderQuiz(); if (hasGsap) gsap.from('#quiz > *', { y: 16, opacity: 0, stagger: .06, duration: .45, ease: 'power3.out', clearProps: 'opacity,transform' }); }
     else {
       quiz.done = true; renderQuiz();
       if (hasGsap) gsap.from('#quiz > *', { scale: .7, opacity: 0, stagger: .12, duration: .7, ease: 'back.out(1.8)', clearProps: 'opacity,transform' });
-      if (quiz.score === QZ.length) setTimeout(() => burstAt($('quiz'), undefined, 40), 300);
+      if (quiz.score === QZ.length) { SFX.tada(); setTimeout(() => burstAt($('quiz'), undefined, 40), 300); } else SFX.chime();
       completeBar();
     }
   }
@@ -833,16 +952,18 @@ function initScratch() {
   cv.addEventListener('pointerdown', e => { if (scratch.done) return; cv.setPointerCapture(e.pointerId); last = pt(e); c.beginPath(); c.arc(last[0], last[1], 23, 0, 7); c.fill(); });
   cv.addEventListener('pointermove', e => {
     if (!last || scratch.done) return;
-    const p = pt(e); c.beginPath(); c.moveTo(last[0], last[1]); c.lineTo(p[0], p[1]); c.stroke(); last = p;
+    const p = pt(e); c.beginPath(); c.moveTo(last[0], last[1]); c.lineTo(p[0], p[1]); c.stroke();
+    SFX.scratch(Math.hypot(p[0] - last[0], p[1] - last[1])); last = p;
     if (++moves % 8 === 0 && cleared() > .5) winScratch();
   });
-  const up = () => { last = null; if (!scratch.done && cleared() > .5) winScratch(); };
+  const up = () => { last = null; SFX.scratchStop(); if (!scratch.done && cleared() > .5) winScratch(); };
   cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
 }
 function winScratch() {
   if (scratch.done) return; scratch.done = true;
   $('ticket').classList.add('done');
   document.querySelector('.s-scratch').classList.add('won');
+  SFX.scratchStop(); SFX.tada();
   burstAt($('ticket'), ['#F2B84B', '#E23E57', '#F7A1AE'], 44);
   if (hasGsap) gsap.fromTo('#scPrize', { scale: .85 }, { scale: 1, duration: .8, ease: 'elastic.out(1, .45)' });
   completeBar();
@@ -864,6 +985,7 @@ $('againBtn').textContent = G('شوفيها من جديد', 'شوفها من ج�
 $('replyBtn').href = `https://wa.me/${WRAP.whatsapp}?text=${encodeURIComponent(`وصلني ملخّص حبّنا يا ${WRAP.from} 🤍\n`)}`;
 let hearts = 0;
 $('bigHeart').addEventListener('click', e => {
+  SFX.thump();
   burstAt(e.currentTarget);
   hearts++;
   $('hHint').textContent = hearts === 1 ? 'كمان؟' : `${num(hearts)} قلوب`;
@@ -891,10 +1013,32 @@ function tl(s) { s.tl = hasGsap ? gsap.timeline() : null; return s.tl; }
 
 const FX = {
   title: {
-    dur: 4.5,
-    enter(s) { const t = tl(s); if (!t) return; t.from('.s-title .to', { y: 20, opacity: 0, duration: .7, ease: 'power3.out' })
-      .from('.s-title h1', { scale: .6, opacity: 0, filter: 'blur(14px)', duration: 1.1, ease: 'expo.out' }, '-=.3')
-      .from('.s-title .sub, .s-title .by', { y: 16, opacity: 0, stagger: .2, duration: .7, ease: 'power3.out' }, '-=.5'); }
+    dur: 5,
+    enter(s) {
+      const t = tl(s); if (!t) return;
+      const ws = [...document.querySelectorAll('#tH1 .w')];            // DOM order = reading order (ملخّص, then حبّنا)
+      t.from('#halo', { scale: 0, rotate: -40, duration: 1.1, ease: 'back.out(1.5)' })
+        .from('.s-title .to', { scale: 0, rotate: -25, duration: .6, ease: 'back.out(2.2)' }, '-=.45')
+        .call(SFX.pop, null, '<.1');
+      ws.forEach((w, i) => {
+        t.from(w, { scale: 2.4, opacity: 0, duration: .45, ease: 'power4.in' }, i ? '+=.12' : '+=.1')
+          .call(SFX.slam);
+      });
+      t.call(() => { burstAt($('halo'), ['#F2B84B', '#FBF1E3', '#F7A1AE'], 30); SFX.sparkle(); })
+        .from('.s-title .sub, .s-title .by', { y: 16, opacity: 0, stagger: .18, duration: .6, ease: 'power3.out' }, '-=.1');
+    }
+  },
+  photos: {
+    dur: () => 2.2 + PHOTOS.length * 1.25,
+    enter(s) {
+      const t = tl(s); if (!t) return;
+      t.from('.s-photos .kick, .s-photos h2', { y: 14, opacity: 0, stagger: .12, duration: .55 });
+      document.querySelectorAll('#pics .pol').forEach((p, i) => {
+        t.call(SFX.shutter, null, .55 + i * 1.15)
+          .fromTo('#phFlash', { opacity: .75 }, { opacity: 0, duration: .45, ease: 'power2.out' }, .55 + i * 1.15)
+          .from(p, { y: -60, scale: 1.25, rotate: i % 2 ? 14 : -14, opacity: 0, duration: .75, ease: 'back.out(1.3)' }, .6 + i * 1.15);
+      });
+    }
   },
   sky: {
     dur: 8,
@@ -910,7 +1054,9 @@ const FX = {
       if (!t) { Object.assign(skyState, { stars: 1, lines: 1, labels: 1, moon: 1 }); return; }
       t.from('.s-sky .kick, .s-sky h2', { y: 14, opacity: 0, stagger: .15, duration: .6 })
         .to(skyState, { stars: 1, duration: 2.6, ease: 'power1.inOut' }, '<.2')
-        .to(skyState, { lines: 1, duration: 1.4, ease: 'power2.out' }, '-=.6')
+        .call(() => { for (let k = 0; k < 11; k++) SFX.twinkle(k * .22 + Math.random() * .12); }, null, '<')
+        .call(SFX.chime, null, '-=.6')
+        .to(skyState, { lines: 1, duration: 1.4, ease: 'power2.out' }, '<')
         .to(skyState, { moon: 1, labels: 1, duration: .9 }, '-=.6')
         .from('.s-sky .meta, .s-sky .moonrow, .s-sky .line', { y: 12, opacity: 0, stagger: .25, duration: .7, ease: 'power3.out' }, '-=.6');
     },
@@ -923,9 +1069,12 @@ const FX = {
       clearInterval(daysTimer); daysTimer = setInterval(setDaysExtra, 1000);
       const t = tl(s);
       if (!t) { $('dNum').textContent = num(total); return; }
-      const o = { v: 0 };
+      const o = { v: 0 }; let lastTick = 0;
       t.from('.s-days .kick', { y: 14, opacity: 0, duration: .5 })
-        .fromTo(o, { v: 0 }, { v: total, duration: 2.4, ease: 'power3.out', onUpdate: () => { $('dNum').textContent = num(Math.round(o.v)); } }, '<')
+        .fromTo(o, { v: 0 }, { v: total, duration: 2.4, ease: 'power3.out', onUpdate: () => {
+          $('dNum').textContent = num(Math.round(o.v));
+          const now = performance.now(); if (now - lastTick > 75 && o.v < total) { lastTick = now; SFX.tick(); }
+        }, onComplete: SFX.ding }, '<')
         .from('#dNum', { scale: .7, duration: 1.2, ease: 'expo.out' }, '<')
         .from('.s-days .unit, .s-days .more, .s-days .cap', { y: 16, opacity: 0, stagger: .3, duration: .7, ease: 'power3.out' }, '-=1.2');
     },
@@ -937,7 +1086,7 @@ const FX = {
       const t = tl(s); if (!t) return;
       t.from('.s-stats .kick, .s-stats h2', { y: 16, opacity: 0, stagger: .12, duration: .6 });
       document.querySelectorAll('#stats .stat').forEach((row, i) => {
-        t.from(row, { x: -40, opacity: 0, duration: .7, ease: 'power3.out' }, .5 + i * .55);
+        t.from(row, { x: -40, opacity: 0, duration: .7, ease: 'power3.out' }, .5 + i * .55).call(SFX.pop, null, .5 + i * .55);
         const n = row.querySelector('.n'), target = +n.dataset.n;
         if (n.dataset.n !== '') { const o = { v: 0 }, small = n.querySelector('small').outerHTML; t.fromTo(o, { v: 0 }, { v: target, duration: 1, ease: 'power2.out', onUpdate: () => { n.innerHTML = num(Math.round(o.v)) + small; } }, .5 + i * .55); }
         else t.from(n, { scale: .4, duration: .9, ease: 'back.out(2)' }, .6 + i * .55);
@@ -952,7 +1101,8 @@ const FX = {
       t.from('.s-top .kick, .s-top h2', { y: 16, opacity: 0, stagger: .12, duration: .6 });
       rows.slice().reverse().forEach((li, i) => {
         const one = li.classList.contains('one');
-        t.from(li, one ? { scale: .6, opacity: 0, duration: .9, ease: 'back.out(1.8)' } : { y: 24, opacity: 0, duration: .55, ease: 'power3.out' }, one ? '+=.35' : i ? '-=.25' : '+=.1');
+        t.from(li, one ? { scale: .6, opacity: 0, duration: .9, ease: 'back.out(1.8)' } : { y: 24, opacity: 0, duration: .55, ease: 'power3.out' }, one ? '+=.35' : i ? '-=.25' : '+=.1')
+          .call(one ? () => { SFX.pop(); SFX.sparkle(.05); burstAt(li, ['#F2B84B', '#E23E57', '#2B1238'], 26); } : SFX.tick, null, '<');
       });
     }
   },
@@ -968,6 +1118,7 @@ const FX = {
     dur: () => Math.min(22, 3 + document.querySelectorAll('#lBody .w').length * .16),
     enter(s) {
       $('paper').scrollTop = 0;
+      SFX.paper();
       const t = tl(s); if (!t) return;
       t.from('#paper', { y: 40, opacity: 0, rotate: -5, duration: .8, ease: 'power3.out' })
         .from('#lGreet', { opacity: 0, y: 8, duration: .6 })
@@ -981,13 +1132,33 @@ const FX = {
   }
 };
 
+// Instagram's cube: the two stories are faces of a box that turns. RTL: the next story comes in from the left.
+let cubeTw = null;
+function cube(old, nu, dir) {
+  if (cubeTw) cubeTw.progress(1);
+  if (!old || !hasGsap || reduceMotion) { old?.el.classList.remove('on'); nu.el.classList.add('on'); return; }
+  player.classList.add('cubing');
+  nu.el.classList.add('on');
+  const h = player.clientWidth / 2, off = dir > 0 ? -90 : 90, st = { a: 0 };
+  const set = () => {
+    old.el.style.transform = `translateZ(${-h}px) rotateY(${st.a}deg) translateZ(${h}px)`;
+    nu.el.style.transform = `translateZ(${-h}px) rotateY(${off + st.a}deg) translateZ(${h}px)`;
+  };
+  set();
+  cubeTw = gsap.to(st, { a: -off, duration: .62, ease: 'power2.inOut', onUpdate: set, onComplete: () => {
+    old.el.classList.remove('on');
+    old.el.style.transform = nu.el.style.transform = '';
+    old.el.offsetWidth;                                   // commit the hidden state before transitions come back
+    player.classList.remove('cubing'); cubeTw = null;
+  } });
+}
 function go(i) {
   if (i < 0 || i >= SL.length || i === cur) return;
-  const old = SL[cur];
-  if (old) { old.el.classList.remove('on'); if (old.tl) { old.tl.progress(1).kill(); old.tl = null; } FX[old.key]?.leave?.(old); }
+  const old = SL[cur], dir = i > cur ? 1 : -1;
+  if (old) { if (old.tl) { old.tl.progress(1, true).kill(); old.tl = null; } FX[old.key]?.leave?.(old); SFX.whoosh(); }
   cur = i;
   const s = SL[i];
-  s.el.classList.add('on');
+  cube(old, s, dir);
   player.dataset.tone = s.el.dataset.tone;
   BARS.forEach((b, k) => { b.style.transition = 'none'; b.style.transform = `scaleX(${k < i ? 1 : 0})`; });
   $('hint').classList.remove('show'); clearTimeout(hintTimer);
@@ -1018,23 +1189,30 @@ addEventListener('keydown', e => {
 $('againBtn').addEventListener('click', () => go(0));
 
 /* ---------- Music ---------- */
+// one sound button for the music and the effects
 const snd = $('snd');
 let audio = null, wasPlaying = false;
+snd.hidden = false;
 if (WRAP.music) {
-  audio = new Audio(WRAP.music); audio.loop = true; snd.hidden = false;
-  snd.addEventListener('click', () => { if (audio.paused) { audio.play(); snd.classList.remove('muted'); } else { audio.pause(); snd.classList.add('muted'); } });
+  audio = new Audio(WRAP.music); audio.loop = true;
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) { wasPlaying = !audio.paused; audio.pause(); }
-    else if (wasPlaying) audio.play().catch(() => {});
+    else if (wasPlaying && !SFX.muted) audio.play().catch(() => {});
   });
 }
+snd.addEventListener('click', () => {
+  SFX.muted = !SFX.muted;
+  snd.classList.toggle('muted', SFX.muted);
+  if (audio) SFX.muted ? audio.pause() : audio.play().catch(() => {});
+});
 
 /* ---------- Open the story ---------- */
 const cover = $('cover');
 function openStory() {
   if (cover.classList.contains('opening')) return;
   cover.classList.add('opening');
-  if (audio) audio.play().catch(() => snd.classList.add('muted'));
+  SFX.init(); SFX.open();
+  if (audio) audio.play().catch(() => {});
   const show = () => {
     cover.classList.add('gone'); coverFx.stop();
     player.classList.add('live');
@@ -1081,7 +1259,7 @@ async function makeCard() {
 }
 const share = $('share');
 $('shareBtn').addEventListener('click', async () => {
-  share.classList.add('show');
+  share.classList.add('show'); SFX.shutter();
   if (!cardBlob) {
     cardBlob = await makeCard();
     const url = URL.createObjectURL(cardBlob);
