@@ -1,0 +1,616 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>قرار رسمي</title>
+<!-- Link preview (WhatsApp / Instagram). Change per client. -->
+<meta property="og:title" content="وصلك قرار رسمي بمناسبة عيد الحبيبة">
+<meta property="og:description" content="من وزارة الحب… افتحيه">
+<meta name="theme-color" content="#2A1018">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Rubik:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --wine: #2A1018; --wine-2: #3C1622; --rose: #C8394F; --rose-2: #A92A40; --pink: #F2A0AE; --blush: #FBE3E6;
+    --paper: #FBF5EA; --ink: #2B1A1F; --ink-soft: #6E5A5E; --gold: #C9993F; --gold-2: #E8C374; --green: #3E6B4F;
+    --ease: cubic-bezier(.2, .7, .2, 1);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html { background: var(--wine); -webkit-text-size-adjust: 100%; }
+  body { background: var(--wine); color: var(--ink); font-family: "Amiri", serif; font-size: 19px; line-height: 1.85; overflow-x: hidden; }
+  body.locked { overflow: hidden; height: 100vh; height: 100svh; }
+  button { font: inherit; color: inherit; border: 0; background: none; cursor: pointer; }
+  svg { display: block; }
+  canvas.fx { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  section { position: relative; padding: 84px 18px; overflow: hidden; }
+  .wrap { max-width: 520px; margin: 0 auto; position: relative; }
+  .kick { font-family: "Rubik", sans-serif; font-weight: 700; font-size: 14px; letter-spacing: .06em; text-align: center; color: var(--pink); }
+  .h2 { font-family: "Aref Ruqaa", serif; font-weight: 700; font-size: clamp(34px, 9.5vw, 46px); line-height: 1.35; text-align: center; color: #FFF4EC; }
+
+  /* ===== Intro: an official envelope from the Ministry of Love ===== */
+  .intro { position: fixed; inset: 0; z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 26px; padding: 24px;
+    background: radial-gradient(ellipse 80% 60% at 50% 45%, #4A1B28 0%, var(--wine) 75%); transition: opacity .8s var(--ease), visibility 0s .8s; }
+  .intro.gone { opacity: 0; visibility: hidden; }
+  .intro .top { font-family: "Rubik", sans-serif; font-weight: 500; font-size: 15px; color: rgba(255,240,235,.75); text-align: center; line-height: 1.6; }
+  .intro .top b { display: block; font-family: "Aref Ruqaa", serif; font-size: 30px; color: var(--gold-2); }
+  .envelope { position: relative; width: min(86vw, 370px); aspect-ratio: 1.55; border-radius: 6px; background: #EFE3CC; box-shadow: 0 30px 60px -24px rgba(0,0,0,.7); animation: float 3.4s ease-in-out infinite; }
+  @keyframes float { 50% { transform: translateY(-7px) rotate(-.6deg); } }
+  .envelope::before { content: ""; position: absolute; inset: 0; border-radius: 6px; background: linear-gradient(160deg, transparent 50%, rgba(120,80,40,.1)); }
+  .env-flap { position: absolute; top: 0; left: 0; right: 0; height: 55%; background: #E6D6BA; clip-path: polygon(0 0, 100% 0, 50% 100%); transform-origin: top; }
+  .env-from { position: absolute; top: 12px; right: 16px; font-family: "Rubik", sans-serif; font-size: 11px; font-weight: 700; color: var(--rose-2); line-height: 1.5; text-align: right; z-index: 2; }
+  .env-to { position: absolute; bottom: 16px; right: 18px; font-family: "Aref Ruqaa", serif; font-size: 24px; color: var(--ink); z-index: 2; }
+  .env-to small { display: block; font-family: "Rubik", sans-serif; font-size: 11px; color: var(--ink-soft); }
+  .env-secret { position: absolute; bottom: 18px; left: 16px; z-index: 2; padding: 2px 10px 4px; border: 2px solid var(--rose); border-radius: 4px; color: var(--rose); font-family: "Rubik", sans-serif; font-weight: 800; font-size: 13px; transform: rotate(-8deg); opacity: .85; }
+  .seal { position: absolute; z-index: 3; left: 50%; top: 52%; width: 74px; height: 74px; transform: translate(-50%, -50%); border-radius: 50%;
+    background: radial-gradient(circle at 38% 32%, #E25A6E, #A92A40 60%, #6E1626); box-shadow: 0 6px 12px rgba(0,0,0,.35), inset 0 -3px 6px rgba(0,0,0,.25); display: grid; place-items: center; color: #FFD8DE; }
+  .seal svg { width: 34px; height: 32px; }
+  .seal::after { content: ""; position: absolute; inset: -12px; border-radius: 50%; border: 1px solid rgba(242,160,174,.7); animation: halo 2.3s ease-out infinite; }
+  @keyframes halo { from { transform: scale(.8); opacity: 1; } to { transform: scale(1.5); opacity: 0; } }
+  .intro .hint { font-family: "Rubik", sans-serif; font-size: 14px; color: rgba(255,240,235,.6); }
+
+  /* ===== 1. The decree ===== */
+  .decree-sec { padding-top: 46px; background: radial-gradient(ellipse 90% 50% at 50% 0%, #4A1B28 0%, var(--wine) 70%); }
+  .doc { position: relative; max-width: 520px; margin: 0 auto; padding: 30px 24px 34px; background: var(--paper); box-shadow: 0 30px 70px -30px rgba(0,0,0,.75);
+    background-image: radial-gradient(circle at 50% 46%, rgba(201,153,63,.08) 0 30%, transparent 31%), repeating-linear-gradient(0deg, transparent 0 3px, rgba(120,90,60,.025) 3px 4px); }
+  .doc::before { content: ""; position: absolute; inset: 8px; border: 1.5px solid rgba(201,153,63,.55); pointer-events: none; }
+  .doc::after { content: ""; position: absolute; inset: 13px; border: .8px solid rgba(201,153,63,.4); pointer-events: none; }
+  .doc-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding-bottom: 12px; border-bottom: 1.5px solid rgba(201,153,63,.5); }
+  .doc-head .rep { font-family: "Rubik", sans-serif; font-weight: 800; font-size: 14px; line-height: 1.6; color: var(--ink); }
+  .doc-head .rep small { display: block; font-weight: 500; font-size: 12px; color: var(--ink-soft); }
+  .emblem { width: 56px; height: 56px; flex: none; color: var(--gold); }
+  .doc-head .no { font-family: "Rubik", sans-serif; font-size: 12px; color: var(--ink-soft); text-align: left; line-height: 1.7; }
+  .doc-head .no b { color: var(--ink); }
+  .doc h1 { margin: 18px 0 4px; font-family: "Aref Ruqaa", serif; font-weight: 700; font-size: clamp(30px, 8.6vw, 40px); line-height: 1.35; text-align: center; color: var(--rose-2); }
+  .doc .occasion { text-align: center; font-family: "Rubik", sans-serif; font-weight: 500; font-size: 14px; color: var(--ink-soft); margin-bottom: 14px; }
+  .doc .whereas { list-style: none; }
+  .doc .whereas li, .doc .decide { font-size: 18.5px; line-height: 1.85; }
+  .doc .decide { font-weight: 700; margin: 10px 0 6px; color: var(--ink); }
+  .doc .art { margin: 8px 0; padding: 8px 12px; border-right: 3px solid var(--gold); background: rgba(201,153,63,.08); font-size: 19px; line-height: 1.8; }
+  .doc .art b { color: var(--rose-2); font-family: "Rubik", sans-serif; font-size: 15px; }
+  .doc .w { display: inline-block; }
+  .doc .sign-row { display: flex; align-items: flex-end; justify-content: space-between; margin-top: 20px; min-height: 120px; }
+  .doc .signer { font-family: "Rubik", sans-serif; font-size: 13px; color: var(--ink-soft); line-height: 1.6; }
+  .doc .signer b { display: block; font-family: "Aref Ruqaa", serif; font-weight: 700; font-size: 30px; color: var(--ink); }
+  .stamp { position: relative; width: 132px; height: 132px; flex: none; color: var(--rose); opacity: 0; transform: rotate(-14deg); }
+  .stamp svg { width: 100%; height: 100%; }
+  .doc .scroll { margin-top: 28px; text-align: center; font-family: "Rubik", sans-serif; font-size: 13px; color: var(--ink-soft); }
+
+  /* ===== 2. The ID card ===== */
+  .id-sec { background: var(--wine-2); }
+  .idcard { position: relative; max-width: 380px; margin: 26px auto 0; aspect-ratio: 1.58; border-radius: 18px; padding: 14px 16px; color: var(--ink);
+    background: linear-gradient(135deg, #FFF7EE 0%, #FBE3E6 55%, #F6D3D9 100%); box-shadow: 0 26px 50px -20px rgba(0,0,0,.75); overflow: hidden; }
+  .idcard::before { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(135deg, rgba(200,57,79,.045) 0 2px, transparent 2px 9px); }
+  .idcard .shine { position: absolute; inset: -40%; background: linear-gradient(115deg, transparent 40%, rgba(255,255,255,.75) 50%, transparent 60%); transform: translateX(-60%); pointer-events: none; }
+  .id-top { position: relative; display: flex; justify-content: space-between; align-items: center; font-family: "Rubik", sans-serif; }
+  .id-top b { font-weight: 800; font-size: 14px; color: var(--rose-2); }
+  .id-top small { font-size: 10px; color: var(--ink-soft); }
+  .id-body { position: relative; display: flex; gap: 14px; margin-top: 10px; }
+  .id-photo { width: 27%; aspect-ratio: .8; border-radius: 10px; overflow: hidden; flex: none; background: linear-gradient(150deg, var(--rose), #6E1626); display: grid; place-items: center; color: #FFF0F2; font-family: "Aref Ruqaa", serif; font-size: 44px; box-shadow: 0 0 0 3px #fff; }
+  .id-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .id-fields { flex: 1; font-family: "Rubik", sans-serif; font-size: 11.5px; line-height: 1.45; color: var(--ink-soft); }
+  .id-fields div { margin-bottom: 4px; }
+  .id-fields b { display: block; font-size: 15px; font-weight: 800; color: var(--ink); }
+  .id-fields .name b { font-family: "Aref Ruqaa", serif; font-weight: 700; font-size: 24px; line-height: 1.2; color: var(--rose-2); }
+  .id-bottom { position: absolute; left: 16px; right: auto; bottom: 10px; display: flex; justify-content: space-between; align-items: center; font-family: "Rubik", sans-serif; font-size: 10.5px; color: var(--ink-soft); }
+  .id-hearts { display: flex; gap: 2px; direction: ltr; }
+  .id-hearts i { display: block; width: 3px; background: var(--ink); opacity: .75; }
+  .id-mini-stamp { position: absolute; left: 14px; top: 40%; width: 74px; height: 74px; color: var(--rose); opacity: .78; transform: rotate(-16deg); }
+  .btn { display: flex; align-items: center; justify-content: center; gap: 9px; min-height: 52px; padding: 0 24px; border-radius: 999px; font-family: "Rubik", sans-serif; font-weight: 700; font-size: 16px; text-decoration: none; transition: transform .15s; }
+  .btn:active { transform: scale(.97); }
+  .btn svg { width: 20px; height: 20px; }
+  .btn.gold { background: var(--gold-2); color: var(--ink); }
+  .btn.solid { background: var(--rose); color: #fff; }
+  .btn.ghost { border: 1.5px solid rgba(255,244,236,.4); color: #FFF4EC; }
+  .center-btn { display: flex; justify-content: center; margin-top: 22px; }
+
+  /* ===== 3. The bouquet she builds ===== */
+  .bq-sec { background: radial-gradient(ellipse 90% 70% at 50% 40%, #FBE7EA 0%, #F6D6DC 100%); color: var(--ink); }
+  .bq-sec .kick { color: var(--rose-2); }
+  .bq-sec .h2 { color: var(--ink); }
+  .bq-sec .sub { text-align: center; font-family: "Rubik", sans-serif; font-size: 15px; color: var(--ink-soft); }
+  .bouquet { position: relative; width: min(100%, 340px); aspect-ratio: .82; margin: 10px auto 0; }
+  .bouquet svg.wrap-paper { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .bq-rose { position: absolute; width: 23%; aspect-ratio: 1; transform: translate(-50%, -50%) scale(0); transform-origin: 50% 50%; }
+  .bq-rose svg { width: 100%; height: 100%; filter: drop-shadow(0 4px 6px rgba(80,0,20,.25)); }
+  .bq-tag { position: absolute; transform: translate(-50%, -50%); max-width: 46%; padding: 4px 10px 6px; border-radius: 10px; background: #fff; color: var(--ink); font-family: "Rubik", sans-serif; font-weight: 700; font-size: 12.5px; line-height: 1.35; text-align: center; box-shadow: 0 6px 14px -6px rgba(80,0,20,.4); opacity: 0; pointer-events: none; white-space: normal; z-index: 5; }
+  .bq-add { margin: 14px auto 0; }
+  .bq-count { margin-top: 10px; text-align: center; font-family: "Rubik", sans-serif; font-weight: 700; font-size: 14px; color: var(--rose-2); }
+  .bq-done { margin-top: 8px; text-align: center; font-family: "Aref Ruqaa", serif; font-size: 28px; color: var(--rose-2); opacity: 0; transition: opacity .6s; }
+  .bq-done.show { opacity: 1; }
+  .ribbon { opacity: 0; }
+
+  /* ===== 4. Letter ===== */
+  .letter-sec { background: var(--wine); }
+  .letter { position: relative; max-width: 520px; margin: 26px auto 0; padding: 40px 26px 34px; background-color: var(--paper);
+    background-image: repeating-linear-gradient(transparent 0 35px, rgba(160,110,110,.16) 35px 36px); background-position: 0 22px; box-shadow: 0 30px 70px -30px rgba(0,0,0,.7); }
+  .letter h3 { font-family: "Aref Ruqaa", serif; font-weight: 700; font-size: 36px; line-height: 1.4; color: var(--rose-2); }
+  .letter p { font-size: 20px; line-height: 36px; margin-top: 6px; }
+  .letter .w { display: inline-block; }
+  .letter .sign { margin-top: 18px; text-align: left; font-family: "Aref Ruqaa", serif; font-size: 26px; line-height: 1.4; }
+  .letter .sign small { display: block; font-family: "Amiri", serif; font-size: 17px; color: var(--ink-soft); }
+
+  /* ===== 5. Ending ===== */
+  .end-sec { padding: 96px 20px 60px; background: radial-gradient(ellipse 100% 70% at 50% 30%, #4A1B28 0%, var(--wine) 75%); text-align: center; color: #FFF4EC; }
+  .bigheart { width: 128px; height: 120px; margin: 24px auto 4px; color: var(--rose); }
+  .bigheart svg { width: 100%; height: 100%; filter: drop-shadow(0 12px 24px rgba(200,57,79,.45)); animation: beat 1.6s ease-in-out infinite; }
+  @keyframes beat { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.08); } 30% { transform: scale(.98); } 45% { transform: scale(1.05); } }
+  .hhint { font-family: "Rubik", sans-serif; font-size: 14px; opacity: .7; min-height: 22px; }
+  .hreply { font-family: "Aref Ruqaa", serif; font-size: 28px; color: var(--pink); min-height: 42px; opacity: 0; transition: opacity .6s; }
+  .hreply.show { opacity: 1; }
+  .acts { display: grid; gap: 10px; max-width: 340px; margin: 18px auto 0; }
+  .credit { margin-top: 40px; font-family: "Rubik", sans-serif; font-size: 12px; opacity: .6; }
+  .credit a { color: var(--pink); text-decoration: none; }
+
+  .music { position: fixed; z-index: 60; left: 16px; bottom: calc(16px + env(safe-area-inset-bottom)); width: 48px; height: 48px; border-radius: 50%; display: none; place-items: center; background: rgba(42,16,24,.85); color: var(--pink); border: 1px solid rgba(242,160,174,.5); }
+  body.opened .music.on { display: grid; }
+  .music svg { width: 20px; height: 20px; }
+  .music .off, .music.muted .on-i { display: none; }
+  .music.muted .off { display: block; }
+  .share { position: fixed; inset: 0; z-index: 200; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 20px; background: rgba(10,4,8,.9); opacity: 0; visibility: hidden; transition: opacity .35s, visibility 0s .35s; color: #FFF4EC; font-family: "Rubik", sans-serif; }
+  .share.show { opacity: 1; visibility: visible; transition: opacity .35s; }
+  .share img { max-height: 64vh; max-width: 100%; border-radius: 14px; -webkit-touch-callout: default; }
+  .share p { font-size: 14px; opacity: .75; text-align: center; }
+  .share .row { display: flex; gap: 10px; }
+  .share .x { position: absolute; top: calc(12px + env(safe-area-inset-top)); left: 12px; width: 46px; height: 46px; display: grid; place-items: center; }
+  .share .x svg { width: 22px; height: 22px; }
+</style>
+</head>
+<body class="locked">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="heart" viewBox="0 0 32 30"><path d="M16 29C5 21 0 15 0 8.5 0 3.8 3.6 0 8.2 0c3.3 0 6 1.9 7.8 4.6C17.8 1.9 20.5 0 23.8 0 28.4 0 32 3.8 32 8.5 32 15 27 21 16 29Z" fill="currentColor"/></symbol>
+    <!-- the "approved" stamp: double ring, curved words, a heart -->
+    <symbol id="stamp" viewBox="0 0 140 140">
+      <circle cx="70" cy="70" r="64" fill="none" stroke="currentColor" stroke-width="5"/>
+      <circle cx="70" cy="70" r="52" fill="none" stroke="currentColor" stroke-width="2"/>
+      <path id="stArc" d="M22 70a48 48 0 0 1 96 0" fill="none"/>
+      <text font-family="Rubik, sans-serif" font-weight="800" font-size="13" fill="currentColor"><textPath href="#stArc" startOffset="50%" text-anchor="middle">وزارة الحب · جمهورية قلبي</textPath></text>
+      <path d="M70 99C52 87 46 78 46 69c0-6 4.5-10 9.5-10 4.5 0 7.5 2.6 9.5 5.8 2-3.2 5-5.8 9.5-5.8 5 0 9.5 4 9.5 10 0 9-6 18-24 30Z" fill="currentColor" transform="translate(0 -4)"/>
+      <text x="70" y="118" text-anchor="middle" font-family="Rubik, sans-serif" font-weight="900" font-size="15" fill="currentColor">مُصادَق</text>
+    </symbol>
+    <symbol id="rose" viewBox="-30 -30 60 60">
+      <g stroke="#8E1A2E" stroke-width=".7"><ellipse cx="0" cy="-12" rx="13" ry="12" fill="#B8243D" transform="rotate(0)"/><ellipse cx="0" cy="-12" rx="13" ry="12" fill="#B8243D" transform="rotate(72)"/><ellipse cx="0" cy="-12" rx="13" ry="12" fill="#B8243D" transform="rotate(144)"/><ellipse cx="0" cy="-12" rx="13" ry="12" fill="#B8243D" transform="rotate(216)"/><ellipse cx="0" cy="-12" rx="13" ry="12" fill="#B8243D" transform="rotate(288)"/><ellipse cx="0" cy="-7" rx="9.5" ry="8.5" fill="#D23A52" transform="rotate(36)"/><ellipse cx="0" cy="-7" rx="9.5" ry="8.5" fill="#D23A52" transform="rotate(108)"/><ellipse cx="0" cy="-7" rx="9.5" ry="8.5" fill="#D23A52" transform="rotate(180)"/><ellipse cx="0" cy="-7" rx="9.5" ry="8.5" fill="#D23A52" transform="rotate(252)"/><ellipse cx="0" cy="-7" rx="9.5" ry="8.5" fill="#D23A52" transform="rotate(324)"/></g>
+      <circle r="7.5" fill="#E2546B"/><path d="M-5.5 -.5Q0 -8 5.5 -.5M-3.5 3.5Q0 -2 3.5 3.5" fill="none" stroke="#9E1E35" stroke-width="1.5" stroke-linecap="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ============ Intro ============ -->
+<div class="intro" id="intro">
+  <canvas class="fx" id="introFx"></canvas>
+  <p class="top" id="introTop"></p>
+  <div class="envelope" id="env">
+    <span class="env-flap" id="flap"></span>
+    <p class="env-from">جمهورية قلبي<br>وزارة الحب</p>
+    <p class="env-to"><small>إلى السيدة</small><span data-text="to"></span></p>
+    <span class="env-secret">سرّي للغاية</span>
+    <button class="seal" id="seal" type="button" aria-label="افتح"><svg viewBox="0 0 32 30"><use href="#heart"/></svg></button>
+  </div>
+  <p class="hint" id="introHint"></p>
+</div>
+
+<main>
+  <!-- ===== 1. Decree ===== -->
+  <section class="decree-sec" id="decreeSec">
+    <article class="doc" id="doc">
+      <div class="doc-head">
+        <p class="rep">جمهورية قلبي<small>وزارة الحب</small></p>
+        <svg class="emblem" viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="27" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="30" cy="30" r="22" fill="none" stroke="currentColor" stroke-width="1"/><g transform="translate(14 14) scale(1)"><use href="#heart" width="32" height="30"/></g><path d="M12 42c6 4 12 6 18 6s12-2 18-6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+        <p class="no">قرار رقم <b id="decNo"></b><br>تاريخ <b id="decDate"></b></p>
+      </div>
+      <h1>قرار رسمي</h1>
+      <p class="occasion">بمناسبة عيد الحبيبة</p>
+      <ul class="whereas" id="whereas"></ul>
+      <p class="decide">يُقرّر ما يلي:</p>
+      <div id="articles"></div>
+      <div class="sign-row">
+        <p class="signer">الوزير المختص بحبّك<b data-text="from"></b></p>
+        <span class="stamp" id="stamp"><svg><use href="#stamp"/></svg></span>
+      </div>
+      <p class="scroll" id="docMore"></p>
+    </article>
+  </section>
+
+  <!-- ===== 2. ID card ===== -->
+  <section class="id-sec" id="idSec">
+    <div class="wrap">
+      <p class="kick">وبناءً عليه</p>
+      <h2 class="h2">صدرت هويتك الرسمية</h2>
+      <div class="idcard" id="idcard">
+        <i class="shine" id="shine"></i>
+        <div class="id-top"><b>هوية حبيبة رسمية</b><small>جمهورية قلبي · وزارة الحب</small></div>
+        <div class="id-body">
+          <div class="id-photo" id="idPhoto"></div>
+          <div class="id-fields">
+            <div class="name">الاسم<b data-text="to"></b></div>
+            <div>الرتبة<b id="idRank"></b></div>
+            <div>تاريخ الإصدار<b id="idIssued"></b></div>
+            <div>الصلاحية<b>مدى الحياة</b></div>
+          </div>
+        </div>
+        <span class="id-mini-stamp"><svg><use href="#stamp"/></svg></span>
+        <div class="id-bottom"><span class="id-hearts" id="idBars"></span><b id="idNo" hidden></b></div>
+      </div>
+      <div class="center-btn"><button class="btn gold" id="saveId" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="3"/><path d="M12 8v6M9 11l3 3 3-3"/></svg><span id="saveIdTxt"></span></button></div>
+    </div>
+  </section>
+
+  <!-- ===== 3. Bouquet ===== -->
+  <section class="bq-sec" id="bqSec">
+    <canvas class="fx" id="bqFx"></canvas>
+    <div class="wrap">
+      <p class="kick">وبمناسبة العيد</p>
+      <h2 class="h2">هيّا باقتك</h2>
+      <p class="sub" id="bqSub"></p>
+      <div class="bouquet" id="bouquet">
+        <svg class="wrap-paper" viewBox="0 0 340 415" aria-hidden="true">
+          <g id="stems" stroke="#4E7A55" stroke-width="3" stroke-linecap="round" fill="none"></g>
+          <path d="M70 175 L170 400 L270 175 Q230 205 170 200 Q110 205 70 175Z" fill="#F4E4CF"/>
+          <path d="M70 175 L170 400 L130 190Z" fill="#E9D4B8"/>
+          <path d="M270 175 L170 400 L215 192Z" fill="#EFDCC3"/>
+          <path d="M70 175 Q110 205 170 200 Q230 205 270 175" fill="none" stroke="#D9BE98" stroke-width="2"/>
+          <g class="ribbon" id="ribbon"><path d="M140 300 Q170 290 200 300 L196 318 Q170 308 144 318Z" fill="#C8394F"/><path d="M168 304 L140 350 L152 352 L170 316 L188 352 L200 350 L172 304Z" fill="#A92A40"/><circle cx="170" cy="306" r="8" fill="#C8394F"/></g>
+        </svg>
+        <div id="roses"></div>
+      </div>
+      <div class="center-btn"><button class="btn solid bq-add" id="bqAdd" type="button"><svg viewBox="0 0 32 30" aria-hidden="true"><use href="#heart"/></svg><span id="bqAddTxt"></span></button></div>
+      <p class="bq-count" id="bqCount"></p>
+      <p class="bq-done" id="bqDone"></p>
+    </div>
+  </section>
+
+  <!-- ===== 4. Letter ===== -->
+  <section class="letter-sec" id="letterSec">
+    <div class="wrap">
+      <p class="kick">ومرفق مع القرار</p>
+      <h2 class="h2">رسالة شخصية</h2>
+      <article class="letter" id="letter">
+        <h3 id="lGreet"></h3>
+        <div id="lBody"></div>
+        <p class="sign"><small id="lSign"></small><span data-text="from"></span></p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===== 5. Ending ===== -->
+  <section class="end-sec" id="endSec">
+    <canvas class="fx" id="endFx"></canvas>
+    <div class="wrap">
+      <h2 class="h2" data-text="closing"></h2>
+      <button class="bigheart" id="bigHeart" type="button" aria-label="قلب"><svg viewBox="0 0 32 30"><use href="#heart"/></svg></button>
+      <p class="hhint" id="hHint"></p>
+      <p class="hreply" id="hReply" data-text="heartReply"></p>
+      <div class="acts">
+        <a class="btn solid" id="replyBtn" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 20l1.3-4A8 8 0 1 1 8 18.7L4 20z"/></svg><span id="replyTxt"></span></a>
+        <button class="btn ghost" id="againBtn" type="button"></button>
+      </div>
+      <p class="credit"><span id="creditLabel"></span> <a id="creditLink" dir="ltr" target="_blank" rel="noopener"></a></p>
+    </div>
+  </section>
+</main>
+
+<div class="share" id="share" role="dialog" aria-modal="true" aria-label="الهوية">
+  <button class="x" id="shareX" type="button" aria-label="سكّري"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  <p id="shareWait">لحظة…</p>
+  <img id="shareImg" alt="الهوية" hidden>
+  <p id="shareHelp" hidden></p>
+  <div class="row" id="shareRow" hidden><button class="btn gold" id="shareGo" type="button" hidden></button><a class="btn ghost" id="shareSave" download="هوية-حبيبة.png">حفظ الصورة</a></div>
+</div>
+
+<button class="music" id="music" type="button" aria-label="الموسيقى">
+  <svg class="on-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg>
+  <svg class="off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/><path d="M3 3l18 18"/></svg>
+</button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+/* ============================================================
+   EDIT THIS PER CLIENT — عيد الحبيبة (limited edition)
+   ============================================================ */
+const GF = {
+  to: 'نور',
+  from: 'يوسف',
+  forHim: false,                 // true = she made it for him (texts speak to a man)
+  photo: '',                     // optional: her photo next to this file for the ID card; empty = her first letter
+  decreeNo: '١١/١١',
+  issued: '2026-11-11',
+  whereas: [                     // «بناءً على…» lines (the reasons)
+    'بناءً على ضحكتها اللي بتنسّي التعب كلّو،',
+    'وعلى قلبها اللي ما في متلو بهالدنيا،',
+    'وعلى إنو ما في يوم بيمرق بلاها،'
+  ],
+  articles: [                    // the decree's articles (funny + sweet)
+    'تُعيَّن السيدة نور حبيبةً رسمية… مدى الحياة.',
+    'يُمنع الزعل أكتر من ساعة، وإذا زعلت… الوزير بيصالح.',
+    'ضحكتها محميّة بالقانون، وأي حدا بيزعّلها بيتحاسب.',
+    'يُعمل بهذا القرار من أول يوم شافها فيه… وما بينلغى.'
+  ],
+  rank: 'حبيبتي الأولى والأخيرة',
+  idNo: '١١١١ ٢٠٢٦',
+  roses: [                       // one rose per thing he loves about her (the bouquet she builds)
+    'ضحكتك', 'عيونك', 'صوتك الصبح', 'قلبك الطيب', 'جنونك الحلو', 'إنك بيتي', 'كل شي فيكي'
+  ],
+  letter: {
+    greeting: 'نور،',
+    body: [
+      'كل سنة وإنتِ حبيبتي… بس هالسنة حبيت قولها رسمي.',
+      'ما بعرف إذا في عيد إلك بالتقويم، بس أنا كل يوم بعيّد فيكي.',
+      'وهالقرار ما إلو تاريخ انتهاء.'
+    ],
+    signoff: 'حبيبك،'
+  },
+  closing: 'كل عيد حبيبة… وإنتِ حبيبتي',
+  heartReply: 'قبلت القرار 🤍',
+  whatsapp: '963983896568',
+  music: 'music.mp3',
+  credit: { label: 'صُمّم بواسطة', handle: '@rasael.studio', url: 'https://instagram.com/rasael.studio' }
+};
+/* ============================================================ */
+
+const LOCALE = 'ar-SY-u-nu-arab';
+const G = (her, him) => GF.forHim ? him : her;
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const words = s => esc(s).split(/\s+/).map(w => `<span class="w">${w}</span>`).join(' ');
+const num = n => new Intl.NumberFormat(LOCALE).format(n);
+const hasGsap = !!(window.gsap && window.ScrollTrigger);
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const issued = new Date(GF.issued);
+const fmtDate = d => new Intl.DateTimeFormat(LOCALE, { day: 'numeric', month: 'numeric', year: 'numeric' }).format(d);
+
+document.querySelectorAll('[data-text]').forEach(el => { el.textContent = GF[el.dataset.text] ?? ''; });
+document.title = `قرار رسمي · ${GF.to}`;
+$('introTop').innerHTML = `<b>عيد الحبيبة</b>${G('وصلك قرار رسمي', 'وصلك قرار رسمي')}`;
+$('introHint').textContent = G('افتحي الختم', 'افتح الختم');
+$('decNo').textContent = GF.decreeNo;
+$('decDate').textContent = fmtDate(issued);
+$('whereas').innerHTML = GF.whereas.map(w => `<li>${words(w)}</li>`).join('');
+$('articles').innerHTML = GF.articles.map((a, i) => `<p class="art"><b>المادة ${num(i + 1)}:</b> ${words(a)}</p>`).join('');
+$('docMore').textContent = G('في شي كمان تحت…', 'في شي كمان تحت…');
+$('idRank').textContent = GF.rank;
+$('idIssued').textContent = fmtDate(issued);
+$('idNo').textContent = GF.idNo;
+$('idPhoto').innerHTML = GF.photo ? `<img src="${esc(GF.photo)}" alt="">` : esc(Array.from(GF.to)[0] || '');
+$('idBars').innerHTML = Array.from({ length: 26 }, (_, i) => `<i style="height:${10 + ((i * 7) % 11)}px"></i>`).join('');
+$('saveIdTxt').textContent = G('احفظي هويتك وحطّيها ستوري', 'احفظ هويتك وحطّها ستوري');
+$('bqSub').textContent = G('كل ما تضغطي، بتزيد وردة… وكل وردة إلها سبب', 'كل ما تضغط، بتزيد وردة… وكل وردة إلها سبب');
+$('bqAddTxt').textContent = G('زيدي وردة', 'زيد وردة');
+$('bqDone').textContent = G('باقتك كاملة… متلك', 'باقتك كاملة… متلك');
+$('lGreet').textContent = GF.letter.greeting;
+$('lBody').innerHTML = GF.letter.body.map(p => `<p>${words(p)}</p>`).join('');
+$('lSign').textContent = GF.letter.signoff;
+$('hHint').textContent = G('اضغطي على القلب', 'اضغط على القلب');
+$('replyTxt').textContent = G('ردّي عليه', 'ردّ عليها');
+$('againBtn').textContent = G('اقريه من جديد', 'اقراه من جديد');
+$('creditLabel').textContent = GF.credit.label;
+$('creditLink').textContent = GF.credit.handle; $('creditLink').href = GF.credit.url;
+$('replyBtn').href = `https://wa.me/${GF.whatsapp}?text=${encodeURIComponent(`قبلت القرار يا ${GF.from} 🤍\n`)}`;
+
+/* ---------- sounds (WebAudio, live) ---------- */
+const SFX = (() => {
+  let ctx = null, out = null, nb = null, muted = false;
+  const init = () => { if (ctx) return; const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return; ctx = new AC(); out = ctx.createGain(); out.gain.value = .5; out.connect(ctx.destination); nb = ctx.createBuffer(1, ctx.sampleRate, ctx.sampleRate); const d = nb.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1; };
+  const tone = (f, at = 0, dur = .4, { type = 'sine', vol = .2, to = 0 } = {}) => { if (!ctx || muted) return; const t = ctx.currentTime + at, o = ctx.createOscillator(), g = ctx.createGain(); o.type = type; o.frequency.setValueAtTime(f, t); if (to) o.frequency.exponentialRampToValueAtTime(to, t + dur); g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t + .005); g.gain.exponentialRampToValueAtTime(.0001, t + dur); o.connect(g); g.connect(out); o.start(t); o.stop(t + dur + .05); };
+  const noise = (at, dur, { vol = .1, f = 2000, q = 1, type = 'bandpass' } = {}) => { if (!ctx || muted) return; const t = ctx.currentTime + at, s = ctx.createBufferSource(), fl = ctx.createBiquadFilter(), g = ctx.createGain(); s.buffer = nb; fl.type = type; fl.frequency.value = f; fl.Q.value = q; g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t + .005); g.gain.exponentialRampToValueAtTime(.0001, t + dur); s.connect(fl); fl.connect(g); g.connect(out); s.start(t); s.stop(t + dur + .05); };
+  const bell = (f, at = 0, vol = .08) => { tone(f, at, 1.1, { vol }); tone(f * 2.76, at, .45, { vol: vol * .3 }); };
+  return { init, set muted(v) { muted = v; }, get muted() { return muted; },
+    seal: () => { noise(0, .12, { vol: .2, f: 900, q: .7 }); noise(.05, .5, { vol: .06, f: 3200, q: .5 }); },
+    stamp: () => { tone(85, 0, .3, { vol: .45, to: 45 }); noise(0, .14, { vol: .25, f: 600, q: .5, type: 'lowpass' }); },
+    paper: () => noise(0, .4, { vol: .05, f: 3600, q: .6 }),
+    pop: i => { tone(520 + i * 60, 0, .12, { vol: .16, to: 900 + i * 60 }); bell(1046 + i * 70, .05, .04); },
+    done: () => [784, 988, 1175, 1568].forEach((f, i) => bell(f, i * .08, .07)),
+    thump: () => { tone(95, 0, .24, { vol: .3, to: 50 }); bell(1046, .03, .05); } };
+})();
+
+/* ---------- hearts (intro ambience + bursts) ---------- */
+class Hearts {
+  constructor(cv, ambient) { this.c = cv; this.x = cv.getContext('2d'); this.p = []; this.ambient = ambient; this.run = false; this.size(); addEventListener('resize', () => this.size()); if (ambient) for (let i = 0; i < 16; i++) this.p.push(this.make(Math.random() * this.h)); }
+  size() { const d = Math.min(devicePixelRatio || 1, 2); this.w = this.c.clientWidth || innerWidth; this.h = this.c.clientHeight || innerHeight; this.c.width = this.w * d; this.c.height = this.h * d; this.x.setTransform(d, 0, 0, d, 0, 0); }
+  make(y) { return { x: Math.random() * this.w, y: y ?? this.h + 20, s: 5 + Math.random() * 9, vy: .25 + Math.random() * .5, vx: 0, sw: Math.random() * 6.3, a: .12 + Math.random() * .3, col: '#F2A0AE', life: Infinity }; }
+  burst(cx, cy, cols = ['#C8394F', '#F2A0AE', '#E8C374'], n = 34) { if (reduceMotion) return; for (let i = 0; i < n; i++) { const a = Math.random() * 6.28, sp = 2 + Math.random() * 5; this.p.push({ x: cx, y: cy, s: 6 + Math.random() * 10, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 2, a: 1, life: 90, g: true, col: cols[i % cols.length] }); } this.start(); }
+  heart(x, y, s) { const c = this.x; c.beginPath(); c.moveTo(x, y + s * .3); c.bezierCurveTo(x, y, x - s * .5, y - s * .1, x - s * .5, y + s * .3); c.bezierCurveTo(x - s * .5, y + s * .6, x, y + s * .8, x, y + s); c.bezierCurveTo(x, y + s * .8, x + s * .5, y + s * .6, x + s * .5, y + s * .3); c.bezierCurveTo(x + s * .5, y - s * .1, x, y, x, y + s * .3); c.fill(); }
+  start() { if (this.run || reduceMotion) return; this.run = true; requestAnimationFrame(() => this.loop()); }
+  stop() { this.run = false; this.x.clearRect(0, 0, this.w, this.h); }
+  loop() { if (!this.run) return; const c = this.x; c.clearRect(0, 0, this.w, this.h); this.p = this.p.filter(p => p.life > 0);
+    for (const p of this.p) { if (p.g) { p.vy += .12; p.vx *= .99; p.life--; p.a = Math.max(0, p.life / 90); } else { p.sw += .015; p.vx = Math.sin(p.sw) * .4; if (p.y < -20) Object.assign(p, this.make()); } p.x += p.vx; p.y += p.g ? p.vy : -Math.abs(p.vy); c.globalAlpha = p.a; c.fillStyle = p.col; this.heart(p.x, p.y, p.s); }
+    c.globalAlpha = 1; if (!this.ambient && !this.p.length) { this.run = false; c.clearRect(0, 0, this.w, this.h); return; } requestAnimationFrame(() => this.loop()); }
+}
+const introFx = new Hearts($('introFx'), true); introFx.start();
+const bqFx = new Hearts($('bqFx'), false), endFx = new Hearts($('endFx'), false);
+const burstOn = (fx, canvas, el, cols, n) => { const r = canvas.getBoundingClientRect(), b = el.getBoundingClientRect(); fx.burst(b.left + b.width / 2 - r.left, b.top + b.height / 2 - r.top, cols, n); };
+
+/* ---------- the decree: words ink in, then the stamp slams ---------- */
+let stamped = false;
+function readDecree() {
+  if (!hasGsap) { gsap?.set?.('#stamp', { opacity: 1 }); return; }
+  gsap.timeline()
+    .fromTo('#doc .doc-head, #doc h1, #doc .occasion', { opacity: 0, y: 10 }, { opacity: 1, y: 0, stagger: .15, duration: .6 })
+    .fromTo('#doc .whereas .w', { opacity: 0, filter: 'blur(4px)' }, { opacity: 1, filter: 'blur(0px)', duration: .4, stagger: .06 })
+    .fromTo('#doc .decide', { opacity: 0 }, { opacity: 1, duration: .4 })
+    .fromTo('#doc .art', { opacity: 0, x: 20 }, { opacity: 1, x: 0, duration: .01, stagger: .9 }, '<')
+    .fromTo('#doc .art .w', { opacity: 0, filter: 'blur(4px)' }, { opacity: 1, filter: 'blur(0px)', duration: .4, stagger: .07 }, '<')
+    .fromTo('#doc .signer', { opacity: 0 }, { opacity: 1, duration: .5 })
+    .call(slamStamp)
+    .fromTo('#docMore', { opacity: 0 }, { opacity: 1, duration: .6 }, '+=.5');
+}
+function slamStamp() {
+  if (stamped) return; stamped = true;
+  gsap.fromTo('#stamp', { opacity: 0, scale: 2.6, rotate: -30 }, { opacity: .9, scale: 1, rotate: -14, duration: .38, ease: 'power4.in', onComplete: () => {
+    SFX.stamp();
+    gsap.fromTo('#doc', { x: -4 }, { x: 0, duration: .35, ease: 'elastic.out(1, .3)' });
+  } });
+}
+
+/* ---------- ID card ---------- */
+function showId() {
+  if (!hasGsap) return;
+  gsap.timeline({ scrollTrigger: { trigger: '#idcard', start: 'top 80%' } })
+    .from('#idcard', { rotateY: 90, opacity: 0, duration: 1, ease: 'back.out(1.3)', transformPerspective: 900 })
+    .to('#shine', { x: '60%', duration: 1.1, ease: 'power2.inOut' }, '-=.2')
+    .from('.id-mini-stamp', { scale: 2.4, opacity: 0, duration: .35, ease: 'power4.in', onComplete: () => SFX.stamp() }, '-=.5');
+}
+
+/* ---------- the bouquet she builds ---------- */
+// rose spots (percent of the bouquet box), the stems meet at the paper's mouth
+const SPOTS = [[50, 30], [31, 36], [69, 36], [40, 20], [60, 20], [22, 24], [78, 24], [50, 12], [36, 44], [64, 44]];
+const ROSES = GF.roses.slice(0, SPOTS.length);
+let grown = 0;
+$('roses').innerHTML = ROSES.map((t, i) => `<span class="bq-rose" style="left:${SPOTS[i][0]}%;top:${SPOTS[i][1]}%;width:${23 - (i > 6 ? 3 : 0)}%"><svg viewBox="0 0 60 60"><use href="#rose"/></svg></span><span class="bq-tag" style="left:${SPOTS[i][0]}%;top:${SPOTS[i][1] - 11}%">${esc(t)}</span>`).join('');
+const stemsG = document.getElementById('stems');
+const bqCount = () => { $('bqCount').textContent = `${num(grown)} من ${num(ROSES.length)}`; };
+bqCount();
+function addRose() {
+  if (grown >= ROSES.length) return;
+  const i = grown++, rose = document.querySelectorAll('.bq-rose')[i], tag = document.querySelectorAll('.bq-tag')[i];
+  const [x, y] = SPOTS[i];
+  stemsG.insertAdjacentHTML('beforeend', `<path d="M170 300 Q${(170 + x * 3.4) / 2} ${(300 + y * 4.15) / 2 + 20} ${x * 3.4} ${y * 4.15 + 20}" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>`);
+  const stem = stemsG.lastElementChild;
+  SFX.pop(i); bqCount();
+  if (hasGsap) {
+    gsap.to(stem, { strokeDashoffset: 0, duration: .35, ease: 'power2.out' });
+    gsap.to(rose, { scale: 1, rotate: gsap.utils.random(-25, 25), duration: .7, delay: .15, ease: 'back.out(2.2)' });
+    document.querySelectorAll('.bq-tag').forEach(t => t !== tag && gsap.to(t, { opacity: 0, duration: .2 }));
+    gsap.fromTo(tag, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: .35, delay: .3 });
+  } else { rose.style.transform = 'translate(-50%,-50%) scale(1)'; stem.style.strokeDashoffset = 0; tag.style.opacity = 1; }
+  if (grown === ROSES.length) setTimeout(finishBouquet, 900);
+}
+function finishBouquet() {
+  if (hasGsap) { gsap.to('.bq-tag', { opacity: 0, duration: .3 }); gsap.to('#ribbon', { opacity: 1, duration: .5 }); gsap.fromTo('#bouquet', { scale: 1 }, { scale: 1.04, yoyo: true, repeat: 1, duration: .3 }); }
+  $('bqAdd').style.visibility = 'hidden';
+  $('bqDone').classList.add('show');
+  SFX.done(); burstOn(bqFx, $('bqFx'), $('bouquet'), ['#C8394F', '#F2A0AE', '#E8C374'], 40);
+}
+$('bqAdd').addEventListener('click', addRose);
+$('bouquet').addEventListener('click', addRose);
+
+/* ---------- ending ---------- */
+let hearts = 0;
+$('bigHeart').addEventListener('click', e => { SFX.thump(); burstOn(endFx, $('endFx'), e.currentTarget); hearts++; $('hHint').textContent = hearts === 1 ? 'كمان؟' : `${num(hearts)} قلوب`; $('hReply').classList.add('show'); });
+$('againBtn').addEventListener('click', () => { scrollTo({ top: 0, behavior: 'smooth' }); });
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+addEventListener('pageshow', e => { if (e.persisted) location.reload(); });
+
+/* ---------- music ---------- */
+const musicBtn = $('music'); let audio = null;
+if (GF.music) { audio = new Audio(GF.music); audio.loop = true; musicBtn.classList.add('on');
+  musicBtn.addEventListener('click', () => { if (audio.paused) { audio.play(); musicBtn.classList.remove('muted'); SFX.muted = false; } else { audio.pause(); musicBtn.classList.add('muted'); SFX.muted = true; } }); }
+
+/* ---------- scroll reveals ---------- */
+function initScroll() {
+  if (!hasGsap) return;
+  gsap.registerPlugin(ScrollTrigger);
+  showId();
+  gsap.utils.toArray('.kick, .h2, .sub').forEach(el => gsap.from(el, { y: 22, opacity: 0, duration: .8, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 90%' } }));
+  gsap.from('#bouquet', { y: 40, opacity: 0, duration: .9, ease: 'power3.out', scrollTrigger: { trigger: '#bouquet', start: 'top 85%' } });
+  gsap.timeline({ scrollTrigger: { trigger: '#letter', start: 'top 75%' } })
+    .from('#letter', { y: 40, opacity: 0, rotate: -3, duration: .8, ease: 'power3.out' })
+    .fromTo('#lBody .w', { opacity: 0, filter: 'blur(4px)' }, { opacity: 1, filter: 'blur(0px)', duration: .45, stagger: .1 })
+    .from('#letter .sign', { opacity: 0, y: 10, duration: .7 });
+  gsap.from('#bigHeart', { scale: 0, duration: 1, ease: 'elastic.out(1, .5)', scrollTrigger: { trigger: '#bigHeart', start: 'top 85%' } });
+}
+
+/* ---------- open the envelope ---------- */
+const intro = $('intro');
+function reveal() {
+  intro.classList.add('gone'); introFx.stop();
+  document.body.classList.remove('locked'); document.body.classList.add('opened');
+  scrollTo(0, 0);
+  readDecree(); initScroll();
+  setTimeout(() => intro.remove(), 900);
+}
+$('seal').addEventListener('click', () => {
+  if (intro.classList.contains('opening')) return;
+  intro.classList.add('opening');
+  SFX.init(); SFX.seal();
+  if (audio) audio.play().catch(() => musicBtn.classList.add('muted'));
+  if (!hasGsap || reduceMotion) { reveal(); return; }
+  gsap.timeline({ onComplete: reveal })
+    .to('#seal', { scale: 1.25, duration: .15 })
+    .to('#seal', { scale: 0, opacity: 0, duration: .25, ease: 'back.in(2)' })
+    .to('#flap', { rotateX: 180, duration: .55, ease: 'power2.inOut' }, '-=.05')
+    .to('#env', { y: 40, scale: 1.1, opacity: 0, duration: .55, ease: 'power2.in' }, '+=.1');
+});
+
+/* ---------- share the ID card as a picture ---------- */
+let cardBlob = null;
+async function makeCard() {
+  try { await Promise.all(['900 80px Rubik', '700 60px "Aref Ruqaa"'].map(f => document.fonts.load(f))); } catch {}
+  const W = 1080, H = 1920, cv = document.createElement('canvas'); cv.width = W; cv.height = H; const c = cv.getContext('2d');
+  const bg = c.createLinearGradient(0, 0, 0, H); bg.addColorStop(0, '#2A1018'); bg.addColorStop(1, '#4A1B28'); c.fillStyle = bg; c.fillRect(0, 0, W, H);
+  c.direction = 'rtl'; c.textAlign = 'center';
+  c.fillStyle = '#E8C374'; c.font = '700 64px "Aref Ruqaa", serif'; c.fillText('عيد الحبيبة', W / 2, 330);
+  c.fillStyle = '#FFF4EC'; c.font = '800 46px Rubik, sans-serif'; c.fillText('صدرت هويتي الرسمية', W / 2, 410);
+  // the card
+  const cx = 90, cy = 560, cw = 900, ch = 570, r = 40;
+  const g = c.createLinearGradient(cx, cy, cx + cw, cy + ch); g.addColorStop(0, '#FFF7EE'); g.addColorStop(.55, '#FBE3E6'); g.addColorStop(1, '#F6D3D9');
+  c.save(); c.shadowColor = 'rgba(0,0,0,.5)'; c.shadowBlur = 60; c.shadowOffsetY = 24; c.beginPath(); c.roundRect(cx, cy, cw, ch, r); c.fillStyle = g; c.fill(); c.restore();
+  c.textAlign = 'right'; c.fillStyle = '#A92A40'; c.font = '800 38px Rubik, sans-serif'; c.fillText('هوية حبيبة رسمية', cx + cw - 40, cy + 70);
+  c.textAlign = 'left'; c.fillStyle = '#6E5A5E'; c.font = '500 24px Rubik, sans-serif'; c.direction = 'rtl'; c.fillText('جمهورية قلبي · وزارة الحب', cx + 40, cy + 66);
+  // photo / initial
+  const px = cx + cw - 40 - 250, py = cy + 110;
+  c.save(); c.beginPath(); c.roundRect(px, py, 250, 310, 24); c.clip();
+  if (GF.photo) { try { const im = await new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = GF.photo; }); const s = Math.max(250 / im.width, 310 / im.height); c.drawImage(im, px + (250 - im.width * s) / 2, py + (310 - im.height * s) / 2, im.width * s, im.height * s); } catch {} }
+  else { const pg = c.createLinearGradient(px, py, px + 250, py + 310); pg.addColorStop(0, '#C8394F'); pg.addColorStop(1, '#6E1626'); c.fillStyle = pg; c.fillRect(px, py, 250, 310); c.fillStyle = '#FFF0F2'; c.textAlign = 'center'; c.font = '700 130px "Aref Ruqaa", serif'; c.fillText(Array.from(GF.to)[0] || '', px + 125, py + 200); }
+  c.restore();
+  const fx = px - 40; c.textAlign = 'right'; c.direction = 'rtl';
+  const field = (label, value, y, big) => { c.fillStyle = '#6E5A5E'; c.font = '500 26px Rubik, sans-serif'; c.fillText(label, fx, y); c.fillStyle = big ? '#A92A40' : '#2B1A1F'; c.font = big ? '700 54px "Aref Ruqaa", serif' : '800 34px Rubik, sans-serif'; c.fillText(value, fx, y + (big ? 58 : 44)); };
+  field('الاسم', GF.to, cy + 150, true); field('الرتبة', GF.rank, cy + 260); field('تاريخ الإصدار', fmtDate(issued), cy + 350); field('الصلاحية', 'مدى الحياة', cy + 440);
+  // stamp
+  c.save(); c.translate(cx + 150, cy + 300); c.rotate(-.28); c.strokeStyle = 'rgba(200,57,79,.8)'; c.fillStyle = 'rgba(200,57,79,.8)'; c.lineWidth = 9; c.beginPath(); c.arc(0, 0, 105, 0, 7); c.stroke(); c.lineWidth = 3; c.beginPath(); c.arc(0, 0, 86, 0, 7); c.stroke();
+  c.textAlign = 'center'; c.font = '900 34px Rubik, sans-serif'; c.fillText('مُصادَق', 0, 12); c.font = '700 20px Rubik, sans-serif'; c.fillText('وزارة الحب', 0, -40); c.fillText('جمهورية قلبي', 0, 56); c.restore();
+  c.textAlign = 'center'; c.direction = 'rtl'; c.fillStyle = '#FFF4EC'; c.font = '700 54px "Aref Ruqaa", serif'; c.fillText(`من ${GF.from}`, W / 2, 1300);
+  c.fillStyle = 'rgba(255,244,236,.75)'; c.font = '500 34px Rubik, sans-serif'; c.fillText('قرار رقم ' + GF.decreeNo + ' · لا يُلغى', W / 2, 1370);
+  c.direction = 'ltr'; c.fillStyle = 'rgba(255,244,236,.55)'; c.font = '500 30px Rubik, sans-serif'; c.fillText(GF.credit.handle, W / 2, H - 70);
+  return new Promise(r => cv.toBlob(r, 'image/png'));
+}
+const share = $('share');
+$('saveId').addEventListener('click', async () => {
+  share.classList.add('show');
+  if (!cardBlob) {
+    cardBlob = await makeCard(); const url = URL.createObjectURL(cardBlob);
+    $('shareImg').src = url; $('shareSave').href = url;
+    const file = new File([cardBlob], 'هوية-حبيبة.png', { type: 'image/png' });
+    if (navigator.canShare && navigator.canShare({ files: [file] })) { const b = $('shareGo'); b.hidden = false; b.textContent = G('شاركيها', 'شاركها'); b.onclick = () => navigator.share({ files: [file] }).catch(() => {}); }
+    $('shareHelp').textContent = G('أو اضغطي مطوّلاً على الصورة واحفظيها', 'أو اضغط مطوّلاً على الصورة واحفظها');
+  }
+  $('shareWait').hidden = true; $('shareImg').hidden = false; $('shareHelp').hidden = false; $('shareRow').hidden = false;
+});
+$('shareX').addEventListener('click', () => share.classList.remove('show'));
+share.addEventListener('click', e => { if (e.target === share) share.classList.remove('show'); });
+</script>
+<!-- rasael-lock -->
+<script>
+const LOCK = { password: '', hint: '', forHim: GF.forHim };
+</script>
+<style>
+  #rlock { position: fixed; inset: 0; z-index: 2147483000; display: grid; place-items: center; padding: 24px; background: radial-gradient(ellipse 80% 60% at 50% 40%, #4A1B28, #12070B); color: #FBF1E6; font-family: "Rubik", system-ui, sans-serif; text-align: center; transition: opacity .7s, visibility .7s; }
+  #rlock.open { opacity: 0; visibility: hidden; }
+  #rlock .box { width: min(340px, 100%); }
+  #rlock svg { width: 58px; height: 58px; color: #E8C374; margin: 0 auto 14px; display: block; }
+  #rlock h2 { font-size: 24px; font-weight: 800; line-height: 1.4; }
+  #rlock p { opacity: .72; font-size: 15px; margin: 6px 0 22px; }
+  #rlock form { display: flex; gap: 8px; }
+  #rlock input { flex: 1; min-width: 0; min-height: 52px; border-radius: 14px; border: 1.5px solid rgba(251,241,230,.3); background: rgba(251,241,230,.08); color: inherit; font: inherit; font-size: 20px; text-align: center; padding: 0 12px; outline: none; }
+  #rlock button { min-height: 52px; min-width: 76px; border: 0; border-radius: 14px; background: #C8394F; color: #fff; font: inherit; font-weight: 700; font-size: 17px; }
+  #rlock .hint { margin-top: 12px; font-size: 14px; opacity: .65; }
+  #rlock .wrong { margin-top: 10px; min-height: 24px; color: #FFB4BE; font-size: 14px; }
+</style>
+<script>
+(() => {
+  if (!LOCK.password) return;
+  const norm = s => String(s).trim().toLowerCase().replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[\s\/.\-_]/g, '').replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي');
+  const el = document.createElement('div'); el.id = 'rlock';
+  el.innerHTML = `<div class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg>
+    <h2>${LOCK.forHim ? 'هالقرار إلك إنتَ بس' : 'هالقرار إلك إنتِ بس'}</h2><p>${LOCK.forHim ? 'اكتب كلمة السر' : 'اكتبي كلمة السر'}</p>
+    <form><input type="text" autocomplete="off" aria-label="كلمة السر"><button type="submit">افتح</button></form>${LOCK.hint ? `<div class="hint">تلميح: ${LOCK.hint.replace(/</g, '&lt;')}</div>` : ''}<div class="wrong" aria-live="polite"></div></div>`;
+  document.body.appendChild(el);
+  const input = el.querySelector('input'), wrong = el.querySelector('.wrong');
+  el.querySelector('form').addEventListener('submit', e => { e.preventDefault(); if (norm(input.value) === norm(LOCK.password)) { el.classList.add('open'); setTimeout(() => el.remove(), 800); } else wrong.textContent = LOCK.forHim ? 'مو هي… جرّب كمان مرة' : 'مو هي… جرّبي كمان مرة'; });
+})();
+</script>
+</body>
+</html>
