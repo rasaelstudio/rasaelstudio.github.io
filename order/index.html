@@ -83,7 +83,8 @@
     <fieldset>
       <legend><span class="n">١</span>شو بدك نعملك؟</legend>
       <div class="kinds">
-        <div class="kind"><input type="radio" name="kind" id="k-wrapped" value="wrapped"><label for="k-wrapped"><img src="../assets/wrapped-closed.jpg" alt="">ملخّص حبّنا (جديد)</label></div>
+        <div class="kind"><input type="radio" name="kind" id="k-gfday" value="gfday"><label for="k-gfday"><img src="../assets/gfday-closed.jpg" alt="">عيد الحبيبة (عرض محدود)</label></div>
+<div class="kind"><input type="radio" name="kind" id="k-wrapped" value="wrapped"><label for="k-wrapped"><img src="../assets/wrapped-closed.jpg" alt="">ملخّص حبّنا (جديد)</label></div>
 <div class="kind"><input type="radio" name="kind" id="k-wedding" value="wedding"><label for="k-wedding"><img src="../assets/wedding-closed.jpg" alt="">دعوة عرس</label></div>
         <div class="kind"><input type="radio" name="kind" id="k-engage" value="engage"><label for="k-engage"><img src="../assets/engage-closed.jpg" alt="">خطوبة / كتب كتاب</label></div>
         <div class="kind"><input type="radio" name="kind" id="k-sorry" value="sorry"><label for="k-sorry"><img src="../assets/sorry-closed.jpg" alt="">صالحها 🏳️</label></div>
@@ -130,10 +131,19 @@
 <script src="../config.js"></script>
 <script>
 const R = window.RASAEL;
-const KIND_NAME = { wrapped: 'ملخّص حبّنا (ستوري)', wedding: 'دعوة عرس', engage: 'دعوة خطوبة / كتب كتاب', letter: 'رسالة حب', proposal: 'طلب زواج', birthday: 'عيد ميلاد', reveal: 'كشف جنس المولود', cup: 'اقريلو فنجانو', sorry: 'صالحها (اعتذار)', other: 'هدية لمناسبة' };
+const KIND_NAME = { gfday: 'عيد الحبيبة: قرار رسمي (عرض محدود)', wrapped: 'ملخّص حبّنا (ستوري)', wedding: 'دعوة عرس', engage: 'دعوة خطوبة / كتب كتاب', letter: 'رسالة حب', proposal: 'طلب زواج', birthday: 'عيد ميلاد', reveal: 'كشف جنس المولود', cup: 'اقريلو فنجانو', sorry: 'صالحها (اعتذار)', other: 'هدية لمناسبة' };
 
 // The questions for each kind. Order of fields = order in the WhatsApp message.
 const FIELDS = {
+  gfday: [
+    { id: 'to', label: 'اسمها', req: 1 },
+    { id: 'toGender', label: 'اللي رح يفتحها: هي ولا هو؟', type: 'select', options: ['هي', 'هو'], req: 1 },
+    { id: 'from', label: 'اسمك متل ما بدك يبيّن', req: 1 },
+    { id: 'reasons', label: 'شو بتحب فيها؟ (كل شي بسطر، لحد ٧، بيصيرو ورد بالباقة)', type: 'textarea', ph: 'ضحكتها\nعيونها\nإنها بيتي' },
+    { id: 'articles', label: 'بدك تكتب مواد القرار بنفسك؟', type: 'textarea', ph: 'مثال: يُمنع الزعل أكتر من ساعة… أو اتركها علينا', hint: 'إذا تركتها فاضية منكتبلك مواد حلوة ومضحكة' },
+    { id: 'letter', label: 'رسالتك إلها', type: 'textarea', ph: 'اكتب من قلبك… أو «اكتبوها إنتو»' },
+    { id: 'replyWa', label: 'رقم واتسابك لزر «ردّي عليه»', type: 'tel', ph: '9639xxxxxxxx' },
+  ],
   wrapped: [
     { id: 'to', label: 'اسمها', req: 1 },
     { id: 'toGender', label: 'اللي رح يفتحها: هي ولا هو؟', type: 'select', options: ['هي', 'هو'], req: 1 },
@@ -264,7 +274,7 @@ function fieldHtml(f) {
 }
 
 let kind = null;
-const tiers = () => R.prices[kind === 'wedding' || kind === 'engage' ? 'wedding' : kind === 'wrapped' ? 'wrapped' : 'gift'];
+const tiers = () => R.prices[kind === 'wedding' || kind === 'engage' ? 'wedding' : kind === 'wrapped' ? 'wrapped' : kind === 'gfday' ? 'gfday' : 'gift'];
 function setKind(k, planId) {
   kind = k;
   $('plans').innerHTML = tiers().map((p, i) => `
