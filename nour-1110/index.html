@@ -115,6 +115,7 @@
   .us-heart { position: absolute; left: 50%; top: 38%; z-index: 2; width: 46px; height: 44px; margin-left: -23px; color: var(--rose); filter: drop-shadow(0 4px 8px rgba(0,0,0,.25)); animation: usbeat 1.6s ease-in-out infinite; }
   .us-heart svg { width: 100%; height: 100%; }
   @keyframes usbeat { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.18); } 30% { transform: scale(1); } 45% { transform: scale(1.1); } }
+  .count-ymd { margin-top: 6px; text-align: center; font-family: "El Messiri", sans-serif; font-size: 18px; color: var(--rose); }
   .us-line { margin-top: 52px; text-align: center; font-family: "Aref Ruqaa", serif; font-weight: 700; font-size: 26px; color: var(--rose); }
   .kicker {
     display: flex; align-items: center; justify-content: center; gap: 12px;
@@ -329,6 +330,7 @@
       <p class="kicker"><svg><use href="#heart"/></svg>صرلنا مع بعض<svg><use href="#heart"/></svg></p>
       <p class="count-big" id="cDays">٠</p>
       <p class="count-unit">يوم</p>
+      <p class="count-ymd" id="cYMD"></p>
       <div class="count-small">
         <div><b id="cH">٠٠</b><span>ساعة</span></div>
         <div><b id="cM">٠٠</b><span>دقيقة</span></div>
@@ -500,6 +502,18 @@ function tick() {
   $('cS').textContent = num(s % 60, 2);
 }
 tick(); setInterval(tick, 1000);
+// the same time in years, months and days ("سنة و٥ شهور و١٦ يوم")
+(function ymd() {
+  const n = new Date();
+  let y = n.getFullYear() - met.getFullYear(), m = n.getMonth() - met.getMonth(), d = n.getDate() - met.getDate();
+  if (n.getHours() * 60 + n.getMinutes() < met.getHours() * 60 + met.getMinutes()) d--;
+  if (d < 0) { m--; d += new Date(n.getFullYear(), n.getMonth(), 0).getDate(); }
+  if (m < 0) { y--; m += 12; }
+  const yy = y === 1 ? 'سنة' : y === 2 ? 'سنتين' : y > 2 ? `${num(y)} سنين` : '';
+  const mm = m === 1 ? 'شهر' : m === 2 ? 'شهرين' : m > 2 ? `${num(m)} شهور` : '';
+  const dd = d === 1 ? 'يوم' : d === 2 ? 'يومين' : d > 2 ? `${num(d)} ${d <= 10 ? 'أيام' : 'يوم'}` : '';
+  $('cYMD').textContent = 'يعني ' + [yy, mm, dd].filter(Boolean).join(' و');
+})();
 
 /* ---------- Reasons deck ---------- */
 const deck = $('deck');
