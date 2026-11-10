@@ -103,6 +103,19 @@
   .on-wine { background: var(--wine); color: var(--on-wine); }
   .on-wine-2 { background: var(--wine-2); color: var(--on-wine); }
   .on-paper { background: var(--paper) var(--noise); color: var(--ink); }
+  /* the two of them: two polaroids leaning in, a heart between */
+  .us { position: relative; display: flex; justify-content: center; align-items: flex-start; margin: 56px auto 0; max-width: 420px; }
+  .us .pol { width: 46%; margin: 0; padding: 8px 8px 0; background: #fff; box-shadow: 0 14px 30px -14px rgba(0,0,0,.45); }
+  .us .pol img { display: block; width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
+  .us .her { transform: rotate(4deg) translateX(4px); z-index: 1; }
+  .us .her img { object-position: 50% 18%; }
+  .us .him { transform: rotate(-4deg) translate(-4px, 26px); }
+  .us .him img { object-position: 50% 30%; }
+  .us figcaption { font-family: "Aref Ruqaa", serif; font-size: 15px; line-height: 1.5; color: var(--ink); text-align: center; padding: 8px 2px 10px; min-height: 3.6em; }
+  .us-heart { position: absolute; left: 50%; top: 38%; z-index: 2; width: 46px; height: 44px; margin-left: -23px; color: var(--rose); filter: drop-shadow(0 4px 8px rgba(0,0,0,.25)); animation: usbeat 1.6s ease-in-out infinite; }
+  .us-heart svg { width: 100%; height: 100%; }
+  @keyframes usbeat { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.18); } 30% { transform: scale(1); } 45% { transform: scale(1.1); } }
+  .us-line { margin-top: 52px; text-align: center; font-family: "Aref Ruqaa", serif; font-weight: 700; font-size: 26px; color: var(--rose); }
   .kicker {
     display: flex; align-items: center; justify-content: center; gap: 12px;
     font-family: "El Messiri", sans-serif; font-weight: 500; font-size: 14px; letter-spacing: .14em; color: var(--rose); margin-bottom: 18px;
@@ -322,6 +335,12 @@
         <div><b id="cS">٠٠</b><span>ثانية</span></div>
       </div>
       <p class="since" id="since"></p>
+      <div class="us" id="us">
+        <figure class="pol her"><img src="her.jpg" alt="نور"><figcaption>وهي… أحلى من كل الطبيعة اللي وراها</figcaption></figure>
+        <span class="us-heart"><svg viewBox="0 0 32 30" aria-hidden="true"><use href="#heart"/></svg></span>
+        <figure class="pol him"><img src="him.jpg" alt="مهدي"><figcaption>وهاد… اللي اختارك، وما رح يغيّر رأيو</figcaption></figure>
+      </div>
+      <p class="us-line">إنتِ وأنا… بس هالمرة صح</p>
     </div>
   </section>
   <div class="edge flip"></div>
@@ -651,7 +670,10 @@ function initScroll() {
     gsap.from(li, { x: 40, opacity: 0, duration: .9, ease: 'power3.out', scrollTrigger: { trigger: li, start: 'top 85%' } });
   });
 
-  gsap.from('#owGrid .ow', { y: 50, opacity: 0, rotate: () => gsap.utils.random(-8, 8), stagger: .1, duration: .8, ease: 'back.out(1.5)', scrollTrigger: { trigger: '#owGrid', start: 'top 85%' } });
+  gsap.from('#us .her', { x: 80, rotate: 14, opacity: 0, duration: 1.1, ease: 'power3.out', scrollTrigger: { trigger: '#us', start: 'top 80%' } });
+  gsap.from('#us .him', { x: -80, rotate: -14, opacity: 0, duration: 1.1, ease: 'power3.out', scrollTrigger: { trigger: '#us', start: 'top 80%' } });
+  gsap.from('#us .us-heart svg',{ scale: 0, opacity: 0, duration: .6, delay: .8, ease: 'back.out(3)', scrollTrigger: { trigger: '#us', start: 'top 80%' } });
+  gsap.from('#owGrid .ow',{ y: 50, opacity: 0, rotate: () => gsap.utils.random(-8, 8), stagger: .1, duration: .8, ease: 'back.out(1.5)', scrollTrigger: { trigger: '#owGrid', start: 'top 85%' } });
 
   gsap.utils.toArray('.kicker, .h2, .sub').forEach(el => {
     gsap.from(el, { y: 24, opacity: 0, duration: .9, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 90%' } });
