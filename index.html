@@ -90,6 +90,11 @@
   .plan h3 { font-size: 22px; color: var(--wine); }
   .plan .price { font-family: "El Messiri", serif; font-size: 38px; font-weight: 700; margin: 6px 0; }
   .plan p { color: var(--muted); font-size: 15px; min-height: 3.4em; }
+  .plan .price s { font-size: 22px; color: var(--muted); margin-inline-start: 8px; text-decoration-color: #E23E57; text-decoration-thickness: 2px; }
+  .bfbar { display: block; background: #0C0C0E; color: #FBF1E6; text-align: center; padding: 11px 16px; font-weight: 700; font-size: 15px; line-height: 1.5; text-decoration: none; border-bottom: 2px solid #E9C46A; }
+  .bfbar b { color: #E9C46A; margin-inline-end: 6px; }
+  .bfbar s { color: #9A9AA2; text-decoration-color: #E23E57; text-decoration-thickness: 2px; }
+  .bfbar span { white-space: nowrap; }
   .plan .btn { margin-top: 14px; width: 100%; min-height: 48px; background: var(--wine); color: var(--cream); font-size: 16px; }
   .plan.best .btn { background: var(--pink); color: #fff; }
   .note { text-align: center; color: var(--muted); font-size: 14px; margin-top: 18px; }
@@ -138,6 +143,7 @@
 </head>
 <body>
 
+<a class="bfbar" id="bfbar" href="order/?kind=letter&plan=premium" hidden><b>بلاك فرايدي</b><span>الباقة الكاملة بـ١٠٠٠ ل.س بدل <s>١٥٠٠</s></span> · <span>لآخر تشرين التاني ←</span></a>
 <header class="hero">
   <div class="wrap">
     <nav class="nav">
@@ -169,15 +175,6 @@
     <div class="wrap">
       <div class="sec-head rv"><h2>اختار التصميم</h2><p>افتح المثال من موبايلك وجرّبه متل ما رح يوصل للي بتحبّه</p></div>
       <div class="cards">
-        <article class="card rv">
-          <div class="shot g"><div class="phone"><img src="assets/gfday-closed.jpg" alt="عيد الحبيبة: ظرف رسمي من وزارة الحب"></div></div>
-          <div class="body">
-            <h3>عيد الحبيبة <span class="new">عرض محدود</span></h3>
-            <p>بتفتح ظرف من «وزارة الحب»، وبتقرا قرار رسمي باسمها: «المادة ٢: يُمنع الزعل أكتر من ساعة»… ختم، وهوية حبيبة رسمية بتنزّلها ستوري، وباقة ورد بتبنيها بإيدها، ورسالتك بالآخر</p>
-            <div class="chips"><span>قرار رسمي باسمها</span><span>هوية حبيبة</span><span>باقة ورد</span><span>رسالتك</span></div>
-            <div class="foot"><span class="from">السعر<b data-from="gfday"></b></span><a class="btn" href="demo/gfday/">جرّب المثال</a></div>
-          </div>
-        </article>
         <article class="card rv">
           <div class="shot x"><div class="phone"><img src="assets/wrapped-closed.jpg" alt="ملخّص حبّنا: ستوري بصورتهم وعنوان ملخّص حبّنا"></div></div>
           <div class="body">
@@ -267,7 +264,6 @@
       <div class="sec-head rv"><h2>الأسعار</h2><p>بالليرة السورية الجديدة، وبتدفع بعد ما تشوف التصميم بأول نسخة</p></div>
       <div class="tabs rv" role="tablist">
         <button role="tab" aria-selected="true" data-tab="gift">هدايا وحب</button>
-        <button role="tab" aria-selected="false" data-tab="gfday">عيد الحبيبة</button>
         <button role="tab" aria-selected="false" data-tab="wrapped">ملخّص حبّنا</button>
         <button role="tab" aria-selected="false" data-tab="wedding">دعوات أعراس</button>
       </div>
@@ -349,7 +345,7 @@ function showPlans(kind) {
     <div class="plan${p.best ? ' best' : ''}">
       ${p.best && many ? '<span class="badge">الأفضل</span>' : ''}
       <h3>${p.name}</h3>
-      <div class="price">${R.fmt(p.price)}</div>
+      <div class="price">${R.fmt(p.price)}${p.was ? `<s>${R.fmt(p.was)}</s>` : ''}</div>
       <p>${p.desc}</p>
       <a class="btn" href="order/?kind=${kind === 'gift' ? 'letter' : kind}&plan=${p.id}">اختار هالباقة</a>
     </div>`).join('');
@@ -359,6 +355,7 @@ document.querySelectorAll('.tabs button').forEach(b => b.addEventListener('click
   showPlans(b.dataset.tab);
 }));
 showPlans('gift');
+if (R.offerOn) document.getElementById('bfbar').hidden = false;
 
 // reveal on scroll + floating order button once the hero is gone
 const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
