@@ -62,7 +62,10 @@
   .btn { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; min-height: 58px; border-radius: 60px; font-weight: 700; font-size: 18px; }
   .btn svg { width: 24px; height: 24px; flex: none; }
   .btn.wa { background: var(--wa); color: #fff; box-shadow: 0 14px 28px -12px rgba(31,168,85,.9); }
-  .btn.ig { margin-top: 10px; min-height: 50px; font-size: 16px; border: 1.5px solid var(--line); background: #fff; color: var(--wine); }
+  .btn.ig { background: linear-gradient(45deg, #f9a03f, #e1306c 45%, #833ab4); color: #fff; box-shadow: 0 14px 28px -12px rgba(193,53,132,.9); }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .duo .btn { min-height: 56px; font-size: 16px; gap: 8px; padding: 0 8px; }
+  .duo .btn svg { width: 22px; height: 22px; }
   .hint { text-align: center; color: var(--muted); font-size: 14px; margin-top: 10px; }
 
   .steps { display: grid; gap: 10px; margin-top: 18px; }
@@ -164,12 +167,17 @@
       <button type="button" aria-pressed="false" data-msg="بدي صفحة اعتذار، زعلانة مني">صالحها</button>
       <button type="button" aria-pressed="false" data-msg="عندي فكرة تانية">شي تاني</button>
     </div>
-    <a class="btn wa" id="waBtn" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-3.3-.8-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.2z"/></svg>
-      ابعتلنا عالواتساب
-    </a>
-    <a class="btn ig" id="igBtn" target="_blank" rel="noopener">أو ابعتلنا رسالة عالإنستا</a>
-    <p class="hint">منردّ عليك بسرعة، والرسالة مكتوبة جاهزة… بس اضغط إرسال</p>
+    <div class="duo" id="duo">
+      <a class="btn wa" id="waBtn" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-3.3-.8-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.2z"/></svg>
+        واتساب
+      </a>
+      <a class="btn ig" id="igBtn" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+        إنستغرام
+      </a>
+    </div>
+    <p class="hint">احكينا من وين ما بدك، ومنردّ عليك بسرعة. عالواتساب الرسالة بتكون مكتوبة جاهزة</p>
   </section>
 
   <section>
@@ -213,10 +221,16 @@
   <footer>رسائل · <a id="igFoot" target="_blank" rel="noopener"></a></footer>
 </main>
 
-<div class="float hide" id="float"><a class="btn wa" id="waFloat" target="_blank" rel="noopener">
-  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-3.3-.8-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.2z"/></svg>
-  اطلبها عالواتساب
-</a></div>
+<div class="float hide duo" id="float">
+  <a class="btn wa" id="waFloat" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-3.3-.8-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.2z"/></svg>
+    واتساب
+  </a>
+  <a class="btn ig" id="igFloat" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+    إنستغرام
+  </a>
+</div>
 
 <script src="../config.js"></script>
 <script>
@@ -265,7 +279,7 @@ function setMsg(b) {
 document.querySelectorAll('#pick button').forEach(b => b.addEventListener('click', () => setMsg(b)));
 setMsg(document.querySelector('#pick button'));
 const ig = `https://ig.me/m/${R.instagram}`;
-document.getElementById('igBtn').href = ig;
+document.getElementById('igBtn').href = document.getElementById('igFloat').href = ig;
 const igFoot = document.getElementById('igFoot'); igFoot.href = `https://instagram.com/${R.instagram}`; igFoot.textContent = '@' + R.instagram;
 
 // reviews
