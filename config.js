@@ -21,5 +21,7 @@ window.RASAEL = {
 // Black Friday offer: shown on the home page and the order form; after 'until' every price goes back to 'was' by itself
 window.RASAEL.offer = { text: 'بلاك فرايدي: الباقة الكاملة بـ١٠٠٠ ل.س بدل ١٥٠٠', sub: 'لآخر تشرين التاني', until: '2026-11-30T23:59:59+03:00' };
 window.RASAEL.offerOn = Date.now() < new Date(window.RASAEL.offer.until).getTime();
+// during the offer the full package costs the same as «الأكثر طلباً», so only the full package is shown
+if (window.RASAEL.offerOn) window.RASAEL.prices.gift = window.RASAEL.prices.gift.filter(p => p.id !== 'popular').map(p => ({ ...p, best: true }));
 if (!window.RASAEL.offerOn) Object.values(window.RASAEL.prices).forEach(ts => ts.forEach(p => { if (p.was) { p.price = p.was; delete p.was; } }));
 window.RASAEL.fmt = n => new Intl.NumberFormat('ar-SY-u-nu-arab').format(n) + ' ل.س';

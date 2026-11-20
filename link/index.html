@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>رسائل | صفحة باسمها بتوصلها برابط</title>
+<meta name="description" content="رسالة حب، عيد ميلاد أو اعتذار… صفحة باسمها بتوصلها برابط عالواتساب. بتدفع بعد ما تشوف الفيديو.">
+<meta property="og:title" content="رسائل | صفحة باسمها… بتوصلها برابط">
+<meta property="og:description" content="رسالة حب، عيد ميلاد أو اعتذار… بتدفع بعد ما تشوف الفيديو">
+<meta property="og:image" content="../assets/og.jpg">
+<meta name="theme-color" content="#3E121B">
+<link rel="icon" href="../assets/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --wine: #561A27; --wine-2: #3E121B; --wine-3: #7A2738; --cream: #FBF1E6; --cream-2: #F4E4D3;
+    --pink: #F07C8C; --pink-ink: #C8394F; --ink: #2A0D16; --muted: #7B5C63; --line: #E8D4C2;
+    --wa: #1FA855; --r: 22px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--cream); color: var(--ink); font: 400 16px/1.75 "IBM Plex Sans Arabic", system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; padding-bottom: 96px; }
+  a { color: inherit; text-decoration: none; }
+  img, video { display: block; max-width: 100%; }
+  .wrap { width: min(560px, 100% - 32px); margin-inline: auto; }
+  h1, h2, h3 { font-family: "El Messiri", serif; font-weight: 700; line-height: 1.3; }
+
+  .bfbar { display: block; background: #0C0C0E; color: var(--cream); text-align: center; padding: 10px 16px; font-weight: 700; font-size: 15px; line-height: 1.5; border-bottom: 2px solid #E9C46A; }
+  .bfbar b { color: #E9C46A; margin-inline-end: 6px; }
+
+  .hero { background: radial-gradient(ellipse 100% 70% at 50% 25%, var(--wine-3), var(--wine) 55%, var(--wine-2)); color: var(--cream); text-align: center; padding: 18px 0 40px; }
+  .brand { display: inline-flex; align-items: center; gap: 8px; font-family: "El Messiri", serif; font-weight: 700; font-size: 20px; opacity: .9; }
+  .brand img { width: 32px; height: 32px; border-radius: 8px; }
+  .hero h1 { font-size: clamp(34px, 9.5vw, 48px); margin: 22px auto 10px; }
+  .hero h1 em { font-style: normal; color: var(--pink); }
+  .hero .lead { color: rgba(251,241,230,.82); font-size: 17px; max-width: 32ch; margin-inline: auto; }
+
+  .phone { width: min(250px, 66vw); margin: 28px auto 0; aspect-ratio: 390 / 844; border-radius: 34px; padding: 8px; background: #0B0B0E; box-shadow: 0 0 0 2px #2B2B33, 0 40px 80px -30px rgba(0,0,0,.85); }
+  .phone video, .phone img { width: 100%; height: 100%; object-fit: cover; border-radius: 27px; background: #3a1420; }
+  .url { display: inline-flex; align-items: center; gap: 6px; direction: ltr; margin-top: 14px; font-size: 13px; color: rgba(251,241,230,.7); background: rgba(251,241,230,.08); border: 1px solid rgba(251,241,230,.18); padding: 3px 14px; border-radius: 30px; }
+  .url svg { width: 13px; height: 13px; }
+
+  section { padding: 44px 0 0; }
+  .h2 { font-size: clamp(26px, 7vw, 34px); color: var(--wine); text-align: center; }
+  .sub { text-align: center; color: var(--muted); margin-top: 4px; }
+
+  .price-card { background: #fff; border: 1.5px solid var(--pink); border-radius: var(--r); padding: 26px 22px; box-shadow: 0 24px 40px -28px rgba(240,124,140,.9); }
+  .price-card .tag { display: inline-block; background: #0C0C0E; color: #E9C46A; font-size: 13px; font-weight: 700; padding: 2px 12px; border-radius: 30px; }
+  .price-card .price { font-family: "El Messiri", serif; font-size: 44px; font-weight: 700; margin: 6px 0 2px; }
+  .price-card .price s { font-size: 24px; color: var(--muted); margin-inline-start: 10px; text-decoration-color: #E23E57; text-decoration-thickness: 2px; }
+  .price-card .until { color: var(--muted); font-size: 14px; }
+  .list { list-style: none; display: grid; gap: 8px; margin: 18px 0 4px; }
+  .list li { display: flex; gap: 10px; align-items: flex-start; }
+  .list li::before { content: ""; flex: none; width: 20px; height: 20px; margin-top: 4px; border-radius: 50%; background: var(--pink) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12.5l4 4 8-9'/%3E%3C/svg%3E") center / 13px no-repeat; }
+  .safe { margin-top: 16px; background: var(--cream); border-radius: 16px; padding: 12px 16px; font-weight: 700; color: var(--wine); text-align: center; }
+  .safe small { display: block; font-weight: 400; color: var(--muted); font-size: 14px; }
+
+  .pick { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 18px 0 12px; }
+  .pick button { font: inherit; font-weight: 700; font-size: 15px; min-height: 44px; padding: 0 16px; border-radius: 40px; border: 1.5px solid var(--line); background: #fff; color: var(--muted); cursor: pointer; }
+  .pick button[aria-pressed="true"] { border-color: var(--wine); background: var(--wine); color: var(--cream); }
+  .btn { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; min-height: 58px; border-radius: 60px; font-weight: 700; font-size: 18px; }
+  .btn svg { width: 24px; height: 24px; flex: none; }
+  .btn.wa { background: var(--wa); color: #fff; box-shadow: 0 14px 28px -12px rgba(31,168,85,.9); }
+  .btn.ig { margin-top: 10px; min-height: 50px; font-size: 16px; border: 1.5px solid var(--line); background: #fff; color: var(--wine); }
+  .hint { text-align: center; color: var(--muted); font-size: 14px; margin-top: 10px; }
+
+  .steps { display: grid; gap: 10px; margin-top: 18px; }
+  .step { display: flex; gap: 14px; align-items: center; background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 14px 16px; }
+  .step b { flex: none; width: 40px; height: 40px; border-radius: 50%; background: var(--wine); color: var(--cream); display: grid; place-items: center; font-family: "El Messiri", serif; font-size: 19px; }
+  .step span { font-weight: 500; }
+
+  .reviews { display: grid; gap: 14px; margin-top: 18px; }
+  .rev { background: #111B21; border-radius: 22px; padding: 14px 14px 16px; }
+  .rev .who { display: flex; align-items: center; gap: 10px; color: #aebac1; font-size: 13px; margin-bottom: 10px; }
+  .rev .who i { width: 30px; height: 30px; border-radius: 50%; background: #2a3942; display: grid; place-items: center; font-style: normal; color: #e9edef; font-size: 14px; }
+  .rev .who b { color: #e9edef; font-size: 14px; display: block; line-height: 1.3; }
+  .rev p { width: fit-content; max-width: 88%; background: #202c33; color: #e9edef; border-radius: 18px; padding: 8px 14px; margin: 0 0 6px; font-size: 16px; line-height: 1.6; }
+  .rev-note { text-align: center; color: var(--muted); font-size: 13px; margin-top: 10px; }
+
+  .demos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 18px; }
+  .demo { background: #fff; border: 1px solid var(--line); border-radius: 18px; overflow: hidden; text-align: center; }
+  .demo .shot { aspect-ratio: 3 / 4; overflow: hidden; }
+  .demo .shot img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+  .demo h3 { font-size: 16px; color: var(--wine); padding: 8px 4px 0; }
+  .demo span { display: block; font-size: 13px; color: var(--pink-ink); font-weight: 700; padding-bottom: 10px; }
+  .all { display: block; text-align: center; margin-top: 14px; color: var(--wine); font-weight: 700; text-decoration: underline; text-underline-offset: 4px; }
+
+  .faq { display: grid; gap: 8px; margin-top: 18px; }
+  details { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 0 18px; }
+  summary { cursor: pointer; list-style: none; font-weight: 700; padding: 14px 0; display: flex; justify-content: space-between; align-items: center; gap: 12px; min-height: 44px; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; font-size: 22px; color: var(--pink-ink); flex: none; }
+  details[open] summary::after { content: "−"; }
+  details p { color: var(--muted); padding-bottom: 14px; }
+
+  footer { text-align: center; color: var(--muted); font-size: 14px; padding: 36px 0 10px; }
+  footer a { direction: ltr; display: inline-block; color: var(--wine); font-weight: 700; }
+
+  .float { position: fixed; z-index: 20; left: 16px; right: 16px; bottom: calc(14px + env(safe-area-inset-bottom)); max-width: 528px; margin-inline: auto; transition: transform .3s, opacity .3s; }
+  .float.hide { transform: translateY(140%); opacity: 0; pointer-events: none; }
+</style>
+</head>
+<body>
+
+<a class="bfbar" id="bfbar" href="#order" hidden><b>بلاك فرايدي</b>الباقة الكاملة بـ١٠٠٠ بدل ١٥٠٠ · لآخر تشرين التاني</a>
+
+<header class="hero">
+  <div class="wrap">
+    <a class="brand" href="../"><img src="../assets/icon.png" alt="">رسائل</a>
+    <h1>صفحة باسمها…<br><em>بتوصلها برابط</em></h1>
+    <p class="lead">رسالة حب، عيد ميلاد، أو اعتذار. بتبعتلها الرابط عالواتساب، بتفتحو من موبايلها، وبتنكتب رسالتك قدّامها كلمة كلمة.</p>
+    <div class="phone"><video id="demoVid" src="demo.mp4" poster="../assets/letter.jpg" muted playsinline loop autoplay preload="metadata"></video></div>
+    <span class="url"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><bdi>rasaelstudio.github.io/nour</bdi></span>
+  </div>
+</header>
+
+<main class="wrap">
+  <section id="order">
+    <div class="price-card">
+      <span class="tag" id="offerTag" hidden>بلاك فرايدي</span>
+      <div class="price" id="price"></div>
+      <div class="until" id="until"></div>
+      <ul class="list">
+        <li>رسالتك بتنكتب قدّامها كلمة كلمة</li>
+        <li>مع أغنيتكن بتشتغل لحالها</li>
+        <li>عدّاد أيامكن، وليش بتحبها، ورسائل «افتحيها لمّا…»</li>
+        <li>كلمة سر، ما حدا بيفتحها غيرها</li>
+        <li>بتردّ عليك بكبسة عالواتساب</li>
+        <li>ما بتعرف شو تكتب؟ نحنا منكتبلك</li>
+      </ul>
+      <div class="safe">ما بتدفع شي قبل ما تشوفها<small>منبعتلك فيديو للصفحة جاهزة، وإذا عجبتك بتدفع</small></div>
+    </div>
+
+    <h2 class="h2" style="margin-top:34px">لمين بدك ياها؟</h2>
+    <div class="pick" id="pick">
+      <button type="button" aria-pressed="true" data-msg="بدي رسالة حب لحبيبتي">رسالة حب</button>
+      <button type="button" aria-pressed="false" data-msg="بدي صفحة عيد ميلاد">عيد ميلاد</button>
+      <button type="button" aria-pressed="false" data-msg="بدي صفحة اعتذار، زعلانة مني">صالحها</button>
+      <button type="button" aria-pressed="false" data-msg="عندي فكرة تانية">شي تاني</button>
+    </div>
+    <a class="btn wa" id="waBtn" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-3.3-.8-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.2z"/></svg>
+      ابعتلنا عالواتساب
+    </a>
+    <a class="btn ig" id="igBtn" target="_blank" rel="noopener">أو ابعتلنا رسالة عالإنستا</a>
+    <p class="hint">منردّ عليك بسرعة، والرسالة مكتوبة جاهزة… بس اضغط إرسال</p>
+  </section>
+
+  <section>
+    <h2 class="h2">كيف بتطلبها؟</h2>
+    <div class="steps">
+      <div class="step"><b>١</b><span>ابعتلنا اسمها وشوي عن قصتكن</span></div>
+      <div class="step"><b>٢</b><span>منبعتلك فيديو للصفحة قبل ما تدفع</span></div>
+      <div class="step"><b>٣</b><span>بتدفع بشام كاش أو سيريتل كاش، وبيوصلك الرابط</span></div>
+    </div>
+  </section>
+
+  <section id="reviewsSec" hidden>
+    <h2 class="h2">شو قالوا اللي طلبوا قبلك</h2>
+    <div class="reviews" id="reviews"></div>
+    <p class="rev-note">رسائل حقيقية من زبائننا عالإنستا، بدون أساميهن</p>
+  </section>
+
+  <section>
+    <h2 class="h2">جرّبها بنفسك</h2>
+    <p class="sub">افتح المثال من موبايلك، متل ما رح يوصلها</p>
+    <div class="demos">
+      <a class="demo" href="../demo/letter-1500/"><div class="shot"><img src="../assets/letter-closed.jpg" alt="رسالة حب"></div><h3>رسالة حب</h3><span>جرّب</span></a>
+      <a class="demo" href="../demo/birthday/"><div class="shot"><img src="../assets/birthday-closed.jpg" alt="عيد ميلاد"></div><h3>عيد ميلاد</h3><span>جرّب</span></a>
+      <a class="demo" href="../demo/sorry/"><div class="shot"><img src="../assets/sorry-closed.jpg" alt="صالحها"></div><h3>صالحها</h3><span>جرّب</span></a>
+    </div>
+    <p class="hint">كلمة السر بمثال الرسالة: نور</p>
+    <a class="all" href="../#templates">شوف كل التصاميم</a>
+  </section>
+
+  <section>
+    <h2 class="h2">أسئلة بتتكرر</h2>
+    <div class="faq">
+      <details><summary>كيف بدفع؟</summary><p>بشام كاش أو سيريتل كاش، بس بعد ما تشوف فيديو الصفحة وتعجبك.</p></details>
+      <details><summary>أنا برّا سوريا، فيني اطلب؟</summary><p>أكيد. الصفحة بتوصلها وين ما كانت، وحدا من أهلك بسوريا بيحوّل عنك بشام كاش أو سيريتل كاش.</p></details>
+      <details><summary>أيمتى بتجهز؟</summary><p>أغلب الطلبات بنفس اليوم. وإذا بدك ياها بوقت محدد (متل الساعة ١٢ بعيد ميلادها) قلّنا.</p></details>
+      <details><summary>بتفتح على كل الموبايلات؟</summary><p>إي، آيفون وأندرويد، من الواتساب أو الإنستا مباشرة، بدون أي تطبيق.</p></details>
+      <details><summary>حدا غيرها بيشوفها؟</summary><p>لا. الرابط سرّي وما بيطلع بالبحث، وعليه كلمة سر. وما منشارك قصتكن مع حدا.</p></details>
+    </div>
+  </section>
+
+  <footer>رسائل · <a id="igFoot" target="_blank" rel="noopener"></a></footer>
+</main>
+
+<div class="float hide" id="float"><a class="btn wa" id="waFloat" target="_blank" rel="noopener">
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-3.3-.8-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.2z"/></svg>
+  اطلبها عالواتساب
+</a></div>
+
+<script src="../config.js"></script>
+<script>
+/* Customer reviews: their own words from Instagram, word for word, no names. Only paying customers, only with their OK.
+   Empty list = the section stays hidden. */
+const REVIEWS = [
+  { what: 'طلب رسالة لحبيبتو', lines: ['لك شو هاااد', 'لك كتير بجننن', 'مشي الحال زبط والله', 'وكتير فرحت وقت شافتو', 'مابعرف كيف بدي اشكرك والله'] },
+  { what: 'طلب صفحة عيد ميلاد', lines: ['والله للأمانة شي دهب و بجنن', 'و التصميم بجنن', 'و جهزلي حالك عرس أخوي بعد كم شهر بدي بطاقة'] },
+  { what: 'طلب رسالة عيد ميلاد', lines: ['بجنن طالع', 'كتير كتير حلو'] },
+];
+
+const R = window.RASAEL;
+const plan = R.prices.gift.find(p => p.id === 'premium');
+document.getElementById('price').innerHTML = R.fmt(plan.price) + (plan.was ? `<s>${R.fmt(plan.was)}</s>` : '');
+if (R.offerOn) {
+  document.getElementById('bfbar').hidden = false;
+  document.getElementById('offerTag').hidden = false;
+  document.getElementById('until').textContent = 'العرض لآخر تشرين التاني بس';
+} else {
+  document.getElementById('until').textContent = 'الباقة الكاملة';
+}
+
+// WhatsApp message written for them, depending on what they picked
+const wa = msg => `https://wa.me/${R.whatsapp}?text=${encodeURIComponent('مرحبا رسائل، شفت الريل و' + msg)}`;
+const waBtn = document.getElementById('waBtn'), waFloat = document.getElementById('waFloat');
+function setMsg(b) {
+  document.querySelectorAll('#pick button').forEach(x => x.setAttribute('aria-pressed', x === b));
+  waBtn.href = waFloat.href = wa(b.dataset.msg);
+}
+document.querySelectorAll('#pick button').forEach(b => b.addEventListener('click', () => setMsg(b)));
+setMsg(document.querySelector('#pick button'));
+const ig = `https://ig.me/m/${R.instagram}`;
+document.getElementById('igBtn').href = ig;
+const igFoot = document.getElementById('igFoot'); igFoot.href = `https://instagram.com/${R.instagram}`; igFoot.textContent = '@' + R.instagram;
+
+// reviews
+if (REVIEWS.length) {
+  document.getElementById('reviewsSec').hidden = false;
+  document.getElementById('reviews').innerHTML = REVIEWS.map(r => `<div class="rev"><div class="who"><i>★</i><span><b>زبون من رسائل</b>${r.what}</span></div>${r.lines.map(l => `<p>${l}</p>`).join('')}</div>`).join('');
+}
+
+// floating WhatsApp button, always there except while the main one is on screen
+const float = document.getElementById('float');
+new IntersectionObserver(([e]) => float.classList.toggle('hide', e.isIntersecting)).observe(waBtn);
+
+// some phones block muted autoplay until the video is on screen
+const v = document.getElementById('demoVid');
+new IntersectionObserver(([e]) => { if (e.isIntersecting) v.play().catch(() => {}); }).observe(v);
+</script>
+</body>
+</html>
