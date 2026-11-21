@@ -715,8 +715,8 @@ $('seal').addEventListener('click', () => {
 <!-- rasael-lock: password screen (premium). Set a password to turn it on; leave it empty for no lock. -->
 <script>
 const LOCK = {
-  password: 'N-R',                             // e.g. '1203' or 'نور' — empty = no lock
-  hint: 'حرفين بالإنكليزي… حرفك وحرفي',                                    // shown under the box, e.g. 'تاريخ أول لقاء (يوم وشهر)'
+  password: ['العنقاء', 'عنقاء', 'العنقا', 'عنقا', 'الفينيق', 'فينيق', 'الفنيق', 'فنيق', 'phoenix'],  // any one opens it
+  hint: 'اللي بيدخل قلبي ما بيعرف يموت',      // shown as a glowing riddle, no "تلميح:" label
   forHim: false,                               // true = the texts speak to a man
 };
 </script>
@@ -732,7 +732,14 @@ const LOCK = {
   #rlock input { flex: 1; min-width: 0; min-height: 52px; border-radius: 14px; border: 1.5px solid rgba(251,241,230,.3); background: rgba(251,241,230,.08); color: inherit; font: inherit; font-size: 20px; text-align: center; letter-spacing: .08em; padding: 0 12px; outline: none; transition: border-color .2s; }
   #rlock input:focus { border-color: #F07C8C; }
   #rlock button { min-height: 52px; min-width: 76px; border: 0; border-radius: 14px; background: #F07C8C; color: #fff; font: inherit; font-weight: 700; font-size: 17px; cursor: pointer; }
-  #rlock .hint { margin-top: 12px; font-size: 14px; opacity: .65; }
+  #rlock .hint { margin-top: 30px; position: relative; padding: 18px 10px 6px; }
+  #rlock .hint::before { content: ""; position: absolute; left: 50%; top: 0; width: 120px; height: 1px; transform: translateX(-50%); background: linear-gradient(90deg, transparent, #E8A44A, transparent); }
+  #rlock .hint .riddle { display: block; font-family: "Aref Ruqaa", "Amiri", serif; font-size: 27px; font-weight: 700; line-height: 1.7;
+    background: linear-gradient(100deg, #FFD9A0 0%, #F2A23C 30%, #E0522D 55%, #FFD9A0 80%); background-size: 220% 100%;
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    filter: drop-shadow(0 0 10px rgba(240,120,50,.45)); animation: rlock-ember 5s ease-in-out infinite; }
+  #rlock .hint .spark { display: block; margin-top: 4px; font-size: 13px; letter-spacing: .3em; color: #E8A44A; opacity: .6; }
+  @keyframes rlock-ember { 0%, 100% { background-position: 0% 50%; filter: drop-shadow(0 0 8px rgba(240,120,50,.35)); } 50% { background-position: 100% 50%; filter: drop-shadow(0 0 16px rgba(240,120,50,.7)); } }
   #rlock .wrong { margin-top: 10px; min-height: 24px; color: #FFB4BE; font-size: 14px; }
   #rlock.shake form { animation: rlock-shake .45s; }
   @keyframes rlock-shake { 20%, 60% { transform: translateX(-9px); } 40%, 80% { transform: translateX(9px); } }
@@ -750,7 +757,7 @@ const LOCK = {
     <h2>${LOCK.forHim ? 'هالصفحة إلك إنتَ بس' : 'هالصفحة إلك إنتِ بس'}</h2>
     <p>${LOCK.forHim ? 'اكتب كلمة السر لتفتحها' : 'اكتبي كلمة السر لتفتحيها'}</p>
     <form><input type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="كلمة السر"><button type="submit">افتح</button></form>
-    ${LOCK.hint ? `<div class="hint">تلميح: ${LOCK.hint.replace(/</g, '&lt;')}</div>` : ''}
+    ${LOCK.hint ? `<div class="hint"><span class="riddle">«${LOCK.hint.replace(/</g, '&lt;')}»</span><span class="spark">✦ ✦ ✦</span></div>` : ''}
     <div class="wrong" aria-live="polite"></div>
   </div>`;
   document.body.appendChild(el);
@@ -759,7 +766,7 @@ const LOCK = {
   let tries = 0;
   el.querySelector('form').addEventListener('submit', e => {
     e.preventDefault();
-    if (norm(input.value) === norm(LOCK.password)) {
+    if ([].concat(LOCK.password).some(p => norm(input.value) === norm(p))) {
       try { sessionStorage.setItem(KEY, '1'); } catch {}
       input.blur(); el.classList.add('open');
       setTimeout(() => el.remove(), 800);
