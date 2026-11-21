@@ -247,8 +247,7 @@
       <h2 class="big rv" id="endTitle"></h2>
       <p class="sub rv" id="endSub"></p>
       <div class="actions rv">
-        <a class="btn wa" id="replyBtn" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-3.3-.8-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.2z"/></svg>
+        <a class="btn berry" id="replyBtn" target="_blank" rel="noopener">
           <span id="replyLbl"></span>
         </a>
         <button class="btn ghost" id="againBtn">🎂 <span id="againLbl"></span></button>
@@ -339,7 +338,13 @@ $('couponTitle').textContent = g('هداياكِ 🎁', 'هداياك 🎁');
 $('couponSub').textContent = g('حكّي بإصبعك لتشوفي شو مخبّى', 'حكّ بإصبعك لتشوف شو مخبّى');
 $('endTitle').textContent = 'عقبال المية 🤍';
 $('endSub').textContent = g(`وكل سنة وإنتِ أحلى يا ${BDAY.nick}`, `وكل سنة وإنتَ أحلى يا ${BDAY.nick}`);
-$('replyLbl').textContent = g(`ردّي على ${BDAY.from}`, `ردّ على ${BDAY.from}`);
+$('replyLbl').textContent = g(`ردّي على ${BDAY.from}… وين ما بتحكو 🤍`, `ردّ على ${BDAY.from}… وين ما بتحكو 🤍`);
+// she picks where to reply (WhatsApp, Instagram, Messenger…) from the phone's own share sheet; WhatsApp is the fallback
+$('replyBtn').addEventListener('click', e => {
+  if (!navigator.share) return;
+  e.preventDefault();
+  navigator.share({ text: g('شكراً عالمفاجأة… كتير حبّيتها 🤍🎂', 'شكراً عالمفاجأة… كتير حبّيتها 🤍🎂') }).catch(() => {});
+});
 $('againLbl').textContent = g('طفّي الشموع مرة تانية', 'طفّي الشموع مرة تانية');
 $('replyBtn').href = `https://wa.me/${BDAY.whatsapp || ''}?text=${encodeURIComponent(g('شكراً عالمفاجأة… كتير حبّيتها 🤍🎂', 'شكراً عالمفاجأة… كتير حبّيتها 🤍🎂'))}`;
 $('credit').textContent = `صُنعت بحب 🤍 ${BDAY.credit}`;
@@ -406,7 +411,14 @@ function tick() {
 
 /* ---------- music ---------- */
 let audio = null;
-if (BDAY.music) { audio = new Audio(BDAY.music); audio.loop = true; }
+const MUSIC_FROM = 30;   // the song starts at its chorus, and loops back there
+if (BDAY.music) {
+  audio = new Audio(BDAY.music); audio.preload = 'auto';
+  const toChorus = () => { try { audio.currentTime = MUSIC_FROM; } catch (e) {} };
+  audio.addEventListener('loadedmetadata', toChorus, { once: true });
+  audio.addEventListener('ended', () => { toChorus(); audio.play().catch(() => {}); });
+  audio.addEventListener('play', () => { if (audio.currentTime < MUSIC_FROM - 1) toChorus(); }, { once: true });
+}
 
 /* ---------- 1 → 2: open the gift ---------- */
 const gift = $('gift');
