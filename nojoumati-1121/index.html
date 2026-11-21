@@ -375,6 +375,57 @@
   </script>
   <div class="edge-bg" style="--bg:var(--wine-2)"><div class="edge flip"></div></div>
 
+  <!-- ===== 5c. The phoenix (his request) ===== -->
+  <style>
+    #phoenix { position: relative; overflow: hidden; padding: 90px 16px 100px; text-align: center; background: radial-gradient(ellipse 70% 55% at 50% 48%, #5C1A12 0%, #2A0B0E 55%, var(--wine-2) 100%); }
+    #phoenix .bird { width: min(230px, 62vw); margin: 0 auto -6px; display: block; filter: drop-shadow(0 0 18px rgba(255,120,40,.55)); opacity: 0; transform: translateY(30px) scale(.9); transition: opacity 1.4s ease, transform 1.6s cubic-bezier(.2,.8,.2,1); }
+    #phoenix .name { font-family: "Aref Ruqaa", "Amiri", serif; font-weight: 700; font-size: clamp(64px, 20vw, 92px); line-height: 1.3; margin: 0;
+      background: linear-gradient(100deg, #FFE2A8 0%, #F6A33A 28%, #E2462A 52%, #FFD08A 76%, #FFE2A8 100%); background-size: 240% 100%;
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      filter: drop-shadow(0 0 22px rgba(240,100,40,.55)); animation: phx-burn 6s ease-in-out infinite; opacity: 0; transform: translateY(20px); transition: opacity 1.4s ease .5s, transform 1.4s ease .5s; }
+    #phoenix .sub { font-family: "El Messiri", sans-serif; font-size: 15px; color: #F3B77A; letter-spacing: .04em; margin-top: 8px; opacity: 0; transition: opacity 1.2s ease 1.2s; }
+    #phoenix.in .bird, #phoenix.in .name { opacity: 1; transform: none; }
+    #phoenix.in .sub { opacity: .85; }
+    #phoenix .ember { position: absolute; bottom: -10px; width: 5px; height: 5px; border-radius: 50%; background: #FFB25A; box-shadow: 0 0 8px 2px rgba(255,140,50,.8); animation: phx-rise linear infinite; opacity: 0; }
+    @keyframes phx-burn { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+    @keyframes phx-rise { 0% { transform: translateY(0) translateX(0); opacity: 0; } 15% { opacity: .9; } 100% { transform: translateY(-560px) translateX(var(--dx, 20px)); opacity: 0; } }
+    #phoenix .wing { transform-origin: 100px 92px; animation: phx-flap 3.2s ease-in-out infinite; }
+    #phoenix .wing.r { animation-delay: 0s; transform-box: view-box; }
+    @keyframes phx-flap { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(.9); } }
+    @media (prefers-reduced-motion: reduce) { #phoenix .ember, #phoenix .name, #phoenix .wing { animation: none; } }
+  </style>
+  <section id="phoenix" aria-label="العنقاء">
+    <svg class="bird" viewBox="0 0 200 190" aria-hidden="true">
+      <defs>
+        <linearGradient id="phxG" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#E2462A"/><stop offset=".55" stop-color="#F6A33A"/><stop offset="1" stop-color="#FFE2A8"/></linearGradient>
+      </defs>
+      <g fill="url(#phxG)">
+        <!-- wings -->
+        <path class="wing" d="M100 92 C80 70 58 66 30 40 C34 58 26 62 8 58 C26 74 22 82 6 88 C30 96 52 100 70 104 C82 106 92 102 100 96Z"/>
+        <path class="wing r" d="M100 92 C120 70 142 66 170 40 C166 58 174 62 192 58 C174 74 178 82 194 88 C170 96 148 100 130 104 C118 106 108 102 100 96Z"/>
+        <!-- head + neck -->
+        <path d="M100 98 C94 84 94 70 100 58 C102 52 108 50 112 52 L120 50 L112 56 C108 64 108 80 104 98Z"/>
+        <path d="M108 50 C110 42 106 36 100 34 C104 40 104 44 102 50Z" opacity=".8"/>
+        <!-- body -->
+        <path d="M100 92 C112 100 112 118 100 130 C88 118 88 100 100 92Z"/>
+        <!-- flame tail -->
+        <path d="M100 128 C92 146 78 156 70 182 C84 170 92 162 96 150 C94 166 92 176 100 188 C108 176 106 166 104 150 C108 162 116 170 130 182 C122 156 108 146 100 128Z" opacity=".9"/>
+      </g>
+    </svg>
+    <p class="name">العنقاء</p>
+    <p class="sub">طائر الفينيق… رمز الحياة اللي ما بتموت</p>
+    <span class="ember" style="left:12%;animation-duration:7s;animation-delay:0s;--dx:30px"></span>
+    <span class="ember" style="left:24%;animation-duration:9s;animation-delay:2s;--dx:-20px"></span>
+    <span class="ember" style="left:38%;animation-duration:6.5s;animation-delay:4s;--dx:25px"></span>
+    <span class="ember" style="left:55%;animation-duration:8s;animation-delay:1s;--dx:-30px"></span>
+    <span class="ember" style="left:68%;animation-duration:7.5s;animation-delay:3s;--dx:20px"></span>
+    <span class="ember" style="left:82%;animation-duration:9.5s;animation-delay:5s;--dx:-25px"></span>
+    <span class="ember" style="left:91%;animation-duration:6s;animation-delay:2.5s;--dx:15px"></span>
+  </section>
+  <script>
+    (() => { const s = document.getElementById('phoenix'); new IntersectionObserver(([e], o) => { if (e.isIntersecting) { s.classList.add('in'); o.disconnect(); } }, { threshold: .3 }).observe(s); })();
+  </script>
+
   <!-- ===== 6. Open when ===== -->
   <section class="on-wine-2" id="openWhen">
     <div class="wrap">
