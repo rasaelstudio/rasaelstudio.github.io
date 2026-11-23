@@ -307,7 +307,7 @@ const ENGAGE = {
   bride: 'ياسمين',
   groomFamily: 'السيد محمد الحلبي وعقيلته',
   brideFamily: 'السيد خالد النجّار وعقيلته',
-  date: '2026-11-20T19:00:00+03:00', // the party's local time, with its UTC offset
+  date: '2027-01-15T19:00:00+03:00', // the party's local time, with its UTC offset
   verse: '﴿وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً﴾',   // '' = none
   venue: { name: 'مطعم نارنج', address: 'دمشق، باب توما', map: 'https://maps.google.com/?q=Naranj+Restaurant+Damascus' },
   programme: [                       // optional; empty list = hidden
@@ -324,7 +324,7 @@ const ENGAGE = {
   ],
   photos: [],                        // optional: file names next to this page
   rsvpWhatsapp: '963983896568',      // replies go to this number ('' = RSVP hidden)
-  rsvpBy: '2026-11-15',              // optional "please reply by"
+  rsvpBy: '2027-01-05',              // optional "please reply by"
   dua: 'بارك الله لهما، وبارك عليهما، وجمع بينهما في خير',
   music: '',                         // e.g. 'music.mp3' next to this file; starts when the rings meet
   credit: '@rasael.studio',
@@ -449,7 +449,7 @@ function tick() {
 if (tick()) { const t = setInterval(() => { if (!tick()) clearInterval(t); }, 1000); }
 
 /* ---------- calendar reminder (.ics works on iPhone and Android) ---------- */
-$('calBtn').addEventListener('click', () => {
+$('calBtn')?.addEventListener('click', () => {
   const z = d => new Date(d).toISOString().replace(/[-:]/g, '').replace(/\.\d+/, '');
   const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Rasael//Engagement//AR', 'BEGIN:VEVENT', `UID:${+when}@rasael`, `DTSTAMP:${z(Date.now())}`,
     `DTSTART:${z(when)}`, `DTEND:${z(+when + 3 * 36e5)}`, `SUMMARY:${ENGAGE.kind} ${ENGAGE.groom} و${ENGAGE.bride} 💍`, `LOCATION:${ENGAGE.venue.name}، ${ENGAGE.venue.address}`, `URL:${location.href}`,
