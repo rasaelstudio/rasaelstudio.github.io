@@ -426,6 +426,141 @@
     (() => { const s = document.getElementById('phoenix'); new IntersectionObserver(([e], o) => { if (e.isIntersecting) { s.classList.add('in'); o.disconnect(); } }, { threshold: .3 }).observe(s); })();
   </script>
 
+  <!-- ===== 5d. His poems: a folder she opens (his request) ===== -->
+  <style>
+    #diwan { padding: 80px 16px 90px; text-align: center; background: var(--wine-2); color: var(--on-wine, #FBF1E6); }
+    #diwan .h2 { color: #FBF1E6; }
+    #diwan .sub { font-family: "El Messiri", sans-serif; font-size: 15px; color: var(--pink); margin-top: 6px; }
+    .dw-folder { position: relative; width: min(300px, 80vw); aspect-ratio: 1.25; margin: 34px auto 0; cursor: pointer; border: 0; background: none; padding: 0; -webkit-tap-highlight-color: transparent; }
+    .dw-folder .back { position: absolute; inset: 0; border-radius: 10px 22px 22px 22px; background: #C9A26B; }
+    .dw-folder .back::before { content: ""; position: absolute; top: -16px; right: 0; width: 42%; height: 26px; border-radius: 12px 12px 0 0; background: #C9A26B; }
+    .dw-folder .paper { position: absolute; left: 9%; right: 9%; top: 8%; height: 70%; border-radius: 8px; background: var(--paper); transition: transform .6s var(--ease); box-shadow: 0 4px 10px rgba(0,0,0,.2); }
+    .dw-folder .paper.p2 { transform: rotate(-4deg); background: #F4E9D8; }
+    .dw-folder .front { position: absolute; left: 0; right: 0; bottom: 0; height: 72%; border-radius: 18px 18px 22px 22px; background: linear-gradient(#E3BD82, #D4A867); transform-origin: 50% 100%; transition: transform .6s var(--ease); display: grid; place-items: center; box-shadow: 0 -6px 18px rgba(0,0,0,.18); }
+    .dw-folder .front b { font-family: "Aref Ruqaa", serif; font-size: clamp(24px, 7vw, 30px); color: var(--ink); line-height: 1.35; padding: 0 14px; }
+    .dw-folder.open .front { transform: perspective(700px) rotateX(-58deg); }
+    .dw-folder.open .paper.p1 { transform: translateY(-22px); }
+    .dw-tap { font-family: "El Messiri", sans-serif; font-size: 14px; color: var(--on-wine-soft, #d9bfc4); margin-top: 14px; }
+    .dw-list { display: grid; gap: 12px; max-width: 420px; margin: 26px auto 0; max-height: 0; overflow: hidden; transition: max-height .8s var(--ease); }
+    .dw-list.open { max-height: 600px; }
+    .dw-file { display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 16px; background: var(--paper); color: var(--ink); text-align: right; border: 0; cursor: pointer; font: inherit; box-shadow: 0 10px 24px -14px rgba(0,0,0,.6); }
+    .dw-file svg { width: 34px; height: 34px; flex: none; color: var(--rose); }
+    .dw-file b { display: block; font-family: "Aref Ruqaa", serif; font-size: 23px; line-height: 1.35; }
+    .dw-file small { display: block; font-family: "El Messiri", sans-serif; font-size: 13px; color: var(--ink-soft); }
+    #dwRead { position: fixed; inset: 0; z-index: 900; background: rgba(20, 6, 10, .7); display: none; }
+    #dwRead.on { display: block; }
+    #dwRead .sheet { position: absolute; inset: 14px; border-radius: 22px; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 54px 22px 50px; background-color: var(--paper); background-image: var(--noise); color: var(--ink); }
+    #dwRead .x { position: sticky; top: -40px; float: left; width: 42px; height: 42px; margin: -40px -8px 0 0; border-radius: 50%; border: 0; background: var(--wine); color: #FBF1E6; font-size: 24px; line-height: 42px; cursor: pointer; }
+    .dw-t { font-family: "Aref Ruqaa", serif; font-weight: 700; font-size: clamp(30px, 8.6vw, 40px); line-height: 1.4; text-align: center; color: var(--rose); }
+    .dw-m { font-family: "El Messiri", sans-serif; font-size: 13px; color: var(--ink-soft); text-align: center; margin: 4px 0 16px; }
+    .dw-p { font-size: 15.5px; line-height: 1.9; color: var(--ink-soft); margin-bottom: 10px; text-align: justify; }
+    .dw-p b { color: var(--ink); }
+    .dw-v { margin: 22px 0 0; }
+    .dw-v div { padding: 10px 0 12px; border-bottom: 1px dashed rgba(200, 57, 79, .25); }
+    .dw-v span { display: block; font-size: 20px; line-height: 1.8; }
+    .dw-v span + span { text-align: left; }
+    .dw-g { margin-top: 24px; padding: 14px 16px; border-radius: 14px; background: rgba(200, 57, 79, .07); font-size: 15px; line-height: 1.9; }
+    .dw-g h4 { font-family: "El Messiri", sans-serif; font-size: 14px; color: var(--rose); margin-bottom: 4px; }
+  </style>
+  <section id="diwan">
+    <div class="wrap">
+      <p class="kicker">من قلمي إلك</p>
+      <h2 class="h2">كتاباتي ببحور عيونك</h2>
+      <p class="sub">٣ قصائد… كتبتهن إلك</p>
+      <button class="dw-folder" id="dwFolder" aria-label="افتحي المجلد">
+        <span class="back"></span><span class="paper p2"></span><span class="paper p1"></span>
+        <span class="front"><b>كتاباتي ببحور عيونك</b></span>
+      </button>
+      <p class="dw-tap" id="dwTap">اضغطي على المجلد لتفتحيه</p>
+      <div class="dw-list" id="dwList"></div>
+    </div>
+  </section>
+  <div id="dwRead" role="dialog" aria-modal="true"><div class="sheet" id="dwSheet"></div></div>
+  <script>
+  (() => {
+    const BIO = 'وُلد الشّاعر في مدينة أمْلجَ في المملكةِ العربيّةِ السّعوديهْ، جنوبَ بلادِ الرّافدين عَاش في سُوريا تَحديداً في مدينةِ حَمَاه، هُناك ترعرَعَ، لُقِّب بالإبْلِ لقوةِ غَزَلِه، وله دوَاوِين عدَّه من ابرزِها';
+    const POEMS = [
+      { title: 'نَجمتي انتِي السّكِينه', years: '2006-2026',
+        bio: BIO + '(نَام القمرُ اينَ النّور)(الظّلامُ الحَارِق)......',
+        intro: 'لَقد تعرفَ الشّاعر على امرأةٍ تعرفُ بالجمَال خلال فترةٍ وجيزه قامتْ تلك الامرأه بسرقةِ قلبه منهُ دونَ اخذِ الاذنْ وانساحَ الشّاعرُ في هذه القصيدةِ دونَ وعيٍ وقام بعزفِ كلماتٍ توصِفُ جمال محبوبته وروحَها الدافِئه التّي تخطِفُ الأبصَار من خِلال هذا النّص:',
+        verses: [
+          ['بَدَأَتْ رُؤيتِي لِلأبيضِ دُونَ إضْهادِ', 'كَمَا يَبدأُ عَدُّ الارقامِ مِنَ الاحَادِ🤍'],
+          ['وَيزدادُ حبِّي لِنجمَتي بِالإستِمدَادِ', 'وقَلبي يُحارِبُ مُتأاكِلًا بِخُطوةِ الإستِعدادِ'],
+          ['ويأتِي حبِّي لِلازرق عليها بالاعدادِ', 'وعَقلِي لا يقدرُ على الصوابِ إرشادِ🩵'],
+          ['وتَركتُ حُبَّ الدُّنيَا وحُبَّ الإستِشهادِ', 'وَوَقعتُ دُونَ وعيٍ بِعشقِ الرَّمادِ🤎'],
+          ['واتَّفقَ قلبِي وعقلِي لِحبِّهَا بالإتِّحادِ', 'وعليها الزَّهري يَجْعَلُنِي مُكبَّلًا بِالأصفادِ🩷'],
+          ['مرَّ فِراقُها عليَّ بِجعلِ حُبِّي بِزدِيادِ', 'وسَببًا لِرُأيتي لِلاخضَر قَبل جُلوسي على الأنضَادِ💚'],
+          ['تمهَّلي لا تنظُري لقد إنهارَ إقتِصادِ', 'سُرِقَ قلبِي وعقلِي ولا استطيعُ الإستِردادِ'],
+          ['يُحاول آلُ رَضوانٍ تَفريقَنَا كَالاوغادِ', 'ونحنُ لا يَهمُّنا كأنَّنَا نأكلُ الزَّبادِ'],
+          ['بَنيتُ ضَريح بِقلبِي لها بِالاوتُوكادِ', 'أعمِدتُهُ بحبِّي وعشقِي يَطلبُ الإستِنادِ'],
+          ['انَا لهَا اضيءُ لضِفرهَا كلَّ السَّوادِ', 'حتَّى لو كان بِتَعَبِ أطْنَانِ الحَصادِ'],
+          ['هَذه حَالي... لا أُريد عيشةَ الزَّهادِ', 'هي تنبضُ... جَسَدي يَمِيل لرِمشها بِالإنْقيادِ'],
+        ],
+        gloss: ['إضهاد: ملل/تعب', 'استمداد: التكاثر/التجدد', 'استرداد: ارجاع ما أخذ مني', 'الزباد: نوع من أنواع اللبن-يقصد الشاعر هنا عدم الاكتراث', 'اوتوكاد: تطبيق تخطيط ابنيه'] },
+      { title: 'الظّلامُ الحَارِقُ', years: '2006-2024',
+        bio: BIO + '(نجمتي انتي السّكينه)(إلى لؤْلؤَتي البَيضاء)......',
+        intro: 'لَقد تعرفَ الشّاعر على امرأةٍ تعرفُ بالجمَال خلال فترةٍ وجيزه قامتْ تلك الامرأه بسرقةِ قلبه منهُ دونَ اخذِ الاذنْ وانساحَ الشّاعرُ في هذه القصيدةِ دونَ وعيٍ وقام بعزفِ كلماتٍ توصِفُ طول غياب محبوبته من خلال هذا النَّص:',
+        verses: [
+          ['بَدَأ هَجرُكِ لِي دُونَ إنْذارِ', 'وبَدَأ قَلبِي إشْتَعالًا كَعُودُ ثِقَابِ'],
+          ['نَبتَةٌ زُرِعَتْ بِمَاءٍ وسَمَادِ', 'كَنبتَةٍ زُرِعَتْ دُونَ خِصَابِ؟'],
+          ['ويَمُرُّ هَجرُكِ ويُنسِيني الكَثِير', 'هَكَذا أُجزَى لَقَد تَفرّقَت ذِئابِ'],
+          ['صِرتُ بَعدَكِ ابْحَثُ فَقَط عَن غِذَائِي', 'هَكذَا يُرضِيكِي عِيشَةٌ مِثلَ الذّبَابِ؟'],
+          ['النّاسُ تُحِبُّ كَذِبًا وَتَمضِي', 'وانا للان حُبِّي لَكِ فَوقَ السّحَابِ'],
+          ['مُشَرّدٌ،بَائِسٌ،لَا مَربَى لَهُ', 'اصبَحتُ اعْرفُ طَعمَ الشّرَابِ'],
+          ['بِالعَمَلِ تَحْصِدُ قَصْرًا وخَدَمًا', 'وَحُبُّكِ لِي مُسْتحِيلُ الإكتِسَابِ؟'],
+          ['ان زُرِعَ الكُرْهُ لا بَأس عَادٍ', 'لَكن مِنَ البِدَايَةِ قُولِ عَليكَ الذّهَابِ'],
+          ['بِسِلَاحٍ استطِيعُ السّفَرَ بَينَ الجِبَالِ', 'وبِعَيْنَاكِي لا تَصعُبُ الصّعَابِ'],
+          ['فُراقٌ اذَاقَنِي طَعمَ القَسْوةِ', 'وجَعَلنِي المِسُ الضّبَابِ'],
+          ['انْتي بِقلبِي قد سكَنْتِي', 'وبِسَبَبِكِ احبَبْتُ العُنصرَ المُذابِ'],
+          ['إنْ كُنْتِي تُرِيدِينَ مُعَاقَبتِي فَقُولِي', 'اذْهبْ واجْمع اطْنَانًا مِن الاخْشَابِ'],
+          ['وإن كَان اختبارًا لِمَدَى صَبرِي', 'فَتَهَانِينَا لَقدْ تَملّكْتِي إعجَابِ'],
+          ['لَقَد تَركْتِنِي لمعَاقَبَتِي بِنَظَرِكِ', 'بِسَبَبِكِ لكِنتُ أُصبِحُ اكبَرَ إرهَابِ'],
+          ['وإنْ كَان لصَعبٌ الكَلَامُ مَعِي كثِيرًا', 'فَلا بَأسٌ بِمُنادَاتِي بِالالْقَابِ'],
+        ] },
+      { title: 'لَفظُ إسمُكِ…', years: '',
+        verses: [
+          ['لَفظُ إسمُكِ... بِهِ قُوَّةٌ مِنَ الرَّزَانِ', 'نَجمَةٌ...بِرأيُكِ أَ تَزدادُ المِحانِ؟!'],
+          ['في عُمقِ البُعدِ.. يَحتضنُك زَمانِ', 'انتي في دُعائي... لا لِلتَّفانِ'],
+          ['أَخِر غَزَلِي... خُدُودٌ كَالرُّمانِ', 'أَطفأتي ناري قد مضى أَوانِ'],
+          ['عَيبٌ واخجَلُ...قد أُصِبت بالسَّلانِ', 'فَيقَتِي أُريدُها عند إنتهاء الزّمانِ'],
+          ['ذَكرتَها؟.. ذَهب الظّمأ بَين المبانِ', 'وابْتلَّتِ العُروقُ لي ولفلانِ'],
+          ['يا ترى ستأتي واركضُ لها كحصانِ؟', 'ويا خَيبتي من عدم إعطائي الحَنانِ'],
+          ['يا ترى هل عزَّتي انا مثلُ أصلانِ؟', 'أم انِّي لا أصلُ حتّى لِأيٍ من الغصانِ'],
+          ['ذِكرُكِ دائِمٌ بعد قراأتِي لِلقرأنِ', 'جسدي يُحبكِ... لا يسكتُ عنكِ لسانِ'],
+          ['أريدُ إنْ سمحتي أن أرى بيانِ', 'قَلبي أمْ عَقلي قد فاز بالرِّهانِ؟'],
+          ['ليتني أُصلح لك يا حُبّي الخزانِ', 'حتّى لو بوجعِ تَكسيرِ السِّنانِ'],
+        ] },
+    ];
+    const AUTHOR = 'الشاعر: رَاغِبْ البُهتُرِيُّ';
+    const AR = n => String(n).replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
+    const list = document.getElementById('dwList'), folder = document.getElementById('dwFolder');
+    const read = document.getElementById('dwRead'), sheet = document.getElementById('dwSheet');
+    document.body.appendChild(read);   // out of any transformed parent, so it really covers the screen
+    const ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M12 17c-2-1.4-3.4-2.4-3.4-3.8 0-1 .8-1.7 1.7-1.7.7 0 1.3.4 1.7 1 .4-.6 1-1 1.7-1 .9 0 1.7.7 1.7 1.7 0 1.4-1.4 2.4-3.4 3.8z" fill="currentColor" stroke="none"/></svg>';
+    list.innerHTML = POEMS.map((p, i) => `<button class="dw-file" data-i="${i}">${ICON}<span><b>${p.title}</b><small>${AR(p.verses.length)} بيت</small></span></button>`).join('');
+    folder.addEventListener('click', () => {
+      const o = !folder.classList.contains('open');
+      folder.classList.toggle('open', o); list.classList.toggle('open', o);
+      document.getElementById('dwTap').textContent = o ? 'اختاري قصيدة' : 'اضغطي على المجلد لتفتحيه';
+    });
+    list.addEventListener('click', e => {
+      const b = e.target.closest('.dw-file'); if (!b) return;
+      const p = POEMS[+b.dataset.i];
+      sheet.innerHTML = '<button class="x" id="dwX" aria-label="سكّري">×</button>'
+        + `<h3 class="dw-t">${p.title}</h3>`
+        + `<p class="dw-m">${p.years ? p.years + ' · ' : ''}${AUTHOR}</p>`
+        + (p.bio ? `<p class="dw-p">${p.bio}</p>` : '')
+        + (p.intro ? `<p class="dw-p"><b>مدخل الى النص:</b> ${p.intro}</p>` : '')
+        + '<div class="dw-v">' + p.verses.map(v => `<div><span>${v[0]}</span><span>${v[1]}</span></div>`).join('') + '</div>'
+        + (p.gloss ? '<div class="dw-g"><h4>شرح مفردات</h4>' + p.gloss.map(g => `<div>${g}</div>`).join('') + '</div>' : '');
+      read.classList.add('on'); sheet.scrollTop = 0; document.body.style.overflow = 'hidden';
+      document.getElementById('dwX').onclick = close;
+    });
+    function close() { read.classList.remove('on'); document.body.style.overflow = ''; }
+    read.addEventListener('click', e => { if (e.target === read) close(); });
+  })();
+  </script>
+
   <!-- ===== 6. Open when ===== -->
   <section class="on-wine-2" id="openWhen">
     <div class="wrap">
