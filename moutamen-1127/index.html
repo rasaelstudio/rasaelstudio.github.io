@@ -472,7 +472,11 @@ function tick() {
   $('cM').textContent = num(Math.floor(s / 60) % 60, 2);
   $('cS').textContent = num(s % 60, 2);
 }
-tick(); setInterval(tick, 1000);
+// no exact date from the client: show 'less than a month' instead of a day count
+$('cDays').textContent = 'أقل من شهر';
+$('cDays').style.fontSize = 'clamp(44px, 14vw, 72px)';
+document.querySelector('.count-unit').style.display = 'none';
+document.querySelector('.count-small').style.display = 'none';
 
 /* ---------- Reasons deck ---------- */
 const deck = $('deck');
